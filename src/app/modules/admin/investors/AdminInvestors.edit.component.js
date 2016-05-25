@@ -35,6 +35,11 @@
         });
       }
 
+      function setFounders() {
+        if (!controller.investor.founders || angular.isFunction(controller.investor.founders.push) == false)
+          controller.investor.founders = [];
+      }
+
       controller.queryCompanies = function(query) {
         return adminListCompaniesService.filter(query);
       };
@@ -77,9 +82,7 @@
 
       adminGetInvestorService.find($stateParams.id).then(function(investor) {
         controller.investor = investor;
-        if (angular.isFunction(investor.founders.push) == false)
-          controller.investor.founders = [];
-
+        setFounders();
         loadTags();
         loadFundingTypes();
       });
@@ -89,6 +92,7 @@
         updateInvestorService.update(controller.investor)
           .then(function(investor) {
             controller.investor = investor;
+            setFounders();
             Notification.success('Investor Updated!')
           }, function() {
             Notification.error('Error: Investor could not be saved!')
