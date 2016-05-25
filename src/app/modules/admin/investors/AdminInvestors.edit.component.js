@@ -77,7 +77,7 @@
 
       adminGetInvestorService.find($stateParams.id).then(function(investor) {
         controller.investor = investor;
-        if ((typeof investor.founders.push === 'function') == false)
+        if (angular.isFunction(investor.founders.push) == false)
           controller.investor.founders = [];
 
         loadTags();

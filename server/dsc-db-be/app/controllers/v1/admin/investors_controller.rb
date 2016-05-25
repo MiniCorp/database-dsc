@@ -64,7 +64,7 @@ module V1
           :exits_ipos, :headquarters, :founded, :local_office,
           :funds_raised, { funding_types: [] }, :investment_size, :regions,
           { office_locations: [:id, :address, :lat, :lng] }, :contact, :contact_email, :preferred_contact,
-          :co_investors, :similar_investors, :similar_investors,
+          :co_investors, :similar_investors, :similar_investors, :founders,
           { founders: [:name, :linkedin] }, :video_url, :website, :tags,
           :custom_field_1, :custom_field_2, :custom_field_3, :custom_field_4,
           { social_accounts: [:twitter, :linkedin, :facebook] },
