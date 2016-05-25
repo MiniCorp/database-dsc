@@ -8,7 +8,7 @@
       controller: 'AdminHubsEditController'
     })
     .controller('AdminHubsEditController', function(store, $state, adminGetHubService,
-      updateHubService, $stateParams, Notification, listTagsService, listCompaniesService) {
+      updateHubService, $stateParams, Notification, listTagsService, adminListCompaniesService) {
 
       var controller = this;
       this.hub_type = {};
@@ -40,7 +40,7 @@
       }
 
       controller.queryCompanies = function(query) {
-        return listCompaniesService.filter(query);
+        return adminListCompaniesService.filter(query);
       };
 
       controller.toggleCalendar = function() {
