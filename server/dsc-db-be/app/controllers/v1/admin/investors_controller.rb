@@ -32,7 +32,6 @@ module V1
       end
 
       def update
-        byebug
         investor.update(investor_params)
         render json: investor
       end
