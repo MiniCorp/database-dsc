@@ -7,7 +7,7 @@
       controller: 'AdminCompaniesNewController',
       templateUrl: 'app/modules/admin/companies/companies.new.html'
     })
-    .controller('AdminCompaniesNewController', function(createCompanyService, $confirm, Notification, listInvestorsService, listTagsService) {
+    .controller('AdminCompaniesNewController', function(createCompanyService, $confirm, Notification, adminListInvestorsService, listTagsService) {
       this.createCompanyService = createCompanyService;
       var controller = this;
 
@@ -33,7 +33,7 @@
       }
 
       controller.queryInvestors = function(query) {
-        return listInvestorsService.filter(query);
+        return adminListInvestorsService.filter(query);
       };
 
       controller.queryTags = function(query) {

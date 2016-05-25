@@ -7,7 +7,7 @@
       controller: 'AdminHubsNewController',
       templateUrl: 'app/modules/admin/hubs/hubs.new.html'
     })
-    .controller('AdminHubsNewController', function(createHubService, $confirm, Notification, listInvestorsService, listTagsService, listCompaniesService) {
+    .controller('AdminHubsNewController', function(createHubService, $confirm, Notification, adminListInvestorsService, listTagsService, adminListCompaniesService) {
       this.createHubService = createHubService;
       var controller = this;
       this.hub_type = {};
@@ -55,7 +55,7 @@
       };
 
       controller.queryCompanies = function(query) {
-        return listCompaniesService.filter(query);
+        return adminListCompaniesService.filter(query);
       };
 
       function setHubTypes() {

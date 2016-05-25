@@ -48,14 +48,6 @@
               }
             }
           }
-        },
-        dealStructure: {
-          type: 'dropdown',
-          id: 'deal-structure',
-          label: 'Deal Structure',
-          selectedValue: '',
-          noSelectionString: 'Any structure',
-          values: ['Equity (Minority)', 'Equity (Majority)', 'Venture Debt', 'Convertible Debt', 'Mezzanine']
         }
       };
     })
