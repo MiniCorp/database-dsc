@@ -13,6 +13,11 @@
       this.target_markets = {};
 
       function loadTags() {
+        if (!controller.company.tags || angular.isFunction(controller.company.tags.forEach) == false) {
+          controller.company.tags = [];
+          return;
+        }
+
         controller.company.tags.forEach(function(tag) {
           controller.tags.push({text: tag})
         });
@@ -29,9 +34,21 @@
           controller.company.funding_rounds = [];
       }
 
+      function setOfficeLocations() {
+        if (!controller.company.office_locations || angular.isFunction(controller.company.office_locations.push) == false)
+          controller.company.office_locations = [];
+      }
+
+      function setFounders() {
+        if (!controller.company.founders || angular.isFunction(controller.company.founders.push) == false)
+          controller.company.founders = [];
+      }
+
       adminGetCompanyService.find($stateParams.id).then(function(company) {
         controller.company = company;
         setFundingRounds();
+        setOfficeLocations();
+        setFounders();
         loadTags();
         loadTargetMarkets();
       });
@@ -101,6 +118,8 @@
           .then(function(company) {
             controller.company = company;
             setFundingRounds();
+            setOfficeLocations();
+            setFounders();
             Notification.success('Company Updated!')
           }, function() {
             Notification.error('Error: Company could not be saved!')
