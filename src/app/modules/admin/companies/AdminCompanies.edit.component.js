@@ -24,8 +24,14 @@
         });
       }
 
+      function setFundingRounds() {
+        if (!controller.company.funding_rounds || angular.isFunction(controller.company.funding_rounds.push) == false)
+          controller.company.funding_rounds = [];
+      }
+
       adminGetCompanyService.find($stateParams.id).then(function(company) {
         controller.company = company;
+        setFundingRounds();
         loadTags();
         loadTargetMarkets();
       });
@@ -94,6 +100,7 @@
         updateCompanyService.update(controller.company)
           .then(function(company) {
             controller.company = company;
+            setFundingRounds();
             Notification.success('Company Updated!')
           }, function() {
             Notification.error('Error: Company could not be saved!')
