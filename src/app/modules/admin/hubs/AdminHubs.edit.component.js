@@ -22,6 +22,11 @@
       this.currentAppDeadlineDate;
 
       function loadTags() {
+        if (!controller.hub.tags || angular.isFunction(controller.hub.tags.forEach) == false) {
+          controller.hub.tags = [];
+          return;
+        }
+
         controller.hub.tags.forEach(function(tag) {
           controller.tags.push({text: tag})
         });

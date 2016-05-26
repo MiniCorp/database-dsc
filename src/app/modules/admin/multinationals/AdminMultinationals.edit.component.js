@@ -13,6 +13,11 @@
       this.functions = [];
 
       function loadTags() {
+        if (!controller.multinational.tags || angular.isFunction(controller.multinational.tags.forEach) == false) {
+          controller.multinational.tags = [];
+          return;
+        }
+
         controller.multinational.tags.forEach(function(tag) {
           controller.tags.push({text: tag})
         });
