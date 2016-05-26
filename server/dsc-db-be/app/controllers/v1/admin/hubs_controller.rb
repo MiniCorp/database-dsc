@@ -10,7 +10,7 @@ module V1
       end
 
       def index
-        hubs = Hub.with_deleted.order(:id)
+        hubs = Hub.with_deleted.order(:name)
 
         respond_to do |format|
           format.html {

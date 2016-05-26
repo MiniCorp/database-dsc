@@ -11,9 +11,9 @@ module V1
 
       def index
         if params[:filter].present?
-          companies = Company.select(:id, :name).where("name ILIKE ?", "%#{params[:filter]}%")
+          companies = Company.select(:id, :name).where("name ILIKE ?", "%#{params[:filter]}%").order(:name)
         else
-          companies = Company.with_deleted.order(:id)
+          companies = Company.with_deleted.order(:name)
         end
 
         respond_to do |format|

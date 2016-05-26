@@ -12,9 +12,9 @@ module V1
       def index
 
         if params[:filter].present?
-          investors = Investor.select(:id, :name).where("name ILIKE ?", "%#{params[:filter]}%")
+          investors = Investor.select(:id, :name).where("name ILIKE ?", "%#{params[:filter]}%").order(:name)
         else
-          investors = Investor.with_deleted.order(:id)
+          investors = Investor.with_deleted.order(:name)
         end
 
         respond_to do |format|

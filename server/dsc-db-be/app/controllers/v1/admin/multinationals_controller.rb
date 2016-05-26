@@ -11,7 +11,7 @@ module V1
       end
 
       def index
-        multinationals = Multinational.with_deleted.order(:id)
+        multinationals = Multinational.with_deleted.order(:name)
 
         respond_to do |format|
           format.html do

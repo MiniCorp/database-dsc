@@ -15,9 +15,9 @@ module V1
       def index
 
         if params[:filter].present?
-          investors = Investor.unclaimed_or_owned_by(current_user.id).select(:id, :name).where("name ILIKE ?", "%#{params[:filter]}%")
+          investors = Investor.unclaimed_or_owned_by(current_user.id).select(:id, :name).where("name ILIKE ?", "%#{params[:filter]}%").order(:name)
         else
-          investors = Investor.unclaimed_or_owned_by(current_user.id).with_deleted.order(:id)
+          investors = Investor.unclaimed_or_owned_by(current_user.id).with_deleted.order(:name)
         end
 
         investors.each {|investor| investor.current_user = current_user} if current_user

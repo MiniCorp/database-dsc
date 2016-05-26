@@ -1,4 +1,4 @@
-# Dublin Commissioner for Startups Project
+# Tech Ireland Project
 
 ![TRAVIS CI](https://travis-ci.org/databasedsc/database-dsc.svg?branch=master)
 
@@ -12,7 +12,7 @@ AngularJS 1.5
 	- Node v5.0
 	- Gulp
 	- Bower
-	
+
 Installation Tips:
 
 * Use [nvm for managing node versions](https://github.com/creationix/nvm) and ensure that there's no conflict between them.
@@ -27,9 +27,9 @@ Installation Tips:
 		- npm install
 		- npm install -g yo gulp bower
 		- bower install
-		
+
 		********* starts the app *********
-		- gulp serve 
+		- gulp serve
 		**********************************
 
 ### Gulp Commands
@@ -37,21 +37,21 @@ Installation Tips:
 	- gulp build : builds /src into /dist
 	- gulp test  : runs front-end app unit tests
 	- gulp e2e   : run application end to end tests
-	
+
 Note that the e2e runs agaisn't the real backend application, so make sure that an instance of the backend is running on localhost (default port 4000 can be modified on ngConstants.js).
 
 There's a environment(integration) in the backend app designed for this purpose.
 
 `rails s -p 4000 -e integration`
-	
+
 ##Backend
 Ruby On Rails 5.0-beta3 --api-only
 
 - dependecies
   - Ruby v2.2.3
-	 
+
 Installation Tips
-* Use [rbenv to manage ruby versions](https://github.com/rbenv/rbenv) and ensure that there's no conflict between them. 
+* Use [rbenv to manage ruby versions](https://github.com/rbenv/rbenv) and ensure that there's no conflict between them.
 
 		********* if using brew **********
 		- brew install rbenv
@@ -64,11 +64,11 @@ Installation Tips
 		- bundle install
 		- rbenv rehash
 		- rake db:create db:migrate db:seed
-		
+
 		********* starts the app *********
 		- rails s -p 4000
 		**********************************
-		
+
 ### Rails commands
 
   - rspec : runs unit and integration test
@@ -80,7 +80,7 @@ Installation Tips
 Posgresql > 9.4
 
 This project uses Postgres Full Text Search functionalities so ensure that the version you will be using have that capability.
- 
+
 ## Continous Delivery
 
 This project use Travis CI. Refer to the .travis.yml. After the test script tasks passes successfully it will start the deployment to CF.
@@ -88,7 +88,7 @@ This project use Travis CI. Refer to the .travis.yml. After the test script task
 There are 2 deploy tasks, one for each App.
 
 NOTE: The backend is not being automatically deployed at the moment.
- 
+
 ##Powered by:
 
 <img src="./PivotalLabs-Logo-OnLight.png" width="400" height="85" /><img src="./PivotalCloudFoundry-Logo-Horizontal-OnLight.png" width="400" height="85" />
