@@ -91,6 +91,16 @@ a {
   color:#fff;
 }
 
+.btn-primary-blue {
+  background-color: #2196f3;
+  color: #FFFFFF;
+}
+.btn-primary-blue:hover {
+  color: #FFFFFF;
+  background-color: #2196f3;
+  border-color: #2196f3;
+}
+
 @media only screen and (max-width: 767px) {
   .navbar-nav {
     margin-top:50px !important;

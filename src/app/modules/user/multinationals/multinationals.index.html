@@ -2,7 +2,8 @@
   <div class="col-md-12">
     <h2 style="margin-bottom:0;">Multinationals</h2>
     <p class="text-muted" style="margin-bottom:20px;">
-      All multinationals listed on Tech Ireland are listed below. Please claim any multinational you own or alternativly create a new multinational.
+      <br/>
+      <user-header-text></user-header-text>
     </p>
     <p class="pull-right">
       <button ng-click="$ctrl.export()" class="btn btn-primary btn-xs">Export Multinations</button>
@@ -50,8 +51,8 @@
         </div>
 
         <div class="" ng-if="!multinational.user_id">
-          <a ng-if="!multinational.claimed_requested_by_current_user" ng-click="$ctrl.claimMultinational($event, multinational.id)" class="btn btn-xs btn-block btn-default">Claim</a>
-          <a ng-if="multinational.claimed_requested_by_current_user" class="btn btn-xs btn-block btn-default" disabled>Requested</a>
+          <a ng-if="!multinational.claimed_requested_by_current_user" ng-click="$ctrl.claimMultinational($event, multinational.id)" class="btn btn-xs btn-block btn-primary-blue">Claim</a>
+          <a ng-if="multinational.claimed_requested_by_current_user" class="btn btn-xs btn-block btn-primary-blue" disabled>Requested</a>
         </div>
 
       </td>

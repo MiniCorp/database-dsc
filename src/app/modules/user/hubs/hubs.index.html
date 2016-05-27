@@ -2,7 +2,8 @@
   <div class="col-md-12">
     <h2 style="margin-bottom:0;">Hubs</h2>
     <p class="text-muted" style="margin-bottom:20px;">
-      All hubs listed on Tech Ireland are listed below. Please claim any hub you own or alternativly create a new hub.
+      <br/>
+      <user-header-text></user-header-text>
     </p>
     <p class="pull-right">
       <button ng-click="$ctrl.export()" class="btn btn-primary btn-xs">Export Hubs</button>
@@ -45,8 +46,8 @@
           </div>
 
           <div class="" ng-if="!hub.user_id">
-            <a ng-if="!hub.claimed_requested_by_current_user" ng-click="$ctrl.claimHub($event, hub.id)" class="btn btn-xs btn-block btn-default">Claim</a>
-            <a ng-if="hub.claimed_requested_by_current_user" class="btn btn-xs btn-block btn-default" disabled>Requested</a>
+            <a ng-if="!hub.claimed_requested_by_current_user" ng-click="$ctrl.claimHub($event, hub.id)" class="btn btn-xs btn-block btn-primary-blue">Claim</a>
+            <a ng-if="hub.claimed_requested_by_current_user" class="btn btn-xs btn-block btn-primary-blue" disabled>Requested</a>
           </div>
         </td>
       </tr>
