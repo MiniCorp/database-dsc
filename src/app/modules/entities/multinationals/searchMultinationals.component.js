@@ -36,6 +36,7 @@
       $scope.perPage = 9;
 
       $scope.$watch('currentPage', function () {
+        $document.scrollTopAnimated(0, 250);
         controller.search();
       }, true);
 

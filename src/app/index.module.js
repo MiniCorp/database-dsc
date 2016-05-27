@@ -33,6 +33,7 @@
       'hubProfile',
       'searchFilters',
       'socialLinks',
-      'truncate'
+      'truncate',
+      'duScroll'
     ]);
 })();
