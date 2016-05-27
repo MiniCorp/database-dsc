@@ -29,8 +29,11 @@
 
       this.investor = getInvestorService.find($stateParams.id).then(function(investor) {
         controller.investor = investor;
-
+        
         var companyIds = investor.companies_invested_in.map(function(a) { return a.id; });
+        if (companyIds.length == 0)
+          return
+
         searchCompaniesService.getCompaniesWithIDs(companyIds.join(',')).then(function(companies){
           var investedInCompanies = companies.data;
           controller.investor.investedInCompanies = investedInCompanies;

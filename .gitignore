@@ -7,3 +7,5 @@ coverage/
 dist/
 
 server/dsc-db-be/config/environment_variables.yml
+
+.DS_Store
