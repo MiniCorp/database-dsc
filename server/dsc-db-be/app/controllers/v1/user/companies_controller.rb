@@ -13,20 +13,20 @@ module V1
       end
 
       def index
-        if params[:filter].present?
-          companies = Company.unclaimed_or_owned_by(current_user.id).select(:id, :name).where("name ILIKE ?", "%#{params[:filter]}%").order(:name)
-        else
-          companies = Company.unclaimed_or_owned_by(current_user.id).with_deleted.order(:name)
-        end
-
-        companies.each {|company| company.current_user = current_user} if current_user
-
         respond_to do |format|
           format.html {
+            if params[:filter].present?
+              companies = Company.unclaimed_or_owned_by(current_user.id).select(:id, :name).where("name ILIKE ?", "%#{params[:filter]}%").order(:name)
+            else
+              companies = Company.unclaimed_or_owned_by(current_user.id).with_deleted.order(:name)
+            end
+
+            companies.each {|company| company.current_user = current_user} if current_user
+
             render json: companies
           }
           format.csv do
-            send_data companies.to_csv
+            send_data PublicCompany.to_csv(PublicCompany.all)
           end
         end
       end
