@@ -139,6 +139,9 @@
         <div class="panel-body">
           <div class="row">
             <div class="col-sm-12">
+              <div class="alert alert-info" role="alert">
+                To get longitude and latitude coordinates: Find your location on google maps, right click on the red marker, select "what's here" and you'll find them at the bottom of the dialog box (first one is latitude, second one is longitude).
+              </div>
 
               <div class="form-group">
                 <label for="location-address">Address</label>
@@ -225,6 +228,9 @@
 <div class="panel panel-default">
   <div class="panel-heading">Tags</div>
   <div class="panel-body">
+    <p>
+      Please add as many as are relevant. If you'd like to suggest a new tag, please email <a href="mailto:ciaran@startupdublin.com">ciaran@startupdublin.com</a>
+    </p>
     <tags-input ng-model="$ctrl.tags"
                 add-on-enter="false"
                 on-tag-added="$ctrl.addTag($tag)"

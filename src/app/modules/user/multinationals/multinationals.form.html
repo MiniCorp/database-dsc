@@ -1,26 +1,15 @@
 <admin-overview entity="$ctrl.multinational"></admin-overview>
+
+
+
 <div class="panel panel-default">
+
   <div class="panel-heading">Details</div>
   <div class="panel-body">
 
     <div class="row">
 
       <div class="col-md-6">
-        <div class="form-group">
-          <label for="headquarters">Headquarters:</label>
-          <input ng-model="$ctrl.multinational.headquarters" id="headquarters" class="form-control" type="text">
-        </div>
-
-        <div class="form-group">
-          <label for="headquarters">Latitude:</label>
-          <input ng-model="$ctrl.multinational.lat" id="headquarters" class="form-control" type="text">
-        </div>
-
-        <div class="form-group">
-          <label for="headquarters">Longitude:</label>
-          <input ng-model="$ctrl.multinational.lng" id="headquarters" class="form-control" type="text">
-        </div>
-
         <div class="form-group">
           <label>European HQ in Ireland</label>
           <br>
@@ -106,6 +95,32 @@
 </div>
 
 <div class="panel panel-default">
+  <div class="panel-heading">Location</div>
+  <div class="panel-body">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="alert alert-info" role="alert">
+          To get longitude and latitude coordinates: Find your location on google maps, right click on the red marker, select "what's here" and you'll find them at the bottom of the dialog box (first one is latitude, second one is longitude).
+        </div>
+        <div class="form-group">
+          <label for="headquarters">Latitude:</label>
+          <input ng-model="$ctrl.multinational.lat" id="headquarters" class="form-control" type="text">
+        </div>
+
+        <div class="form-group">
+          <label for="headquarters">Longitude:</label>
+          <input ng-model="$ctrl.multinational.lng" id="headquarters" class="form-control" type="text">
+        </div>
+        <div class="form-group">
+          <label for="headquarters">Headquarters:</label>
+          <input ng-model="$ctrl.multinational.headquarters" id="headquarters" class="form-control" type="text">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="panel panel-default">
   <div class="panel-heading">
     Startup Packages
     <a ng-click="$ctrl.addStartupPackage()" class="btn btn-primary btn-sm pull-right">Add Package</a>
@@ -155,6 +170,9 @@
 <div class="panel panel-default">
   <div class="panel-heading">Tags</div>
   <div class="panel-body">
+    <p>
+      Please add as many as are relevant. If you'd like to suggest a new tag, please email <a href="mailto:ciaran@startupdublin.com">ciaran@startupdublin.com</a>
+    </p>
     <tags-input ng-model="$ctrl.tags"
                 add-on-enter="false"
                 on-tag-added="$ctrl.addTag($tag)"
