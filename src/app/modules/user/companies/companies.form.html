@@ -43,6 +43,9 @@
         <div class="form-group">
           <label for="employees">Employees:</label>
           <input integer ng-model="$ctrl.company.employees" id="employees" class="form-control" type="number">
+          <p class="help-block">
+            Please give an accurate number, we'll round it in to one the following brackets - 1-5, 6-10, 11-25, 26-50, 50-100, 101-250, 250-500, >500
+          </p>
         </div>
 
         <div class="form-group">
@@ -63,7 +66,14 @@
 
         <div class="form-group">
           <label for="total-funding">Total Funding</label>
-          <input ng-model="$ctrl.company.funding_amount" id="total-funding" class="form-control" type="text">
+          <div class="input-group">
+            <span class="input-group-addon">&euro;</span>
+            <input ng-model="$ctrl.company.funding_amount" id="total-funding" class="form-control" type="text">
+            <span class="input-group-addon">M</span>
+          </div>
+          <p class="helper-text">
+            Don’t use currency symbols or commas. All amounts in Euro.
+          </p>
         </div>
 
         <div class="form-group">
@@ -179,14 +189,6 @@
           <input ng-model="$ctrl.company.looking_for" id="looking-for" class="form-control" type="text">
         </div>
 
-        <div class="form-group">
-          <label>Recently Funded?</label>
-          <br>
-          <input type="radio" ng-model="$ctrl.company.recently_funded" ng-value="true"> Yes
-          &nbsp;
-          <input type="radio" ng-model="$ctrl.company.recently_funded" ng-value="false"> No
-        </div>
-
       </div>
 
     </div>
@@ -211,6 +213,9 @@
         <div class="panel-body">
           <div class="row">
             <div class="col-sm-12">
+              <div class="alert alert-info" role="alert">
+                To get longitude and latitude coordinates: Find your location on google maps, right click on the red marker, select "what's here" and you'll find them at the bottom of the dialog box (first one is latitude, second one is longitude).
+              </div>
 
               <div class="form-group">
                 <label for="location-address">Address</label>
@@ -295,10 +300,13 @@
         </div>
         <div class="panel-body">
           <div class="row">
-            <div class="col-sm-6">
+            <div class="col-sm-8">
               <div class="form-group">
                 <label for="funding-type">Funding type</label>
                 <input ng-model="round.type" id="funding-type" class="form-control" type="text">
+                <p>
+                  Please note, for our purposes we would classify anything less than €100,000 as pre-seed.
+                </p>
               </div>
               <div class="form-group">
                 <label for="funding-amount">Funding amount</label>
@@ -332,6 +340,9 @@
 <div class="panel panel-default">
   <div class="panel-heading">Tags</div>
   <div class="panel-body">
+    <p>
+      Please add as many as are relevant. If you'd like to suggest a new tag, please email <a href="mailto:ciaran@startupdublin.com">ciaran@startupdublin.com</a>
+    </p>
     <tags-input ng-model="$ctrl.tags"
                 add-on-enter="false"
                 on-tag-added="$ctrl.addTag($tag)"

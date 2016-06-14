@@ -1,30 +1,12 @@
 <admin-overview entity="$ctrl.hub"></admin-overview>
 
+
+
 <div class="panel panel-default">
   <div class="panel-heading">Details</div>
   <div class="panel-body">
     <div class="row">
       <div class="col-md-6">
-
-        <div class="form-group">
-          <label for="address">Address:</label>
-          <input ng-model="$ctrl.hub.address" id="address" class="form-control" type="text">
-        </div>
-
-        <div class="form-group">
-          <label for="address">Latitude:</label>
-          <input ng-model="$ctrl.hub.lat" id="address" class="form-control" type="text">
-        </div>
-
-        <div class="form-group">
-          <label for="address">Longitude:</label>
-          <input ng-model="$ctrl.hub.lng" id="address" class="form-control" type="text">
-        </div>
-
-        <div class="form-group">
-          <label for="contact">Contact:</label>
-          <input ng-model="$ctrl.hub.contact" id="contact" class="form-control" type="text">
-        </div>
 
         <div class="form-group">
           <label for="contact">Funding Provided:</label>
@@ -81,6 +63,32 @@
           <input ng-model="$ctrl.hub.contact_detail" id="contact_detail" class="form-control" type="text">
         </div>
 
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="panel panel-default">
+  <div class="panel-heading">Location</div>
+  <div class="panel-body">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="alert alert-info" role="alert">
+          To get longitude and latitude coordinates: Find your location on google maps, right click on the red marker, select "what's here" and you'll find them at the bottom of the dialog box (first one is latitude, second one is longitude).
+        </div>
+        <div class="form-group">
+          <label for="address">Address:</label>
+          <input ng-model="$ctrl.hub.address" id="address" class="form-control" type="text">
+        </div>
+        <div class="form-group">
+          <label for="headquarters">Latitude:</label>
+          <input ng-model="$ctrl.hub.lat" id="address" class="form-control" type="text">
+        </div>
+
+        <div class="form-group">
+          <label for="headquarters">Longitude:</label>
+          <input ng-model="$ctrl.hub.lng" id="address" class="form-control" type="text">
+        </div>
       </div>
     </div>
   </div>
@@ -189,6 +197,9 @@
 <div class="panel panel-default">
   <div class="panel-heading">Tags</div>
   <div class="panel-body">
+    <p>
+      Please add as many as are relevant. If you'd like to suggest a new tag, please email <a href="mailto:ciaran@startupdublin.com">ciaran@startupdublin.com</a>
+    </p>
     <tags-input ng-model="$ctrl.tags"
                 add-on-enter="false"
                 on-tag-added="$ctrl.addTag($tag)"
