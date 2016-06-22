@@ -22,6 +22,11 @@
       this.currentAppDeadlineDate;
 
       function loadTags() {
+        if (!controller.hub.tags || angular.isFunction(controller.hub.tags.forEach) == false) {
+          controller.hub.tags = [];
+          return;
+        }
+
         controller.hub.tags.forEach(function(tag) {
           controller.tags.push({text: tag})
         });
@@ -87,6 +92,11 @@
         controller.hub.hub_type = controller.hub.hub_type
       }
 
+      function setContactURLs() {
+        if (!controller.hub.contact_urls || angular.isFunction(controller.hub.contact_urls.push) == false)
+          controller.hub.contact_urls = [];
+      }
+
       userGetHubService.find($stateParams.id).then(function(hub) {
         controller.hub = hub;
 
@@ -106,6 +116,7 @@
         userUpdateHubService.update(controller.hub)
           .then(function(hub) {
             controller.hub = hub;
+            setContactURLs();
             convertDateForDisplay();
             Notification.success('Hub Updated!')
           }, function() {

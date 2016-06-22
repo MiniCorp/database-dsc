@@ -318,16 +318,20 @@
               </div>
               <div class="form-group">
                 <label for="funding-date">Investors</label>
-                <tags-input ng-model="round.investors"
+                <tags-input name="investorsInput"
+                            ng-model="round.investors"
                             replace-spaces-with-dashes="false"
                             placeholder="Add an investor"
                             add-on-enter="false"
-                            add-from-auto-complete-only="true"
+                            add-from-autocomplete-only="true"
                             key-property="id"
                             display-property="name">
                   <auto-complete source="$ctrl.queryInvestors($query)" display-property="name">
                   </auto-complete>
                 </tags-input>
+                <p class="help-block" style="color:red" ng-show="create.investorsInput.$invalid || edit.investorsInput.$invalid">
+                  Sorry, looks like you are trying to add an investor that does not exist in our system. If you'd like to suggest a new investor, please email <a href="mailto:ciaran@startupdublin.com?Subject=I%20Have%20A%20New%20Investor%20For%20You%21&Body=Hi%20Ciaran%2C%0A%0AI%20was%20editing%20a%20profile%20%28INSERT%20PROFILE%20NAME%20HERE%29%20on%20TechIreland.org%20and%20wanted%20to%20suggest%20a%20new%20investor%20-%20%28INSERT%20TAG%20HERE%29.%0A%0AThanks%21">ciaran@startupdublin.com</a>
+                </p>
               </div>
             </div>
           </div>
@@ -341,14 +345,19 @@
   <div class="panel-heading">Tags</div>
   <div class="panel-body">
     <p>
-      Please add as many as are relevant. If you'd like to suggest a new tag, please email <a href="mailto:ciaran@startupdublin.com">ciaran@startupdublin.com</a>
+      Please add as many as are relevant. If you'd like to suggest a new tag, please email <a href="mailto:ciaran@startupdublin.com?Subject=I%20Have%20A%20New%20Tag%20For%20You%21&Body=Hi%20Ciaran%2C%0A%0AI%20was%20editing%20a%20profile%20%28INSERT%20PROFILE%20NAME%20HERE%29%20on%20TechIreland.org%20and%20wanted%20to%20suggest%20a%20new%20tag%20-%20%28INSERT%20TAG%20HERE%29.%0A%0AThanks%21">ciaran@startupdublin.com</a>
     </p>
-    <tags-input ng-model="$ctrl.tags"
+    <tags-input name="tagsInput"
+                ng-model="$ctrl.tags"
                 add-on-enter="false"
+                add-from-autocomplete-only="true"
                 on-tag-added="$ctrl.addTag($tag)"
                 on-tag-removed="$ctrl.removeTag($tag)">
       <auto-complete source="$ctrl.queryTags($query)"></auto-complete>
     </tags-input>
+    <p class="help-block" style="color:red" ng-show="create.tagsInput.$invalid || edit.tagsInput.$invalid">
+      Sorry, looks like you are trying to use a tag that does not exist in our system.
+    </p>
   </div>
   </div>
 </div>

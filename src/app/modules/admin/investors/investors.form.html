@@ -209,28 +209,37 @@
 <div class="panel panel-default">
   <div class="panel-heading">Companies Invested In</div>
   <div class="panel-body">
-    <tags-input ng-model="$ctrl.investor.companies_invested_in"
+    <tags-input name="companiesInput"
+                ng-model="$ctrl.investor.companies_invested_in"
                 replace-spaces-with-dashes="false"
                 placeholder="Add a company"
                 add-on-enter="false"
-                add-from-auto-complete-only="true"
+                add-from-autocomplete-only="true"
                 key-property="id"
                 display-property="name">
       <auto-complete source="$ctrl.queryCompanies($query)" display-property="name">
       </auto-complete>
     </tags-input>
+    <p class="help-block" style="color:red" ng-show="create.companiesInput.$invalid || edit.companiesInput.$invalid">
+      Sorry, you added a company that does not exist in the system.
+    </p>
   </div>
 </div>
 
 <div class="panel panel-default">
   <div class="panel-heading">Tags</div>
   <div class="panel-body">
-    <tags-input ng-model="$ctrl.tags"
+    <tags-input name="tagsInput"
+                ng-model="$ctrl.tags"
                 add-on-enter="false"
+                add-from-autocomplete-only="true"
                 on-tag-added="$ctrl.addTag($tag)"
                 on-tag-removed="$ctrl.removeTag($tag)">
       <auto-complete source="$ctrl.queryTags($query)"></auto-complete>
     </tags-input>
+    <p class="help-block" style="color:red" ng-show="create.tagsInput.$invalid || edit.tagsInput.$invalid">
+      Sorry, you added a tag that does not exist in the system.
+    </p>
   </div>
 </div>
 

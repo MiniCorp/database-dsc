@@ -75,6 +75,7 @@ module V1
           :building_product_in_ireland,
           :events_space_qualifiers,
           :tags,
+          :startup_packages,
           :custom_field_1, :custom_field_2, :custom_field_3, :custom_field_4,
           functions: [],
           startup_packages: [:name, :link, :description],

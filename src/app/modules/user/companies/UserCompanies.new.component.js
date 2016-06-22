@@ -7,7 +7,7 @@
       controller: 'UserCompaniesNewController',
       templateUrl: 'app/modules/user/companies/companies.new.html'
     })
-    .controller('UserCompaniesNewController', function(userCreateCompanyService, $confirm, Notification, adminListInvestorsService, listTagsService) {
+    .controller('UserCompaniesNewController', function(userCreateCompanyService, $confirm, Notification, userListInvestorsService, listTagsService) {
       this.userCreateCompanyService = userCreateCompanyService;
       var controller = this;
 
@@ -33,7 +33,7 @@
       }
 
       controller.queryInvestors = function(query) {
-        return adminListInvestorsService.filter(query);
+        return userListInvestorsService.filter(query);
       };
 
       controller.queryTags = function(query) {
