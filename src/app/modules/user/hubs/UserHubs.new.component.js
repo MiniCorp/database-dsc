@@ -11,23 +11,21 @@
       this.userCreateHubService = userCreateHubService;
       var controller = this;
       this.hub_type = {};
-      this.appDeadlineDatePicker = {
-        opened: false
-      };
 
       var setEmptyHub = function() {
         controller.hub = {
           founders: [],
           funding_rounds: [],
           tags: [],
-          contact_urls: []
+          contact_urls: [],
+          applications: []
         }
       };
 
       setEmptyHub();
 
-      controller.toggleCalendar = function() {
-        controller.appDeadlineDatePicker.opened = true;
+      controller.toggleCalendar = function(application) {
+        application.opened = true;
       };
 
       controller.queryTags = function(query) {
@@ -41,6 +39,19 @@
       controller.removeTag = function(tag) {
         controller.hub.tags.splice(controller.hub.tags.indexOf(tag.text), 1);
       };
+
+      controller.addApplication = function() {
+        controller.hub.applications.push({
+          title: "",
+          deadline: "",
+          link: "",
+          opened: false
+        });
+      };
+
+      controller.removeApplication = function(application) {
+        controller.hub.applications.splice(controller.hub.applications.indexOf(application), 1);
+      }
 
       controller.addPrivateContact = function() {
         controller.hub.contact_urls.push({
