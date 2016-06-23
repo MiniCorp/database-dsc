@@ -1,6 +1,6 @@
 <div class="block app-block-intro" style="overflow:visible;">
   <div class="container text-center m-t-lg">
-    <h1 class="statcard-number block-title m-b-md" style="font-size:56px;">Where <span style="color:#f0008c">Irish</span> Innovation is Found</h1>
+    <h1 class="statcard-number block-title m-b-md" style="font-size:56px;">Search for <span style="color:#f0008c">Irish</span> Innovation Here</h1>
 
     <div class="row">
       <div class="col-md-offset-2 col-md-8">
@@ -11,6 +11,12 @@
               <span ng-bind-html="item.name | highlight: $select.search"></span>
             </ui-select-choices>
           </ui-select>
+        </div>
+        <p style="padding-top:20px;">
+          Add Your Irish Company Here
+        </p>
+        <div class="">
+          <a class="btn btn-primary" data-ui-sref="userLogin">Join</a>
         </div>
       </div>
     </div>
