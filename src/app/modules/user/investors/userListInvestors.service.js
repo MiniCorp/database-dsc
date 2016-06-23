@@ -11,5 +11,10 @@
         })
       };
 
+      this.filter = function(query) {
+        var basePath = serverUrl + '/user/investors?filter=' + query;
+        return $http.get(basePath);
+      };
+
     });
 })();

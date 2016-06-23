@@ -15,6 +15,11 @@
       this.fundingTypes = [];
 
       function loadTags() {
+        if (!controller.investor.tags || angular.isFunction(controller.investor.tags.forEach) == false) {
+          controller.investor.tags = [];
+          return;
+        }
+
         controller.investor.tags.forEach(function(tag) {
           controller.tags.push({text: tag})
         });
@@ -33,6 +38,16 @@
             controller.investor.funding_types.push(fType);
           }
         });
+      }
+
+      function setOfficeLocations() {
+        if (!controller.investor.office_locations || angular.isFunction(controller.investor.office_locations.push) == false)
+          controller.investor.office_locations = [];
+      }
+
+      function setFounders() {
+        if (!controller.investor.founders || angular.isFunction(controller.investor.founders.push) == false)
+          controller.investor.founders = [];
       }
 
       controller.queryCompanies = function(query) {
@@ -77,6 +92,8 @@
 
       userGetInvestorService.find($stateParams.id).then(function(investor) {
         controller.investor = investor;
+        setOfficeLocations();
+        setFounders();
         loadTags();
         loadFundingTypes();
       });
@@ -86,6 +103,8 @@
         userUpdateInvestorService.update(controller.investor)
           .then(function(investor) {
             controller.investor = investor;
+            setOfficeLocations();
+            setFounders();
             Notification.success('Investor Updated!')
           }, function() {
             Notification.error('Error: Investor could not be saved!')

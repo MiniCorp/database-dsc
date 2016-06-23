@@ -7,7 +7,7 @@
       templateUrl: 'app/modules/user/companies/companies.edit.html',
       controller: 'UserCompaniesEditController'
     })
-    .controller('UserCompaniesEditController', function(store, $state, userGetCompanyService, userUpdateCompanyService, $stateParams, Notification, listTagsService, adminListInvestorsService) {
+    .controller('UserCompaniesEditController', function(store, $state, userGetCompanyService, userUpdateCompanyService, $stateParams, Notification, listTagsService, userListInvestorsService) {
       var controller = this;
       this.tags = [];
       this.target_markets = {};
@@ -24,14 +24,32 @@
         });
       }
 
+      function setFundingRounds() {
+        if (!controller.company.funding_rounds || angular.isFunction(controller.company.funding_rounds.push) == false)
+          controller.company.funding_rounds = [];
+      }
+
+      function setOfficeLocations() {
+        if (!controller.company.office_locations || angular.isFunction(controller.company.office_locations.push) == false)
+          controller.company.office_locations = [];
+      }
+
+      function setFounders() {
+        if (!controller.company.founders || angular.isFunction(controller.company.founders.push) == false)
+          controller.company.founders = [];
+      }
+
       userGetCompanyService.find($stateParams.id).then(function(company) {
         controller.company = company;
+        setFundingRounds();
+        setOfficeLocations();
+        setFounders();
         loadTags();
         loadTargetMarkets();
       });
 
       controller.queryInvestors = function(query) {
-        return adminListInvestorsService.filter(query);
+        return userListInvestorsService.filter(query);
       };
 
       controller.queryTags = function(query) {

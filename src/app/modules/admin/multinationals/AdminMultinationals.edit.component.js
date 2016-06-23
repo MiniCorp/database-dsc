@@ -64,6 +64,11 @@
 
       adminGetMultinationalService.find($stateParams.id).then(function(multinational) {
         controller.multinational = multinational;
+
+        if (!angular.isArray(controller.multinational.startup_packages)) {
+          controller.multinational.startup_packages = [];
+        }
+
         loadFunctions();
         loadTags();
       });

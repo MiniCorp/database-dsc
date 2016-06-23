@@ -92,6 +92,11 @@
         controller.hub.hub_type = controller.hub.hub_type
       }
 
+      function setContactURLs() {
+        if (!controller.hub.contact_urls || angular.isFunction(controller.hub.contact_urls.push) == false)
+          controller.hub.contact_urls = [];
+      }
+
       adminGetHubService.find($stateParams.id).then(function(hub) {
         controller.hub = hub;
 
@@ -111,6 +116,7 @@
         updateHubService.update(controller.hub)
           .then(function(hub) {
             controller.hub = hub;
+            setContactURLs();
             convertDateForDisplay();
             Notification.success('Hub Updated!')
           }, function() {

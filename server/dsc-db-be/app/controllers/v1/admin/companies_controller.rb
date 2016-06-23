@@ -45,9 +45,6 @@ module V1
       end
 
       def is_user_admin
-        puts request.headers["Authorization"]
-        puts Knock::AuthToken.new(token: request.headers["Authorization"].to_s.sub("Bearer ", "")).as_json
-        puts current_user.as_json
         if current_user.user_type != "admin"
           render json: :nothing, status: 401
           return

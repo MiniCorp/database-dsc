@@ -33,7 +33,7 @@
       $stateParams,
       resultsDeferred;
 
-    beforeEach(module('searchCompanies'));
+    beforeEach(module('searchCompanies', 'duScroll'));
 
     beforeEach(inject(function($componentController, $rootScope, $q, searchCompaniesService) {
       $scope = $rootScope.$new();
