@@ -10,7 +10,7 @@
         SA: 'Series A',
         SB: 'Series B',
         SC: 'Series C',
-        'SC+': 'Series C+'
+        SCP: 'Series C+'
       };
 
       return function(input, type) {
