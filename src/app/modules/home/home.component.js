@@ -96,10 +96,21 @@
           controller.totalCompanyItems = companies.headers('Total')
 
           angular.forEach(companies.data, function(company){
-            controller.availableOptions.push({name: company.name, itemType: 'Company', id: company.id});
+            controller.availableOptions.push({name: company.name, itemType: 'Irish', id: company.id});
           });
         });
       };
+
+      this.gatherMtns = function() {
+        searchMultinationalsService.get({searchText: controller.query}, getPaginationDetails()).then(function(multinationals) {
+          controller.mtnsResults = multinationals.data;
+          controller.totalMtnsItems = multinationals.headers('Total');
+
+          angular.forEach(multinationals.data, function(multinational){
+            controller.availableOptions.push({name: multinational.name, itemType: 'International', id: multinational.id});
+          });
+        })
+      }
 
       this.gatherInvestors = function() {
         searchInvestorsService.get({searchText: this.query}, getPaginationDetails()).then(function(investors) {
@@ -107,7 +118,7 @@
           controller.totalInvestorItems = investors.headers('Total');
 
           angular.forEach(investors.data, function(investor){
-            controller.availableOptions.push({name: investor.name, itemType: 'Investor', id: investor.id});
+            controller.availableOptions.push({name: investor.name, itemType: 'Investors', id: investor.id});
           });
         });
       };
@@ -123,16 +134,7 @@
         })
       }
 
-      this.gatherMtns = function() {
-        searchMultinationalsService.get({searchText: controller.query}, getPaginationDetails()).then(function(multinationals) {
-          controller.mtnsResults = multinationals.data;
-          controller.totalMtnsItems = multinationals.headers('Total');
 
-          angular.forEach(multinationals.data, function(multinational){
-            controller.availableOptions.push({name: multinational.name, itemType: 'Multinationals', id: multinational.id});
-          });
-        })
-      }
 
     });
 })();
