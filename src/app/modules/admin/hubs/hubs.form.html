@@ -87,35 +87,59 @@
 </div>
 
 <div class="panel panel-default">
-  <div class="panel-heading">Application Details</div>
+  <div class="panel-heading">
+    Application Details
+    <a ng-click="$ctrl.addApplication()" class="btn btn-primary btn-sm pull-right">Add Application</a>
+  </div>
   <div class="panel-body">
-    <div class="row">
-      <div class="col-md-6">
-
-        <div class="form-group">
-          <label for="application-deadline-name">Application Title:</label>
-          <input ng-model="$ctrl.hub.programs" id="application-deadline-name" class="form-control" type="text">
+    <div ng-if="$ctrl.hub.applications.length == 0">
+      <p>There are no applications.</p>
+    </div>
+    <div ng-if="$ctrl.hub.applications.length > 0" ng-repeat="application in $ctrl.hub.applications track by $index">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          Application
+          <a ng-click="$ctrl.removeApplication(application)" class="pull-right"><i class="fa fa-2x fa-trash"></i></a>
         </div>
-
-      </div>
-      <div class="col-md-6">
-
-        <div class="form-group col-xs-12 col-sm-12 col-md-6">
-          <label for="application-deadline-date">Application Deadline:</label>
-          <div class="input-group">
-            <input id="application-deadline-date"
-                   class="form-control"
-                   type="text"
-                   ng-model="$ctrl.hub.application_deadline"
-                   uib-datepicker-popup="dd/MM/yyyy"
-                   is-open="$ctrl.appDeadlineDatePicker.opened"
-                   close-text="Close">
-            <span class="input-group-btn">
-              <button type="button" class="btn btn-default" ng-click="$ctrl.toggleCalendar()"><i class="fa fa-calendar"></i></button>
-            </span>
+        <div class="panel-body">
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="form-group">
+                <label for="contact-name">Title</label>
+                <input type="text" ng-model="application.title" class="form-control" />
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="form-group">
+                <label for="contact-email">Deadline</label>
+                <div class="input-group">
+                  <input class="form-control"
+                         type="text"
+                         ng-model="application.deadline"
+                         uib-datepicker-popup="dd/MM/yyyy"
+                         is-open="application.opened"
+                         close-text="Close"
+                         ng-click="$ctrl.toggleCalendar(application)"
+                         style="background-color: white;"
+                         readonly>
+                  <span class="input-group-btn">
+                    <button type="button" class="btn btn-default" ng-click="$ctrl.toggleCalendar(application)"><i class="fa fa-calendar"></i></button>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="form-group">
+                <label for="contact-phone">Link</label>
+                <input ng-model="application.link" class="form-control" />
+              </div>
+            </div>
           </div>
         </div>
-
       </div>
     </div>
   </div>

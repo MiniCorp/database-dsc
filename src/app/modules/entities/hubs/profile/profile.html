@@ -43,9 +43,19 @@
       <div class="company-info-value">{{$ctrl.hub.funding_provided ? 'Yes' : 'No'}}</div>
     </div>
 
-    <div class="col-md-4 m-b-md" ng-show="$ctrl.hub.programs && $ctrl.hub.application_deadline">
-      <div class="company-info-title">Application Deadline</div>
-      <div class="company-info-value">{{$ctrl.hub.programs}} - {{$ctrl.hub.application_deadline | date : "dd/MM/yyyy"}}</div>
+    <div class="col-md-4 m-b-md" ng-show="$ctrl.hub.applications">
+      <div class="company-info-title">Applications</div>
+      <div class="company-info-value">
+        <p id="hub-type">
+          <div ng-repeat="application in $ctrl.hub.applications">
+
+              <a ng-if="application.link && application.link.length > 0" href="{{application.link}}" target="_blank">{{application.title}}</a>
+              <span ng-if="!application.link || application.link.length == 0">{{application.title}}</span>
+              <span ng-if="application.deadline"> - {{application.deadline | date: 'dd/MM/yyyy'}}</span>
+            </div>
+          </div>
+        </p>
+      </div>
     </div>
   </div>
 </div>

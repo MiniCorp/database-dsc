@@ -6,11 +6,10 @@
 #  name                 :string
 #  logo                 :string
 #  short_description    :text
-#  programs             :text
 #  created_at           :datetime         not null
 #  updated_at           :datetime         not null
 #  hub_type             :text             default([]), is an Array
-#  application_deadline :date
+#  applications         :json
 #  long_description     :text
 #  founded              :string
 #  contact              :string
@@ -45,7 +44,7 @@ class Hub < ApplicationRecord
     against: {
       name: 'A',
       short_description: 'B',
-      programs: 'C'
+      applications: 'C'
     },
     using: {
       tsearch: { any_word: true, prefix: true, dictionary: 'english' }
@@ -59,7 +58,7 @@ class Hub < ApplicationRecord
       tsearch: { any_word: true }
     }
 
-  scope :application_deadline, -> (range_as_text) { where(application_deadline: APPLICATION_DEADLINES_DATE_RANGES[range_as_text]) }
+  # scope :applications_deadline, -> (range_as_text) { where(application_deadline: APPLICATION_DEADLINES_DATE_RANGES[range_as_text]) }
   scope :funding_provided, -> (funding_provided) { where(funding_provided: funding_provided) }
   scope :unclaimed_or_owned_by, -> (user_id) { where "(user_id is null) OR (user_id = #{user_id})" }
 

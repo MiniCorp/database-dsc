@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160527111710) do
+ActiveRecord::Schema.define(version: 20160623104631) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -37,12 +37,6 @@ ActiveRecord::Schema.define(version: 20160527111710) do
   enable_extension "unaccent"
   enable_extension "uuid-ossp"
   enable_extension "xml2"
-
-  create_table "ar_internal_metadata", primary_key: "key", force: :cascade do |t|
-    t.string   "value"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
 
   create_table "ar_internal_metadata", primary_key: "key", force: :cascade do |t|
     t.string   "value"
@@ -113,19 +107,17 @@ ActiveRecord::Schema.define(version: 20160527111710) do
     t.string   "name"
     t.string   "logo"
     t.text     "short_description"
-    t.text     "programs"
-    t.datetime "created_at",                        null: false
-    t.datetime "updated_at",                        null: false
-    t.text     "hub_type",             default: [],              array: true
-    t.date     "application_deadline"
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
+    t.text     "hub_type",          default: [],              array: true
     t.text     "long_description"
     t.string   "founded"
     t.string   "contact"
     t.string   "contact_detail"
     t.text     "address"
-    t.jsonb    "contact_urls",         default: []
-    t.text     "events",               default: [],              array: true
-    t.jsonb    "alumni",               default: []
+    t.jsonb    "contact_urls",      default: []
+    t.text     "events",            default: [],              array: true
+    t.jsonb    "alumni",            default: []
     t.datetime "deleted_at"
     t.text     "custom_field_1"
     t.text     "custom_field_2"
@@ -134,11 +126,12 @@ ActiveRecord::Schema.define(version: 20160527111710) do
     t.string   "website"
     t.text     "video_url"
     t.jsonb    "social_accounts"
-    t.string   "tags",                 default: [],              array: true
+    t.string   "tags",              default: [],              array: true
     t.boolean  "funding_provided"
     t.float    "lat"
     t.float    "lng"
     t.integer  "user_id"
+    t.jsonb    "applications",      default: []
   end
 
   add_index "hubs", ["alumni"], name: "index_hubs_on_alumni", using: :gin
@@ -355,9 +348,8 @@ ActiveRecord::Schema.define(version: 20160527111710) do
       hubs.logo,
       hubs.short_description,
       hubs.long_description,
-      hubs.programs,
       hubs.hub_type,
-      hubs.application_deadline,
+      hubs.applications,
       hubs.founded,
       hubs.contact,
       hubs.contact_detail,

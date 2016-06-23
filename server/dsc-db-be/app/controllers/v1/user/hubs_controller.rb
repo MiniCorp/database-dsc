@@ -61,13 +61,14 @@ module V1
       def hub_params
         params.require(:hub).permit(
           :name, :logo, :short_description, :long_description,
-          :headquarters, :founded, :programs, { hub_type: [] }, :contact_urls,
-          :application_deadline, :contact, :contact_detail, :alumni, :tags,
+          :headquarters, :founded, { hub_type: [] }, :contact_urls,
+          :contact, :contact_detail, :alumni, :tags,
           :address, { contact_urls: [:name, :email, :phone] }, { events: [] },
           { alumni: [:id, :name] }, :video_url, :website, :custom_field_1,
           :custom_field_2, :custom_field_3, :custom_field_4,
           { social_accounts: [:twitter, :linkedin, :facebook] },
-          { tags: [] }, :funding_provided, :lat, :lng
+          { tags: [] }, :funding_provided, :lat, :lng, :applications,
+          { applications: [:title, :deadline, :link] }
         )
       end
 

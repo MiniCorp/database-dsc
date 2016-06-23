@@ -15,11 +15,6 @@
       this.tags = [];
       this.fundingTypes = [];
       this.officeLocations = [];
-      this.appDeadlineDatePicker = {
-        opened: false
-      };
-
-      this.currentAppDeadlineDate;
 
       function loadTags() {
         if (!controller.hub.tags || angular.isFunction(controller.hub.tags.forEach) == false) {
@@ -32,15 +27,15 @@
         });
       }
 
-      function convertDateForDisplay() {
-        if (controller.hub.application_deadline) {
-          controller.hub.application_deadline = Date.parse(controller.hub.application_deadline);
-        }
-      }
+      function convertDeadlineDateForDisplay() {
 
-      function convertDateForUpdate() {
-        if (controller.hub.application_deadline == controller.currentAppDeadlineDate) {
-          controller.hub.application_deadline = new Date(controller.hub.application_deadline)
+        if (controller.hub.applications) {
+          for (var i = 0; i < controller.hub.applications.length; i++) {
+            var application = controller.hub.applications[i];
+            if (application.deadline != undefined && angular.isString(application.deadline)) {
+              application.deadline = Date.parse(application.deadline);
+            }
+          }
         }
       }
 
@@ -48,13 +43,26 @@
         return listCompaniesService.filter(query);
       };
 
-      controller.toggleCalendar = function() {
-        controller.appDeadlineDatePicker.opened = true;
+      controller.toggleCalendar = function(application) {
+        application.opened = true;
       };
 
       controller.queryTags = function(query) {
         return listTagsService.filter(query);
       };
+
+      controller.addApplication = function() {
+        controller.hub.applications.push({
+          title: "",
+          deadline: "",
+          link: "",
+          opened: false
+        });
+      };
+
+      controller.removeApplication = function(application) {
+        controller.hub.applications.splice(controller.hub.applications.indexOf(application), 1);
+      }
 
       controller.addPrivateContact = function() {
         controller.hub.contact_urls.push({
@@ -97,27 +105,28 @@
           controller.hub.contact_urls = [];
       }
 
+      function setApplications() {
+        if (!controller.hub.applications || angular.isFunction(controller.hub.applications.push) == false)
+          controller.hub.applications = [];
+      }
+
       userGetHubService.find($stateParams.id).then(function(hub) {
         controller.hub = hub;
-
-        if (!angular.isArray(controller.hub.contact_urls)) {
-          controller.hub.contact_urls = [];
-        }
-
-        convertDateForDisplay();
-        controller.currentAppDeadlineDate = hub.application_deadline;
+        convertDeadlineDateForDisplay();
+        setContactURLs();
+        setApplications();
         loadTags();
         loadHubTypes();
       });
 
       this.update = function() {
         setHubTypes();
-        convertDateForUpdate();
         userUpdateHubService.update(controller.hub)
           .then(function(hub) {
             controller.hub = hub;
+            convertDeadlineDateForDisplay();
             setContactURLs();
-            convertDateForDisplay();
+            setApplications();
             Notification.success('Hub Updated!')
           }, function() {
             Notification.error('Error: Hub could not be saved!')
