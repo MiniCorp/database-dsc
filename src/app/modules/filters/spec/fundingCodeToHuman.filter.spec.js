@@ -20,8 +20,8 @@ describe('fundingCodeToHuman', function() {
     expect(seriesA).toEqual('Series A')
   });
 
-  it("should convert SC+ to Series C+ string", function() {
-    var seriesCplus = $filter('fundingCodeToHuman')('SC+', 'fundingCodeToHuman');
+  it("should convert SCP to Series C+ string", function() {
+    var seriesCplus = $filter('fundingCodeToHuman')('SCP', 'fundingCodeToHuman');
     expect(seriesCplus).toEqual('Series C+')
   });
 
