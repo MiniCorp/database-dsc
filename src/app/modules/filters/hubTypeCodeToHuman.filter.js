@@ -10,7 +10,8 @@
         CW: 'Co-working',
         E: 'Education',
         G: 'Government',
-        C: 'Community'
+        C: 'Community',
+        R: 'Research Centre'
       }
 
       return function(regionCode) {

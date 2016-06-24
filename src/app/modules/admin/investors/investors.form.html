@@ -6,7 +6,7 @@
     <div class="row">
       <div class="col-md-6">
         <div class="form-group">
-          <label for="headquarters">Headquarters:</label>
+          <label for="headquarters">Headquarters (City, Country):</label>
           <input ng-model="$ctrl.investor.headquarters" id="headquarters" class="form-control" type="text">
         </div>
 
@@ -98,6 +98,12 @@
           <div class="checkbox">
             <label>
               <input ng-model="$ctrl.fundingTypes.SC" type="checkbox" value="SC"> Series C
+            </label>
+            <br/>
+          </div>
+          <div class="checkbox">
+            <label>
+              <input ng-model="$ctrl.fundingTypes.SCP" type="checkbox" value="SCP"> Series C+
             </label>
             <br/>
           </div>

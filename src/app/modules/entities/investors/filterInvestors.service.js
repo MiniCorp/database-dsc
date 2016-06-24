@@ -23,7 +23,7 @@
             { label: 'Series A', code: 'SA' },
             { label: 'Series B', code: 'SB' },
             { label: 'Series C', code: 'SC'},
-            { label: 'Series C+', code: 'SC+'}
+            { label: 'Series C+', code: 'SCP'}
           ]
         },
         investmentSize: {
