@@ -56,6 +56,10 @@ GEM
     bcrypt (3.1.11)
     builder (3.2.2)
     byebug (9.0.4)
+    climate_control (0.0.3)
+      activesupport (>= 3.0)
+    cocaine (0.5.8)
+      climate_control (>= 0.0.3, < 1.0)
     concurrent-ruby (1.0.2)
     database_cleaner (1.5.3)
     diff-lcs (1.2.5)
@@ -87,10 +91,17 @@ GEM
     mime-types (3.1)
       mime-types-data (~> 3.2015)
     mime-types-data (3.2016.0521)
+    mimemagic (0.3.1)
     mini_portile2 (2.0.0)
     minitest (5.9.0)
     nokogiri (1.6.7.2)
       mini_portile2 (~> 2.0.0.rc2)
+    paperclip (5.0.0.beta2)
+      activemodel (>= 4.2.0)
+      activesupport (>= 4.2.0)
+      cocaine (~> 0.5.5)
+      mime-types
+      mimemagic (~> 0.3.0)
     pg (0.18.4)
     pg_search (1.0.6)
       activerecord (>= 3.1)
@@ -179,6 +190,7 @@ DEPENDENCIES
   httpclient
   kaminari
   knock
+  paperclip (~> 5.0.0.beta1)
   paranoia!
   pg
   pg_search

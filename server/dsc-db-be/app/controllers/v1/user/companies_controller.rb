@@ -40,6 +40,10 @@ module V1
         render json: company
       end
 
+      def remove_exec_summary
+        company.update_attributes(exec_summary: nil)
+      end
+
       protected
 
       def is_user
@@ -59,6 +63,7 @@ module V1
         params.require(:company).permit(
           :name, :logo, :short_description, :long_description, :acquisitions,
           :target_markets, :headquarters, :formerly_known_as, :founded, :tags,
+          :revenue, :recently_funded, :exec_summary,
           { tags: [] }, :incubator, :funding_stage, :employees, :funding_amount,
           :business_model, :company_stage, :operational_status,
           :government_assistance, :looking_for, :contact, :founders, :funding_rounds,
@@ -66,8 +71,7 @@ module V1
           { office_locations: [:id, :address, :lat, :lng] }, :video_url, :website, :custom_field_1,
           :custom_field_2, :custom_field_3, :custom_field_4, :acquired,
           { social_accounts: [:twitter, :linkedin, :facebook] }, :product_stage,
-          { funding_rounds: [:type, :amount, :date, investors: [:id, :name] ] },
-          :revenue, :recently_funded
+          { funding_rounds: [:type, :amount, :date, investors: [:id, :name] ] }
         )
       end
 

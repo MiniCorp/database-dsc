@@ -34,6 +34,7 @@
       'searchFilters',
       'socialLinks',
       'truncate',
-      'duScroll'
+      'duScroll',
+      'ngFileUpload'
     ]);
 })();

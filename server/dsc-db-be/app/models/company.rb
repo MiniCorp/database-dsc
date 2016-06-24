@@ -74,6 +74,10 @@ class Company < ApplicationRecord
       tsearch: { any_word: true }
     }
 
+  has_attached_file :exec_summary, default_url: ""
+
+  validates_attachment_content_type :exec_summary, :content_type => ["application/pdf"]
+
   scope :withIds, -> (company_ids) { where id: company_ids }
   scope :unclaimed_or_owned_by, -> (user_id) { where "(user_id is null) OR (user_id = #{user_id})" }
   scope :funding_stage, -> (funding_stage) { where funding_stage: funding_stage }
@@ -99,7 +103,7 @@ class Company < ApplicationRecord
 
   def as_json(options = { })
     super((options || { }).merge({
-        :methods => [:claimed_requested_by_current_user]
+        :methods => [:claimed_requested_by_current_user, :exec_summary_url]
     }))
   end
 
@@ -109,6 +113,10 @@ class Company < ApplicationRecord
       entity_id: self.id,
       entity_type: UserEntityClaim.entity_types['company']
     ).count > 0 if current_user
+  end
+
+  def exec_summary_url
+    self.exec_summary ? self.exec_summary.url : nil
   end
 
 end

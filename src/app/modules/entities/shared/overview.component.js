@@ -11,8 +11,10 @@
         entityType: '@'
       }
     })
-    .controller('OverviewController', function($scope, $sce) {
+    .controller('OverviewController', function($scope, $sce, serverUrl) {
       var controller = this;
+
+      controller.serverUrl = serverUrl.substring(0, serverUrl.lastIndexOf('/'));
 
       controller.trustSrc = function(src) {
         return $sce.trustAsResourceUrl(src);

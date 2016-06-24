@@ -22,6 +22,10 @@
             <p ng-show="$ctrl.entity.website"><a ng-href="{{$ctrl.entity.website}}" target="_blank">{{$ctrl.entity.website}}</a></p>
             <social-links social-accounts="$ctrl.entity.social_accounts"></social-links>
           </div>
+          <div ng-show="$ctrl.entity.exec_summary_url && $ctrl.entity.exec_summary_url.length > 0">
+            <br/>
+            <a href="{{$ctrl.serverUrl}}{{$ctrl.entity.exec_summary_url}}" class="btn btn-primary btn-sm" download>Download Executive Summary</a>
+          </div>
           <cite ng-show="$ctrl.entity.tags.length > 0" style="margin-top:20px;margin-bottom:0;">Tags</cite>
           <p id="tags" style="font-size:14px;margin-top:10px" ng-show="$ctrl.entity.tags.length > 0">
             <dsc-tag ng-repeat="tag in $ctrl.entity.tags" class="text-center">

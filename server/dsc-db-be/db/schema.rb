@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160623104631) do
+ActiveRecord::Schema.define(version: 20160624154809) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -57,14 +57,13 @@ ActiveRecord::Schema.define(version: 20160623104631) do
   add_index "authorizations", ["user_id"], name: "index_authorizations_on_user_id", using: :btree
 
   create_table "companies", force: :cascade do |t|
-    t.datetime "created_at",                            null: false
-    t.datetime "updated_at",                            null: false
+    t.datetime "created_at",                                null: false
+    t.datetime "updated_at",                                null: false
     t.string   "name"
     t.string   "logo"
     t.text     "short_description"
     t.string   "headquarters"
     t.string   "formerly_known_as"
-    t.text     "investors"
     t.string   "incubator"
     t.integer  "employees"
     t.string   "funding_stage"
@@ -89,13 +88,17 @@ ActiveRecord::Schema.define(version: 20160623104631) do
     t.text     "custom_field_2"
     t.text     "custom_field_3"
     t.text     "custom_field_4"
-    t.jsonb    "office_locations",      default: {}
-    t.string   "tags",                  default: [],                 array: true
+    t.jsonb    "office_locations",          default: {}
+    t.string   "tags",                      default: [],                 array: true
     t.jsonb    "founders"
     t.string   "acquired"
     t.integer  "revenue"
-    t.boolean  "recently_funded",       default: false
+    t.boolean  "recently_funded",           default: false
     t.integer  "user_id"
+    t.string   "exec_summary_file_name"
+    t.string   "exec_summary_content_type"
+    t.integer  "exec_summary_file_size"
+    t.datetime "exec_summary_updated_at"
   end
 
   add_index "companies", ["deleted_at"], name: "index_companies_on_deleted_at", using: :btree
@@ -251,42 +254,6 @@ ActiveRecord::Schema.define(version: 20160623104631) do
   end
 
 
-  create_view :public_companies,  sql_definition: <<-SQL
-      SELECT companies.id,
-      companies.name,
-      companies.logo,
-      companies.short_description,
-      companies.long_description,
-      companies.headquarters,
-      companies.formerly_known_as,
-      companies.investors,
-      companies.incubator,
-      companies.employees,
-      companies.funding_stage,
-      companies.funding_amount,
-      companies.product_stage,
-      companies.target_markets,
-      companies.business_model,
-      companies.company_stage,
-      companies.operational_status,
-      companies.funding_rounds,
-      companies.looking_for,
-      companies.government_assistance,
-      companies.contact,
-      companies.founded,
-      companies.acquisitions,
-      companies.video_url,
-      companies.website,
-      companies.social_accounts,
-      companies.office_locations,
-      companies.tags,
-      companies.founders,
-      companies.acquired,
-      companies.revenue,
-      companies.recently_funded
-     FROM companies;
-  SQL
-
   create_view :public_multinationals,  sql_definition: <<-SQL
       SELECT multinationals.id,
       multinationals.name,
@@ -365,5 +332,40 @@ ActiveRecord::Schema.define(version: 20160623104631) do
       hubs.lat,
       hubs.lng
      FROM hubs;
+  SQL
+
+  create_view :public_companies,  sql_definition: <<-SQL
+      SELECT companies.id,
+      companies.name,
+      companies.logo,
+      companies.short_description,
+      companies.long_description,
+      companies.headquarters,
+      companies.formerly_known_as,
+      companies.incubator,
+      companies.employees,
+      companies.funding_stage,
+      companies.funding_amount,
+      companies.product_stage,
+      companies.target_markets,
+      companies.business_model,
+      companies.company_stage,
+      companies.operational_status,
+      companies.funding_rounds,
+      companies.looking_for,
+      companies.government_assistance,
+      companies.contact,
+      companies.founded,
+      companies.acquisitions,
+      companies.video_url,
+      companies.website,
+      companies.social_accounts,
+      companies.office_locations,
+      companies.tags,
+      companies.founders,
+      companies.acquired,
+      companies.revenue,
+      companies.recently_funded
+     FROM companies;
   SQL
 end

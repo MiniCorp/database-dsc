@@ -32,6 +32,12 @@
         controller.company.target_markets = controller.company.target_markets.join(',')
       }
 
+      controller.clearExecutiveSummary = function() {
+        angular.element(fileInput).val('');
+        controller.company.exec_summary = undefined;
+        controller.company.exec_summary_file_name = null;
+      };
+
       controller.queryInvestors = function(query) {
         return userListInvestorsService.filter(query);
       };

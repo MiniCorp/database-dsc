@@ -123,7 +123,8 @@
                 <p>{{round.amount}}</p>
                 <div ng-if="round.investors.length > 0" class="timeline-body">
                   <p ng-repeat="investor in round.investors">
-                    <a ui-sref="search.investorProfile({id: {{investor.id}}})">{{investor.name}}</a>
+                    <span ng-show="!investor.id">{{investor.name}}</span>
+                    <a ng-show="investor.id" ui-sref="search.investorProfile(investor)">{{investor.name}}</a>
                   </p>
                 </div>
               </div>

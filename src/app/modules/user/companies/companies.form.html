@@ -196,6 +196,49 @@
 </div>
 
 <div class="panel panel-default">
+  <div class="panel-heading">Executive Summary Upload (PDF format only)</div>
+  <div class="panel-body">
+    <div class="row">
+      <div class="col-md-12">
+        <p ng-if="!$ctrl.company.exec_summary_file_name">
+          Click 'Choose file' to select your Executive Summary PDF (Note: the file is not uploaded until you save the company changes).
+        </p>
+        <div ng-if="$ctrl.company.exec_summary_file_name">
+          <p>
+            Current Executive Summary
+          </p>
+          <p>
+            <b>{{$ctrl.company.exec_summary_file_name}}</b>&nbsp;&nbsp;<a href='' ng-click="$ctrl.clearExecutiveSummary()">[remove]</a>
+          </p>
+          <p>
+            Upload another PDF to replace your current Executive Summary.
+          </p>
+        </div>
+      </div>
+      <!-- <input id="file-input" type="file" ngf-select ng-model="$ctrl.company.exec_summary" accept="application/pdf" ngf-max-size="20MB"> -->
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="input-group">
+          <label class="input-group-btn">
+            <span class="btn btn-primary">
+              Browse&hellip; <input id="file-input"
+                                    type="file"
+                                    style="display: none;"
+                                    ngf-select ng-model="$ctrl.company.exec_summary"
+                                    accept="application/pdf"
+                                    ngf-max-size="20MB"
+                                    onchange="angular.element(fileInput).val(angular.element(this)[0].files[0].name);">
+            </span>
+          </label>
+          <input id="fileInput" type="text" class="form-control" readonly>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="panel panel-default">
   <div class="panel-heading">
     Office Locations
     <a ng-click="$ctrl.addOfficeLocation()" class="btn btn-primary btn-sm pull-right">Add Location</a>

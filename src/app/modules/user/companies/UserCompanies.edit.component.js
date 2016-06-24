@@ -48,6 +48,18 @@
         loadTargetMarkets();
       });
 
+      controller.clearExecutiveSummary = function() {
+        userUpdateCompanyService.removeExecutiveSummary(controller.company)
+          .then(function() {
+            angular.element(fileInput).val('');
+            controller.company.exec_summary = undefined;
+            controller.company.exec_summary_file_name = null;
+            Notification.success('Execute Summary deleted.');
+          }, function() {
+            Notification.error('Error: Executive Summary could not be deleted.');
+          });
+      };
+
       controller.queryInvestors = function(query) {
         return userListInvestorsService.filter(query);
       };
@@ -109,9 +121,29 @@
       this.update = function() {
         setTargetMarkets();
 
+        if (controller.company.funding_rounds.length == 0) {
+          controller.company.funding_rounds = null;
+        }
+
+        if (controller.company.office_locations.length == 0) {
+          controller.company.office_locations = null;
+        }
+
+        if (controller.company.founders.length == 0) {
+          controller.company.founders = null;
+        }
+
+        if (controller.company.tags.length == 0) {
+          controller.company.tags = null;
+        }
+
         userUpdateCompanyService.update(controller.company)
           .then(function(company) {
             controller.company = company;
+            angular.element(fileInput).val('');
+            setFundingRounds();
+            setOfficeLocations();
+            setFounders();
             Notification.success('Company Updated!')
           }, function() {
             Notification.error('Error: Company could not be saved!')
