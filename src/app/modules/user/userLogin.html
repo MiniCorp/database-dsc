@@ -13,20 +13,28 @@
         <input ng-model="$ctrl.userCredentials.auth.password" type="password" class="form-control" id="inputPassword" placeholder="Password" required>
       </div>
       <div class="row">
-        <div class="col-xs-6">
-          <button class="btn btn-lg btn-primary btn-block" type="submit">Sign In</button>
+        <div class="col-xs-12">
+          <button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
         </div>
-        <div class="col-xs-6">
-          <button ui-sref="userSignUp" class="btn btn-lg btn-default btn-block" type="button">Sign Up</button>
-        </div>
+
       </div>
+
       <div class="row">
         <div class="col-xs-12">
-          <a class="btn btn-block btn-social btn-lg btn-linkedin" style="text-align:center;padding-left:30px;margin-top: 15px;" ng-click="$ctrl.authenticate('linkedin')">
+          <a class="btn btn-block btn-social btn-lg btn-linkedin" style="text-align:center;padding-left:30px;margin-top: 5px;" ng-click="$ctrl.authenticate('linkedin')">
             <i class="fa fa-linkedin"></i>Sign In with LinkedIn
           </a>
         </div>
       </div>
+
+      <hr>
+
+      <div class="row">
+        <div class="col-xs-12">
+          <button ui-sref="userSignUp" class="btn btn-lg btn-default btn-block" type="button">Add your Company</button>
+        </div>
+      </div>
+
       <div class="row">
 
         <div class="col-xs-12">
