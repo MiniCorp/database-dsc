@@ -44,7 +44,8 @@
               "acquired": company.acquired == null ? "" : company.acquired,
               "revenue": company.revenue,
               "recently_funded": company.recently_funded,
-              "exec_summary": company.exec_summary
+              "exec_summary": company.exec_summary,
+              "allow_sharing": company.allow_sharing
             }
           },
           "arrayKey": "[]"

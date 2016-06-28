@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160624154809) do
+ActiveRecord::Schema.define(version: 20160628124556) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -77,6 +77,7 @@ ActiveRecord::Schema.define(version: 20160624154809) do
     t.string   "exec_summary_content_type"
     t.integer  "exec_summary_file_size"
     t.datetime "exec_summary_updated_at"
+    t.boolean  "allow_sharing",             default: false
   end
 
   add_index "companies", ["deleted_at"], name: "index_companies_on_deleted_at", using: :btree
@@ -88,16 +89,16 @@ ActiveRecord::Schema.define(version: 20160624154809) do
     t.string   "name"
     t.string   "logo"
     t.text     "short_description"
-    t.datetime "created_at",                     null: false
-    t.datetime "updated_at",                     null: false
-    t.text     "hub_type",          default: [],              array: true
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
+    t.text     "hub_type",          default: [],                 array: true
     t.text     "long_description"
     t.string   "founded"
     t.string   "contact"
     t.string   "contact_detail"
     t.text     "address"
     t.jsonb    "contact_urls",      default: []
-    t.text     "events",            default: [],              array: true
+    t.text     "events",            default: [],                 array: true
     t.jsonb    "alumni",            default: []
     t.datetime "deleted_at"
     t.text     "custom_field_1"
@@ -107,12 +108,13 @@ ActiveRecord::Schema.define(version: 20160624154809) do
     t.string   "website"
     t.text     "video_url"
     t.jsonb    "social_accounts"
-    t.string   "tags",              default: [],              array: true
+    t.string   "tags",              default: [],                 array: true
     t.boolean  "funding_provided"
     t.float    "lat"
     t.float    "lng"
     t.integer  "user_id"
     t.jsonb    "applications",      default: []
+    t.boolean  "allow_sharing",     default: false
   end
 
   add_index "hubs", ["alumni"], name: "index_hubs_on_alumni", using: :gin
@@ -127,10 +129,10 @@ ActiveRecord::Schema.define(version: 20160624154809) do
     t.jsonb    "founders",              default: {}
     t.text     "short_description"
     t.string   "local_office"
-    t.text     "tags",                  default: [],              array: true
-    t.datetime "created_at",                         null: false
-    t.datetime "updated_at",                         null: false
-    t.text     "funding_types",         default: [],              array: true
+    t.text     "tags",                  default: [],                 array: true
+    t.datetime "created_at",                            null: false
+    t.datetime "updated_at",                            null: false
+    t.text     "funding_types",         default: [],                 array: true
     t.integer  "investment_size"
     t.string   "funds_raised"
     t.text     "regions"
@@ -155,6 +157,7 @@ ActiveRecord::Schema.define(version: 20160624154809) do
     t.string   "deal_structure"
     t.jsonb    "companies_invested_in", default: []
     t.integer  "user_id"
+    t.boolean  "allow_sharing",         default: false
   end
 
   add_index "investors", ["companies_invested_in"], name: "index_investors_on_companies_invested_in", using: :gin
@@ -192,6 +195,7 @@ ActiveRecord::Schema.define(version: 20160624154809) do
     t.float    "lng"
     t.boolean  "building_product_in_ireland", default: false
     t.integer  "user_id"
+    t.boolean  "allow_sharing",               default: false
   end
 
   add_index "multinationals", ["deleted_at"], name: "index_multinationals_on_deleted_at", using: :btree
