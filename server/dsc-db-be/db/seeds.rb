@@ -32,7 +32,6 @@ unless Rails.env.production?
         "address": "",
         "contact_urls": {},
         "events": [],
-        "programs": "",
         "hub_type": ["A","I"],
         "funding_provided": false
       },
@@ -47,7 +46,6 @@ unless Rails.env.production?
         "address": "",
         "contact_urls": {},
         "events": [],
-        "programs": "",
         "hub_type": ["CW"],
         "funding_provided": true,
         "alumni": [
@@ -249,7 +247,6 @@ unless Rails.env.production?
           }
         ],
         "tags": ["Technology", "Social Recruiting", "Event Management"],
-        "investors": "Undisclosed",
         "office_locations": [
           {"id": 1, "address": "NDRC at the Digital Exchange, Crane Street, Dublin 8", "lat": 42.4076806, "lng": -71.2764524}
         ],
@@ -297,7 +294,6 @@ unless Rails.env.production?
           }
         ],
         "tags": ["Travel", "Big Data Analytics", "Personalization"],
-        "investors": "NDRC - Seed, Series A; Tadhgh O'Toole - Angel; Bloom Equity - Angel; Conor Stanley - Angel; Delta Partners - Angel, Series A; Frontline Ventures - Series B; Polaris Partners - Series B; Silicon Valley Bank - Series B",
         "office_locations": [
           {"id": 1, "address": "Ashford House, Tara Street, Dublin, Dublin 2", "lat": 42.4076806, "lng": -71.2764524},
           {"id": 2, "address": "34 Farnsworth Street, Floor 4, Boston, MA 02110, USA", "lat": 42.4076806, "lng": -71.2764524}
@@ -354,7 +350,6 @@ unless Rails.env.production?
           }
         ],
         "tags": ["Business Analytics", "Application Performance Monitoring", "Big Data Analytics"],
-        "investors": "NDRC, Seed Polaris Partners - Seed, Series A; Floodgate - Seed, Series A; Frontline Ventures - Series A; RRE Ventures - Series A",
         "office_locations": [
           {"id": 1, "address": "26-28 Lomard Street, Dublin 2, Dublin; 34 Farnsworth Street, Floor 4, Boston, MA 02110, USA", "lat": 42.4076806, "lng": -71.2764524}
         ],
@@ -396,7 +391,6 @@ unless Rails.env.production?
           }
         ],
         "tags": ["Security", "E-Commerce", "Fraud Detection", "Software"],
-        "investors": "Wayra - Angel, Seed, Convertible Note; Shane Naughton - Seed; Notion Capital - Seed; Mangrove Capital Partners - Seed, Convertible Note; Kevin Abosch - Seed; Greycroft Partners - Seed, Convertible Note; Enterprise Ireland - Seed; David Coallier - Seed; ACT Venture Capital - Seed, Convertible Note",
         "office_locations": [
           {"id": 1, "address": "2100 Cork Airport Business Park, Cork", "lat": 42.4076806, "lng": -71.2764524},
           {"id": 2, "address": "355 Lexington Avenue, New York, NY 10017, USA", "lat": 42.4076806, "lng": -71.2764524},
@@ -445,7 +439,6 @@ unless Rails.env.production?
           }
         ],
         "tags": ["Music", "Apps", "Analytics", "Local", "Social Media", "Real Time", "Location Based Services"],
-        "investors": "ACT Venture Captal - Seed, Venture; Colin Wiel - Venture; Enterprise Ireland - Seed; Iain MacDonald - Venture; Matthew Le Merle - Seed; Mike Ryan - Venture; NDRC - Seed; Paddy Holahan - Venture; Per Brilloth - Venture; Radical Investments - Seed; Spark Labs Global - Venture; Trevor Bowen - Venture; Xandez Investments LLP - Venture",
         "office_locations": [
           {"id": 1, "address": "1 Rathmines Road Upper, Rathmines, Dublin 6, Dublin", "lat": 42.4076806, "lng": -71.2764524}
         ],
@@ -493,7 +486,6 @@ unless Rails.env.production?
           }
         ],
         "tags": ["Enterprise Software", "SaaS", "Restaurants", "Online Scheduling"],
-        "investors": "NDRC - Seed",
         "office_locations": [
           {"id": 1, "address": "St. Martin's House, Waterloo Road, Dublin 4, Dublin", "lat": 42.4076806, "lng": -71.2764524}
         ],
@@ -533,7 +525,6 @@ unless Rails.env.production?
         }
       ],
       "tags": ["News", "Publishing", "Media", "Social Media"],
-      "investors": "SOSV - Seed; ACT Venture Capital - Venture",
       "office_locations": [
         {"id": 1, "address": "Ferry House, 48 Lower Mount Street, Dublin 2, Dublin", "lat": 42.4076806, "lng": -71.2764524}
       ],
@@ -581,7 +572,6 @@ unless Rails.env.production?
         }
       ],
       "tags": ["Finance", "Virtualization", "Peer-to-Peer", "P2P Money Transfer"],
-      "investors": "Frontline Ventures - Seed, Series A; Enterprise Ireland - Venture; Octopus Ventures - Series A",
       "office_locations": [
         {"id": 1, "address": "Colm House, 91 Pembroke Rd, Ballsbridge, Dublin 4, Dublin", "lat": 42.4076806, "lng": -71.2764524}
       ],
@@ -629,7 +619,6 @@ unless Rails.env.production?
         }
       ],
       "tags": ["Advertising", "Software", "Digital Media"],
-      "investors": "Tribal Ventures - Angel, Seed; Frontline Ventures - Angel; Enterprise Ireland - Angel",
       "office_locations": [
         {"id": 1, "address": "Unit D, Mount Pleasant Business Park, Mount Pleasant Avenue, Ranelagh, Dublin 6, Dublin", "lat": 42.4076806, "lng": -71.2764524}
       ],
@@ -673,7 +662,6 @@ unless Rails.env.production?
         }
       ],
       "tags": ["Wireless", "Internet", "Services"],
-      "investors": "Frontline Ventures - Seed",
       "office_locations": [
         {"id": 1, "address": "National College of Ireland Business Centre, Mayor Square, IFSC, Dublin 1, Dublin", "lat": 42.4076806, "lng": -71.2764524}
       ],

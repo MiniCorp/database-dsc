@@ -42,7 +42,7 @@
           entity_type: 'company'
         }
 
-        $confirm({text: "Are you sure you want request ownership of this company?"}).then(function() {
+        $confirm({text: "Are you the owner of this company?"}).then(function() {
           controller.userClaimEntityService.create(requestedClaim).then(function() {
             var element = angular.element(e.target)
             element.text('Requested');

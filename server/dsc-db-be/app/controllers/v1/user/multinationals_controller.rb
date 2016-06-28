@@ -63,6 +63,7 @@ module V1
         params.require(:multinational).permit(
           :name,
           :logo,
+          :allow_sharing,
           :short_description,
           :long_description,
           :headquarters,

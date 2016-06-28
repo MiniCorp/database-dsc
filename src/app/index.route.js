@@ -184,6 +184,10 @@
           url: '/',
           template: '<home></home>'
         })
+        .state('search.about', {
+          url: '/about',
+          template: '<about></about>'
+        })
         .state('search.searchCompanies', {
           url: '/companies',
           params: {

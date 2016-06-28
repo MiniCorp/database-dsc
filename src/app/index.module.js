@@ -16,6 +16,7 @@
       'ngTagsInput',
       'rzModule',
       'home',
+      'about',
       'ngMap',
       'admin',
       'user',
