@@ -63,6 +63,7 @@ class Investor < ApplicationRecord
       tsearch: { any_word: true }
     }
 
+  scope :live, -> (live) { where is_live: live }
   scope :greater_than, -> (column, limit) { where "#{column} > #{limit}" }
   scope :range_scope, -> (column, range) { where("#{column}" => range) }
   scope :deal_structure, -> (deal_structure) { where deal_structure: deal_structure }

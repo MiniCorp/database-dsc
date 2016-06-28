@@ -58,7 +58,6 @@ class Company < ApplicationRecord
       formerly_known_as: 'A',
       founders: 'D',
       tags: 'D',
-      investors: 'D',
       office_locations: 'D',
       incubator: 'D'
     },
@@ -78,6 +77,7 @@ class Company < ApplicationRecord
 
   validates_attachment_content_type :exec_summary, :content_type => ["application/pdf"]
 
+  scope :live, -> (live) { where is_live: live }
   scope :withIds, -> (company_ids) { where id: company_ids }
   scope :unclaimed_or_owned_by, -> (user_id) { where "(user_id is null) OR (user_id = #{user_id})" }
   scope :funding_stage, -> (funding_stage) { where funding_stage: funding_stage }

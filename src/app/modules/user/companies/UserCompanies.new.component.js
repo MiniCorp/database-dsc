@@ -7,7 +7,7 @@
       controller: 'UserCompaniesNewController',
       templateUrl: 'app/modules/user/companies/companies.new.html'
     })
-    .controller('UserCompaniesNewController', function(userCreateCompanyService, $confirm, Notification, userListInvestorsService, listTagsService) {
+    .controller('UserCompaniesNewController', function(userCreateCompanyService, $confirm, Notification, userListInvestorsService, listTagsService, $document) {
       this.userCreateCompanyService = userCreateCompanyService;
       var controller = this;
 
@@ -33,7 +33,7 @@
       }
 
       controller.clearExecutiveSummary = function() {
-        angular.element(fileInput).val('');
+        angular.element($document[0].getElementById('fileInput')).val('');
         controller.company.exec_summary = undefined;
         controller.company.exec_summary_file_name = null;
       };

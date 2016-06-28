@@ -1,6 +1,6 @@
 module V1
   module User
-    class MultinationalsController < ApplicationController
+    class MultinationalsController < UserController
       before_action :authenticate
       before_action :is_user
 
@@ -8,6 +8,14 @@ module V1
         multinational = Multinational.new(multinational_params)
         multinational.user_id = current_user.id
         multinational.save
+
+        if multinational.persisted?
+          user_entity_pending = UserEntityPending.create(
+            user_id: current_user.id,
+            entity_type: UserEntityPending.entity_types["multinational"],
+            entity_id: multinational.id
+          )
+        end
 
         render json: multinational
       end
@@ -43,13 +51,6 @@ module V1
 
       def restore
         Multinational.restore(params[:id])
-      end
-
-      def is_user
-        if current_user.user_type != "user"
-          render json: :nothing, status: 401
-          return
-        end
       end
 
       private

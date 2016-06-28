@@ -1,8 +1,6 @@
 module V1
   module User
-    class UserEntityClaimsController < ApplicationController
-      before_action :authenticate
-
+    class UserEntityClaimsController < UserController
       def create
         user_entity_claim = UserEntityClaim.where(
           user_id: current_user.id,

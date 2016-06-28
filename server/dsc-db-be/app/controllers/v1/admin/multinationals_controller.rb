@@ -1,9 +1,6 @@
 module V1
   module Admin
-    class MultinationalsController < ApplicationController
-      before_action :authenticate
-      before_action :is_user_admin
-
+    class MultinationalsController < AdminController
       def create
         multinational = Multinational.create(multinational_params)
 
@@ -39,13 +36,6 @@ module V1
 
       def restore
         Multinational.restore(params[:id])
-      end
-
-      def is_user_admin
-        if current_user.user_type != "admin"
-          render json: :nothing, status: 401
-          return
-        end
       end
 
       private

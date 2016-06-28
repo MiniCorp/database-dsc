@@ -1,13 +1,18 @@
 module V1
   module User
-    class InvestorsController < ApplicationController
-      before_action :authenticate
-      before_action :is_user
-
+    class InvestorsController < UserController
       def create
         investor = Investor.new(investor_params)
         investor.user_id = current_user.id
         investor.save
+
+        if investor.persisted?
+          user_entity_pending = UserEntityPending.create(
+            user_id: current_user.id,
+            entity_type: UserEntityPending.entity_types["investor"],
+            entity_id: investor.id
+          )
+        end
 
         render json: investor
       end
@@ -48,13 +53,6 @@ module V1
 
       def restore
         Investor.restore(params[:id])
-      end
-
-      def is_user
-        if current_user.user_type != "user"
-          render json: :nothing, status: 401
-          return
-        end
       end
 
       private

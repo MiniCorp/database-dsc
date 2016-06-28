@@ -33,6 +33,8 @@ end
 
 group :development do
   gem 'annotate'
+  # Preview and edit app mailer templates in Rails
+  gem 'letter_opener'
 end
 
 group :test do
