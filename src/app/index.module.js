@@ -36,6 +36,7 @@
       'socialLinks',
       'truncate',
       'duScroll',
-      'ngFileUpload'
+      'ngFileUpload',
+      'hm.readmore'
     ]);
 })();
