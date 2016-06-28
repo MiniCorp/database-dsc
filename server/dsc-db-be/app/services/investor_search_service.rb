@@ -6,11 +6,11 @@ class InvestorSearchService
 
   def call
     if @params[:searchText].present?
-      investors = Investor.search(@params[:searchText])
+      investors = Investor.live(true).search(@params[:searchText])
     elsif @params[:tag].present?
-      investors = Investor.search_by_tag(@params[:tag])
+      investors = Investor.live(true).search_by_tag(@params[:tag])
     else
-      investors = Investor.all
+      investors = Investor.live(true).all
     end
 
     investors = investors.funding_types(@params[:fundingTypes]) if @params[:fundingTypes].present?

@@ -77,6 +77,7 @@ ActiveRecord::Schema.define(version: 20160628124556) do
     t.string   "exec_summary_content_type"
     t.integer  "exec_summary_file_size"
     t.datetime "exec_summary_updated_at"
+    t.boolean  "is_live",                   default: false
     t.boolean  "allow_sharing",             default: false
   end
 
@@ -114,6 +115,7 @@ ActiveRecord::Schema.define(version: 20160628124556) do
     t.float    "lng"
     t.integer  "user_id"
     t.jsonb    "applications",      default: []
+    t.boolean  "is_live",           default: false
     t.boolean  "allow_sharing",     default: false
   end
 
@@ -157,6 +159,7 @@ ActiveRecord::Schema.define(version: 20160628124556) do
     t.string   "deal_structure"
     t.jsonb    "companies_invested_in", default: []
     t.integer  "user_id"
+    t.boolean  "is_live",               default: false
     t.boolean  "allow_sharing",         default: false
   end
 
@@ -195,6 +198,7 @@ ActiveRecord::Schema.define(version: 20160628124556) do
     t.float    "lng"
     t.boolean  "building_product_in_ireland", default: false
     t.integer  "user_id"
+    t.boolean  "is_live",                     default: false
     t.boolean  "allow_sharing",               default: false
   end
 
@@ -223,6 +227,16 @@ ActiveRecord::Schema.define(version: 20160628124556) do
     t.datetime "updated_at",  null: false
   end
 
+  create_table "user_entity_pendings", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "entity_type"
+    t.integer  "entity_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "user_entity_pendings", ["user_id"], name: "index_user_entity_pendings_on_user_id", using: :btree
+
   create_table "users", force: :cascade do |t|
     t.string   "email"
     t.string   "first_name"
@@ -235,6 +249,7 @@ ActiveRecord::Schema.define(version: 20160628124556) do
     t.datetime "reset_sent_at"
   end
 
+  add_foreign_key "user_entity_pendings", "users"
 
   create_view :public_multinationals,  sql_definition: <<-SQL
       SELECT multinationals.id,

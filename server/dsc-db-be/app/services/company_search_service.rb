@@ -7,15 +7,15 @@ class CompanySearchService
 
   def call
     if @params[:searchText].present?
-      companies = Company.search(@params[:searchText])
+      companies = Company.live(true).search(@params[:searchText])
     elsif @params[:tag].present?
-      companies = Company.search_by_tag(@params[:tag])
+      companies = Company.live(true).search_by_tag(@params[:tag])
     elsif !@params[:recently_funded].nil?
-      companies = Company.recently_funded(@params[:recently_funded].to_s == "true")
+      companies = Company.live(true).recently_funded(@params[:recently_funded].to_s == "true")
     elsif @params[:company_ids].present?
-      companies = Company.withIds(@params[:company_ids].split(','))
+      companies = Company.live(true).withIds(@params[:company_ids].split(','))
     else
-      companies = Company.all
+      companies = Company.live(true).all
     end
 
     matching_params.each do |key, value|

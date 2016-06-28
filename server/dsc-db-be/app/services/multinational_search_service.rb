@@ -6,11 +6,11 @@ class MultinationalSearchService
 
   def call
     if @params[:searchText].present?
-      multinationals = Multinational.search(@params[:searchText])
+      multinationals = Multinational.live(true).search(@params[:searchText])
     elsif @params[:tag].present?
-      multinationals = Multinational.search_by_tag(@params[:tag])
+      multinationals = Multinational.live(true).search_by_tag(@params[:tag])
     else
-      multinationals = Multinational.all
+      multinationals = Multinational.live(true).all
     end
 
     multinationals = multinationals.emea_hq(@params[:emeaHq]) if !@params[:emeaHq].nil?

@@ -99,6 +99,13 @@
           url: '/admin',
           templateUrl: 'app/modules/admin/dashboard.html'
         })
+        .state('admin.pending', {
+          template: '<admin-pending ui-view></admin-pending>'
+        })
+        .state('admin.pending.index', {
+          url: '/admin/pending',
+          template: '<admin-pending-index></admin-pending-index>'
+        })
         .state('admin.claims', {
           template: '<admin-claims ui-view></admin-claims>'
         })

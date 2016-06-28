@@ -7,7 +7,7 @@ class V1::InvestorsController < ApplicationController
   end
 
   def show
-    investor = Investor.find(params[:id])
+    investor = Investor.live(true).find(params[:id])
     render json: investor, status: 200
   end
 

@@ -57,6 +57,7 @@ class Multinational < ApplicationRecord
 
   attr_accessor :current_user
 
+  scope :live, -> (live) { where is_live: live }
   scope :emea_hq, -> (emea_hq) { where(emea_hq: emea_hq) }
   scope :empty_startup_packages, -> { where(startup_packages: '{}') }
   scope :unclaimed_or_owned_by, -> (user_id) { where "(user_id is null) OR (user_id = #{user_id})" }

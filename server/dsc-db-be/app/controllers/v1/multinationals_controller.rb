@@ -8,7 +8,7 @@ class V1::MultinationalsController < ApplicationController
   end
 
   def show
-    multinational = Multinational.find(params[:id])
+    multinational = Multinational.live(true).find(params[:id])
     render json: multinational, status: 200
   end
 

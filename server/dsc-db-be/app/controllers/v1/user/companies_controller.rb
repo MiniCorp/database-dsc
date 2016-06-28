@@ -1,13 +1,18 @@
 module V1
   module User
-    class CompaniesController < ApplicationController
-      before_action :authenticate
-      before_action :is_user
-
+    class CompaniesController < UserController
       def create
         company = Company.new(company_params)
         company.user_id = current_user.id
         company.save
+
+        if company.persisted?
+          user_entity_pending = UserEntityPending.create(
+            user_id: current_user.id,
+            entity_type: UserEntityPending.entity_types["company"],
+            entity_id: company.id
+          )
+        end
 
         render json: company
       end
@@ -42,15 +47,6 @@ module V1
 
       def remove_exec_summary
         company.update_attributes(exec_summary: nil)
-      end
-
-      protected
-
-      def is_user
-        if current_user.user_type != "user"
-          render json: :nothing, status: 401
-          return
-        end
       end
 
       private

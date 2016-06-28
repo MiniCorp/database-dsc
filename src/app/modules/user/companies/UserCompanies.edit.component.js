@@ -7,7 +7,7 @@
       templateUrl: 'app/modules/user/companies/companies.edit.html',
       controller: 'UserCompaniesEditController'
     })
-    .controller('UserCompaniesEditController', function(store, $state, userGetCompanyService, userUpdateCompanyService, $stateParams, Notification, listTagsService, userListInvestorsService) {
+    .controller('UserCompaniesEditController', function(store, $state, userGetCompanyService, userUpdateCompanyService, $stateParams, Notification, listTagsService, userListInvestorsService, $document) {
       var controller = this;
       this.tags = [];
       this.target_markets = {};
@@ -51,7 +51,7 @@
       controller.clearExecutiveSummary = function() {
         userUpdateCompanyService.removeExecutiveSummary(controller.company)
           .then(function() {
-            angular.element(fileInput).val('');
+            angular.element($document[0].getElementById('fileInput')).val('');
             controller.company.exec_summary = undefined;
             controller.company.exec_summary_file_name = null;
             Notification.success('Execute Summary deleted.');
@@ -137,10 +137,14 @@
           controller.company.tags = null;
         }
 
+        // is there a file to upload? If so display a message as it could take a several seconds
+        if (angular.element($document[0].getElementById('fileInput')).val().trim().length > 0)
+          Notification.info('Updating company...');
+
         userUpdateCompanyService.update(controller.company)
           .then(function(company) {
             controller.company = company;
-            angular.element(fileInput).val('');
+            angular.element($document[0].getElementById('fileInput')).val('');
             setFundingRounds();
             setOfficeLocations();
             setFounders();

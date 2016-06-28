@@ -13,7 +13,7 @@ module V1
     end
 
     def show
-      company = Company.find(params[:id])
+      company = Company.live(true).find(params[:id])
       render json: company, status: 200
     end
 

@@ -1,13 +1,18 @@
 module V1
   module User
-    class HubsController < ApplicationController
-      before_action :authenticate
-      before_action :is_user
-
+    class HubsController < UserController
       def create
         hub = Hub.new(hub_params)
         hub.user_id = current_user.id
         hub.save
+
+        if hub.persisted?
+          user_entity_pending = UserEntityPending.create(
+            user_id: current_user.id,
+            entity_type: UserEntityPending.entity_types["hub"],
+            entity_id: hub.id
+          )
+        end
 
         render json: hub
       end
@@ -43,13 +48,6 @@ module V1
 
       def restore
         Hub.restore(params[:id])
-      end
-
-      def is_user
-        if current_user.user_type != "user"
-          render json: :nothing, status: 401
-          return
-        end
       end
 
       private

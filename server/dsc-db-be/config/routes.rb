@@ -1,7 +1,4 @@
 Rails.application.routes.draw do
-
-
-
   root to: 'health#index'
 
   namespace :v1 do
@@ -23,6 +20,7 @@ Rails.application.routes.draw do
     # Administration Routes
     namespace :admin do
       resources :user_entity_claims, only: [:index, :update]
+      resources :user_entity_pending, only: [:index, :update]
 
       resources :companies, only: [:create, :index, :show, :update, :destroy] do
         member do
