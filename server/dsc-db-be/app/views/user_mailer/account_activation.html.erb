@@ -1,0 +1,39 @@
+<tr>
+  <td bgcolor="#f8f8f8" align="center" style="padding: 70px 15px 70px 15px;" class="section-padding">
+    <!--[if (gte mso 9)|(IE)]>
+        <table align="center" border="0" cellspacing="0" cellpadding="0" width="500">
+        <tr>
+        <td align="center" valign="top" width="500">
+        <![endif]-->
+    <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 500px;" class="responsive-table">
+      <tr>
+        <td>
+          <!-- HERO IMAGE -->
+          <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+              <td>
+                <!-- COPY -->
+                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                  <tr>
+                    <td align="center" style="font-size: 25px; font-family: Helvetica, Arial, sans-serif; color: #333333;" class="padding">Email Confirmation</td>
+                  </tr>
+                  <tr>
+                    <td align="center" style="padding: 20px 0 0 0; font-size: 16px; line-height: 25px; font-family: Helvetica, Arial, sans-serif; color: #666666;" class="padding">
+                      <p>Please click on the link below to confirm your email address:</p>
+                      <%= link_to "Confirm email", "#{ENV['FRONTEND_URL']}user/account-activated?token=#{@user.activation_token}&email=#{url_encode(@user.email)}" %>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+    <!--[if (gte mso 9)|(IE)]>
+        </td>
+        </tr>
+        </table>
+        <![endif]-->
+  </td>
+</tr>

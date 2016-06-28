@@ -13,9 +13,20 @@
       this.userInfo = { user: {} };
 
       this.signUp = function() {
+        controller.signUpFail = false;
+        controller.customFail = false;
+        controller.customFailMessage = "";
+        controller.passwordResetSuccess = false;
+
         signUpService.signUp(this.userInfo, false).then(function(response) {
-          $auth.setToken(response.jwt);
-          $state.go('user.companies.index');
+          if (response.error) {
+            controller.customFail = true;
+            controller.customFailMessage = response.error;
+          }
+          else {
+            $auth.setToken(response.jwt);
+            $state.go('user.companies.index');
+          }
         }).catch(function () {
           controller.signUpFail = true;
         })

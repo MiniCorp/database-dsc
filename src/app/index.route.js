@@ -21,6 +21,10 @@
           url: '/user/reset-password',
           template: '<div class="container"><user-reset-password></user-reset-password></div>'
         })
+        .state('userAccountActivated', {
+          url: '/user/account-activated',
+          template: '<div class="container"><user-account-activated></user-account-activated></div>'
+        })
         .state('user', {
           template: '<user></user>'
         })

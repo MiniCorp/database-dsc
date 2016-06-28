@@ -1,0 +1,22 @@
+<br/>
+<div class="row">
+  <div class="col-md-offset-4 col-md-4 col-sm-offset-3 col-sm-6 text-center" style="margin-top:80px;">
+    <a href="/" >
+      <img src="assets/images/tech_ireland_logo.png" style="height:100px;margin-bottom:40px;" >
+    </a>
+    <div ng-if="$ctrl.accountActivationSuccess == false && $ctrl.accountActivationFail == false">
+      <h3>Please wait...</h3>
+    </div>
+    <div ng-if="$ctrl.accountActivationSuccess == true && $ctrl.accountActivationFail == false">
+      <h3>Email Confirmed</h3>
+      <p>Thank you for confirming your email address.</p>
+      <p>Your account has been successfully activated.</p>
+      <a href="#/user/login" class="btn btn-primary">Login</a>
+    </div>
+    <div ng-if="$ctrl.accountActivationFail == true && $ctrl.accountActivationSuccess == false">
+      <h3>Email Confirmation Failed</h3>
+      <p>Sorry we were unable to confirm your email address.</p>
+      <p>Please contact us at: <a href="mailto:ciaran@startupdublin.com">ciaran@startupdublin.com</a> for help resolving this issue.</p>
+    </div>
+  </div>
+</div>
