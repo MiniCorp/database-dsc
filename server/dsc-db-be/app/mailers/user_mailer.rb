@@ -19,4 +19,9 @@ class UserMailer < ApplicationMailer
     @user_entity_pending = user_entity_pending
     mail to: @user_entity_pending.user.email, subject: "Profile rejected"
   end
+
+  def claim_approved(user_entity_claim)
+    @user_entity_claim = user_entity_claim
+    mail to: @user_entity_claim.user.email, subject: "Your claim has been approved"
+  end
 end

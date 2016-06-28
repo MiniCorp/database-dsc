@@ -176,7 +176,14 @@
 
         <div class="form-group">
           <label for="government-assistance">Government Assistance</label>
-          <input ng-model="$ctrl.company.government_assistance" id="government-assistance" class="form-control" type="text">
+          <select ng-model="$ctrl.company.government_assistance" id="government-assistance" class="form-control">
+            <option></option>
+            <option>High Potential Start Up Funding from Enterprise Ireland</option>
+            <option>New Frontiers Entreprener Development Program from Enterprise Ireland</option>
+            <option>Competitive Start Fund from Enterprise Ireland</option>
+            <option>Innovation Voucher from Enterprise Ireland</option>
+            <option>Feasibility Grant from Local Enterprise Office</option>
+          </select>
         </div>
 
         <div class="form-group">

@@ -99,8 +99,8 @@ ActiveRecord::Schema.define(version: 20160628174924) do
     t.string   "exec_summary_content_type"
     t.integer  "exec_summary_file_size"
     t.datetime "exec_summary_updated_at"
-    t.boolean  "is_live",                   default: false
     t.boolean  "allow_sharing",             default: false
+    t.boolean  "is_live",                   default: false
   end
 
   add_index "companies", ["deleted_at"], name: "index_companies_on_deleted_at", using: :btree
@@ -137,8 +137,8 @@ ActiveRecord::Schema.define(version: 20160628174924) do
     t.float    "lng"
     t.integer  "user_id"
     t.jsonb    "applications",      default: []
-    t.boolean  "is_live",           default: false
     t.boolean  "allow_sharing",     default: false
+    t.boolean  "is_live",           default: false
   end
 
   add_index "hubs", ["alumni"], name: "index_hubs_on_alumni", using: :gin
@@ -181,8 +181,8 @@ ActiveRecord::Schema.define(version: 20160628174924) do
     t.string   "deal_structure"
     t.jsonb    "companies_invested_in", default: []
     t.integer  "user_id"
-    t.boolean  "is_live",               default: false
     t.boolean  "allow_sharing",         default: false
+    t.boolean  "is_live",               default: false
   end
 
   add_index "investors", ["companies_invested_in"], name: "index_investors_on_companies_invested_in", using: :gin
@@ -220,8 +220,8 @@ ActiveRecord::Schema.define(version: 20160628174924) do
     t.float    "lng"
     t.boolean  "building_product_in_ireland", default: false
     t.integer  "user_id"
-    t.boolean  "is_live",                     default: false
     t.boolean  "allow_sharing",               default: false
+    t.boolean  "is_live",                     default: false
   end
 
   add_index "multinationals", ["deleted_at"], name: "index_multinationals_on_deleted_at", using: :btree

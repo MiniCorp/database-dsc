@@ -8,9 +8,17 @@
             {{$ctrl.entity.name}}
           </h1>
           <cite ng-show="$ctrl.entity.short_description" style="margin-top:10px;">{{$ctrl.entity.short_description}}</cite>
-          <p style="white-space:pre-wrap;">
-            {{$ctrl.entity.long_description}}
-          </p>
+
+
+            <div hm-read-more
+              hm-text="{{$ctrl.entity.long_description}}"
+              hm-limit="400"
+              hm-more-text="read more"
+              hm-less-text="read less"
+              hm-dots-class="dots"
+              hm-link-class="links" style="padding-top:30px;">
+            </div>
+
           <p>
             <div class="video-player" ng-show="$ctrl.entity.video_url">
               <div class="embed-responsive embed-responsive-16by9">
