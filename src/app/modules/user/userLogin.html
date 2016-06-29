@@ -1,5 +1,6 @@
 <br/>
 <uib-alert ng-show="$ctrl.loginFail" type="danger">There was a problem with your email or password. Please try again.</uib-alert>
+<uib-alert ng-if="$ctrl.customFail" type="danger">{{$ctrl.customFailMessage}}</uib-alert>
 <div class="row">
   <div class="col-md-offset-4 col-md-4 col-sm-offset-3 col-sm-6 text-center" style="margin-top:80px;">
     <a href="/" >

@@ -1,9 +1,6 @@
 module V1
   module User
     class MultinationalsController < UserController
-      before_action :authenticate
-      before_action :is_user
-
       def create
         multinational = Multinational.new(multinational_params)
         multinational.user_id = current_user.id

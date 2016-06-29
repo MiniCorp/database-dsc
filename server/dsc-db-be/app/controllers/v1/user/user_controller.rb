@@ -1,7 +1,7 @@
 module V1
   module User
     class UserController < ApplicationController
-      before_action :authenticate
+      before_action :authenticate_user
       before_action :is_user
 
       def is_user

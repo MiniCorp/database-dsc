@@ -15,12 +15,21 @@
                 <!-- COPY -->
                 <table width="100%" border="0" cellspacing="0" cellpadding="0">
                   <tr>
-                    <td align="center" style="font-size: 25px; font-family: Helvetica, Arial, sans-serif; color: #333333;" class="padding">Email Confirmation</td>
-                  </tr>
-                  <tr>
-                    <td align="center" style="padding: 20px 0 0 0; font-size: 16px; line-height: 25px; font-family: Helvetica, Arial, sans-serif; color: #666666;" class="padding">
-                      <p>Please click on the link below to confirm your email address:</p>
-                      <%= link_to "Confirm email", "#{ENV['FRONTEND_URL']}user/account-activated?token=#{@user.activation_token}&email=#{url_encode(@user.email)}" %>
+                    <td align="left" style="padding: 20px 0 0 0; font-size: 16px; line-height: 25px; font-family: Helvetica, Arial, sans-serif; color: #666666;" class="padding">
+                      <p>Hi <%= @user.first_name %>,</p>
+                      <p>
+                        Thank you for signing up with TechIreland! To verify
+                        your email address and gain the ability to claim an
+                        existing profile, create a new profile or export the
+                        database.
+                      </p>
+                      <p>
+                        Please click on the link below to confirm your email
+                        address:
+                      </p>
+                      <%= link_to "Confirm Email", "#{ENV['FRONTEND_URL']}user/account-activated?token=#{@user.activation_token}&email=#{url_encode(@user.email)}" %>
+                      <p>Best regards,</p>
+                      <p>The TechIreland Team.</p>
                     </td>
                   </tr>
                 </table>

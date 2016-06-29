@@ -1,7 +1,7 @@
 require 'securerandom'
 
 class V1::UsersController < ApplicationController
-  before_action :authenticate, only: [:show, :update]
+  before_action :authenticate_user, only: [:show, :update]
   before_action :is_user, only: [:show, :update]
   before_action :check_user_exists, only: [:create]
 
@@ -14,9 +14,9 @@ class V1::UsersController < ApplicationController
       if user.persisted?
         # create a token used to activate account
         user.create_activation_digest
-        # send user the activate account email
-        user.send_activation_email
-        render json: { message: "Thank you for signing up! You will receive an email shortly containing a link to confirm your email address. You will not be able to login until your email has been confirmed." }, status: 200
+        # send user the verify email mail
+        user.send_email_verification_mail
+        render json: { message: "Thank you for signing up with TechIreland! A confirmation email has been sent to your inbox. Please click the link in the confirmation email to verify your address and gain access to TechIreland." }, status: 200
         return
       end
     else
@@ -53,14 +53,16 @@ class V1::UsersController < ApplicationController
     end
   end
 
-  def verify_account
-    user = User.find_by(email: params[:account_activation][:email])
+  def verify_email
+    user = User.find_by(email: params[:email_verification][:email])
     unless (user &&
             user.authenticated?(:activation, params[:id]))
       render json: :nothing, status: 400
     end
-
-    user.update_attributes(activated: true)
+    # update email confirmed flag for user
+    user.update_attributes(email_confirmed: true)
+    # return the token to the user (logged in)
+    render json: { jwt: auth_token(user).token, user: UserSerializer.new(user) }, status: 200
   end
 
   def is_user
