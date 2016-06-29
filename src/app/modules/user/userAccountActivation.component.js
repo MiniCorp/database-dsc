@@ -6,7 +6,7 @@
       templateUrl: 'app/modules/user/userAccountActivated.html',
       controller: 'UserAccountActivatedController'
     })
-    .controller('UserAccountActivatedController', function(store, $state, userAccountActivateService, $scope, $location, $document) {
+    .controller('UserAccountActivatedController', function(store, $state, userAccountActivateService, $scope, $location, $document, $auth) {
       var controller = this;
 
       this.userAccountActivateService = userAccountActivateService;
@@ -16,23 +16,24 @@
 
       this.params = {
         "user": {},
-        "account_activation": {
+        "email_verification": {
           "email": email
         }
       };
 
-      this.verifyAccount = function() {
+      this.verifyEmail = function() {
         // reset messages
         controller.accountActivationFail = false;
         controller.accountActivationSuccess = false;
 
-        userAccountActivateService.verifyAccount(token, this.params).then(function() {
+        userAccountActivateService.verifyEmail(token, this.params).then(function(response) {
+          $auth.setToken(response.jwt);
           controller.accountActivationSuccess = true;
         }).catch(function () {
           controller.accountActivationFail = true;
         })
       };
 
-      this.verifyAccount();
+      this.verifyEmail();
     });
 })();

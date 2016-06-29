@@ -5,8 +5,8 @@
     .module('user')
     .service('userAccountActivateService', function($http, $httpParamSerializer, serverUrl){
 
-      this.verifyAccount = function(token, params) {
-        var baseUrl = serverUrl + '/users/' + token + '/verify_account';
+      this.verifyEmail = function(token, params) {
+        var baseUrl = serverUrl + '/users/' + token + '/verify_email';
 
         return $http.put(baseUrl, params).then(function(responseObject) {
           return responseObject.data;

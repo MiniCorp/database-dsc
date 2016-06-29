@@ -1,7 +1,7 @@
 module V1
   module Admin
     class AdminController < ApplicationController
-      before_action :authenticate
+      before_action :authenticate_user
       before_action :is_user_admin
 
       def is_user_admin

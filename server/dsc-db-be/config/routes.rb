@@ -2,9 +2,10 @@ Rails.application.routes.draw do
   root to: 'health#index'
 
   namespace :v1 do
+    # omniauth
     post '/auth/:provider',      to: 'auth#authenticate'
-
-    mount Knock::Engine => "/knock"
+    # knock token
+    post '/auth_token' => 'user_token#create'
 
     get 'companies', to: 'companies#index'
     get 'companies/:id', to: 'companies#show'
@@ -47,7 +48,7 @@ Rails.application.routes.draw do
 
     resources :users, only: [:create, :show, :update] do
       member do
-        put :verify_account
+        put :verify_email
       end
     end
 
