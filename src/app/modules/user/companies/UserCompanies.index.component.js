@@ -7,7 +7,7 @@
       controller: 'UserCompaniesIndexController',
       templateUrl: 'app/modules/user/companies/companies.index.html'
     })
-    .controller('UserCompaniesIndexController', function(store, $state, $confirm, jwtHelper, listCompaniesService, userClaimEntityService, deleteCompanyService, restoreCompanyService, Notification, exportToCSV) {
+    .controller('UserCompaniesIndexController', function(store, $state, $confirm, $location, jwtHelper, listCompaniesService, userClaimEntityService, deleteCompanyService, restoreCompanyService, Notification, exportToCSV) {
       this.listCompaniesService = listCompaniesService;
       this.deleteCompanyService = deleteCompanyService;
       this.restoreCompanyService = restoreCompanyService;
@@ -60,6 +60,12 @@
             target: '_blank',
             download: 'companies.csv'
           })[0].click();
+        })
+      };
+
+      this.ensureIrish = function() {
+        $confirm({text: "TechIreland is for Irish tech companies with products (not services for hire). Are you a product based company?"}).then(function() {
+          $location.path('/user/companies/new');
         })
       };
     });
