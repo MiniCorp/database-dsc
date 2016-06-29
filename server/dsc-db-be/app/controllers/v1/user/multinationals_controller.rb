@@ -64,6 +64,7 @@ module V1
           :name,
           :logo,
           :allow_sharing,
+          :startup_evangelist,
           :short_description,
           :long_description,
           :headquarters,

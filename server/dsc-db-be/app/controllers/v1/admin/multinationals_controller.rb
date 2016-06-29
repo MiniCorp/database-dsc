@@ -50,6 +50,7 @@ module V1
           :logo,
           :short_description,
           :long_description,
+          :startup_evangelist,
           :headquarters,
           :emea_hq,
           :functions,

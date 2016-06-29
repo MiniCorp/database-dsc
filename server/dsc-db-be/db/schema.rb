@@ -11,32 +11,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160628174924) do
+ActiveRecord::Schema.define(version: 20160629070709) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-  enable_extension "btree_gin"
-  enable_extension "btree_gist"
-  enable_extension "citext"
-  enable_extension "cube"
-  enable_extension "dblink"
-  enable_extension "dict_int"
-  enable_extension "dict_xsyn"
-  enable_extension "earthdistance"
-  enable_extension "fuzzystrmatch"
-  enable_extension "hstore"
-  enable_extension "intarray"
-  enable_extension "ltree"
-  enable_extension "pg_stat_statements"
-  enable_extension "pg_trgm"
-  enable_extension "pgcrypto"
-  enable_extension "pgrowlocks"
-  enable_extension "pgstattuple"
-  enable_extension "sslinfo"
-  enable_extension "tablefunc"
-  enable_extension "unaccent"
-  enable_extension "uuid-ossp"
-  enable_extension "xml2"
 
   create_table "ar_internal_metadata", primary_key: "key", force: :cascade do |t|
     t.string   "value"
@@ -222,6 +200,7 @@ ActiveRecord::Schema.define(version: 20160628174924) do
     t.integer  "user_id"
     t.boolean  "allow_sharing",               default: false
     t.boolean  "is_live",                     default: false
+    t.boolean  "startup_evangelist"
   end
 
   add_index "multinationals", ["deleted_at"], name: "index_multinationals_on_deleted_at", using: :btree
@@ -273,8 +252,6 @@ ActiveRecord::Schema.define(version: 20160628174924) do
     t.datetime "activation_sent_at"
     t.boolean  "activated"
   end
-
-  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
 
   add_foreign_key "user_entity_pendings", "users"
 
