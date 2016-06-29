@@ -16,8 +16,7 @@ RSpec.describe 'V1::Hubs', :type => :request do
         address:  '',
         alumni:  [],
         contact_urls:  {},
-        events:  [],
-        programs:  ""
+        events:  []
       )
     end
 
@@ -41,14 +40,12 @@ RSpec.describe 'V1::Hubs', :type => :request do
           FactoryGirl.create(
             :hub,
             name: 'NDRC',
-            short_description: 'short desc',
-            programs: 'good programs'
+            short_description: 'short desc'
           )
           FactoryGirl.create(
             :hub,
             name: 'Dogpatch Labs',
-            short_description: 'a little longer',
-            programs: 'a different one'
+            short_description: 'a little longer'
           )
       end
 
@@ -72,69 +69,6 @@ RSpec.describe 'V1::Hubs', :type => :request do
         expect(response).to have_http_status(200)
         expect(hubs_json.size).to eq(1)
       end
-
-      it 'should return the hub that was searched for by programs' do
-        get '/v1/hubs?searchText=good+programs'
-        hubs_json = JSON.parse(response.body)
-        expect(response).to have_http_status(200)
-        expect(hubs_json.size).to eq(1)
-      end
-    end
-
-    xdescribe 'application deadline' do
-      let!(:hubs) do
-        FactoryGirl.create(
-          :hub,
-          application_deadline: 10.hours.from_now
-        )
-        FactoryGirl.create(
-          :hub,
-          application_deadline: 1.months.from_now
-        )
-
-        FactoryGirl.create(
-          :hub,
-          application_deadline: 2.months.from_now
-        )
-        FactoryGirl.create(
-          :hub,
-          application_deadline: 5.months.from_now
-        )
-        FactoryGirl.create(
-          :hub,
-          application_deadline: 2.months.ago
-        )
-      end
-
-      it 'should return the hubs that match the application deadline filter criteria' do
-        get '/v1/hubs?applicationDeadlines=This+Month'
-        hubs_json = JSON.parse(response.body)
-        expect(response).to have_http_status(200)
-        expect(hubs_json.size).to eq(1)
-      end
-
-      it 'should return the hubs that match the application deadline filter criteria' do
-        get '/v1/hubs?applicationDeadlines=Next+Month'
-        hubs_json = JSON.parse(response.body)
-        expect(response).to have_http_status(200)
-        expect(hubs_json.size).to eq(2)
-      end
-
-      it 'should return the hubs that match the application deadline filter criteria' do
-        get '/v1/hubs?applicationDeadlines=Next+Three+Months'
-        hubs_json = JSON.parse(response.body)
-        expect(response).to have_http_status(200)
-        expect(hubs_json.size).to eq(3)
-      end
-
-      it 'should return the hubs that match the application deadline filter criteria' do
-        get '/v1/hubs?applicationDeadlines=Over+Three+Months'
-        hubs_json = JSON.parse(response.body)
-        expect(response).to have_http_status(200)
-        expect(hubs_json.size).to eq(4)
-      end
-
-
     end
 
     describe 'hub type' do

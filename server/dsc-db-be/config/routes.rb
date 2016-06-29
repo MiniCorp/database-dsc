@@ -45,8 +45,10 @@ Rails.application.routes.draw do
       resources :tags, only: [:index]
     end
 
-    # User routes
     resources :users, only: [:create, :show, :update] do
+      member do
+        put :verify_account
+      end
     end
 
     namespace :user do

@@ -3,7 +3,7 @@ require 'securerandom'
 class V1::UsersController < ApplicationController
   before_action :authenticate, only: [:show, :update]
   before_action :is_user, only: [:show, :update]
-  # before_action :set_user, only: [:show, :update]
+  before_action :check_user_exists, only: [:create]
 
   def create
     if params[:via_linkedin] == false
@@ -18,8 +18,12 @@ class V1::UsersController < ApplicationController
     end
     # check the user save ok
     if user.persisted?
+      # create a token used to activate account
+      user.create_activation_digest
+      # send user the activate account email
+      user.send_activation_email
       # use the Knock AuthToken model to create a token for us
-      render json: { jwt: auth_token(user).token, user: UserSerializer.new(user) }, status: 200
+      render json: { user: UserSerializer.new(user) }, status: 200
     else
       # bad request
       render json: user, status: 400
@@ -39,6 +43,16 @@ class V1::UsersController < ApplicationController
     end
   end
 
+  def verify_account
+    user = User.find_by(email: params[:account_activation][:email])
+    unless (user &&
+            user.authenticated?(:activation, params[:id]))
+      render json: :nothing, status: 400
+    end
+
+    user.update_attributes(activated: true)
+  end
+
   def is_user
     if current_user.user_type != "user"
       render json: :nothing, status: 401
@@ -47,6 +61,14 @@ class V1::UsersController < ApplicationController
   end
 
 private
+
+  def check_user_exists
+    user = User.find_by_email(user_params[:email])
+    if user.nil? == false
+      render json: { error: "A user already exists with the email: #{ user_params[:email] }" }, status: 200
+      return
+    end
+  end
 
   def auth_token(user)
     Knock::AuthToken.new payload: { sub: user.id }
