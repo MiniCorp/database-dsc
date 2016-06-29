@@ -80,6 +80,14 @@
         </div>
 
         <div class="form-group">
+          <label>Startup Evangelist</label>
+          <br>
+          <input type="radio" ng-model="$ctrl.multinational.startup_evangelist" ng-value="true"> Yes
+          &nbsp;
+          <input type="radio" ng-model="$ctrl.multinational.startup_evangelist" ng-value="false"> No
+        </div>
+
+        <div class="form-group">
           <label for="events-space-qualifier">Events Space Qualifier</label>
           <textarea ng-model="$ctrl.multinational.events_space_qualifiers" id="events-space-qualifier" class="form-control"></textarea>
         </div>
@@ -88,6 +96,8 @@
           <label for="next-event">Next Event</label>
           <textarea ng-model="$ctrl.multinational.next_event" id="next-event" class="form-control"></textarea>
         </div>
+
+
       </div>
 
     </div>

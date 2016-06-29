@@ -98,7 +98,7 @@ describe('CompanyProfile', function() {
       expect(page.details.getText()).toContain('NDRC');
     });
 
-    it('should display Government Assistance', function() {
+    it('should display Government Support', function() {
       expect(page.details.getText()).toContain('NDRC');
     });
 
