@@ -3,6 +3,8 @@ module V1
     class InvestorsController < AdminController
       def create
         investor = Investor.create(investor_params)
+        investor.update_attributes(is_live: true)
+
         render json: investor
       end
 

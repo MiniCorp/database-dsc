@@ -167,7 +167,8 @@
                       add-on-enter="false"
                       add-from-autocomplete-only="true"
                       on-tag-added="$ctrl.addIncubator($tag)"
-                      on-tag-removed="$ctrl.removeIncubator($tag)">
+                      on-tag-removed="$ctrl.removeIncubator($tag)"
+                      placeholder="Add an Incubator">
             <auto-complete source="$ctrl.queryHubs($query)"></auto-complete>
           </tags-input>
           <p class="help-block" style="color:red" ng-show="create.tagsInput.$invalid || edit.tagsInput.$invalid">

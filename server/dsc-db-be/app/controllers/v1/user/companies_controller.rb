@@ -69,6 +69,7 @@ module V1
       def company_params
         params.require(:company).permit(
           :name, :logo, :short_description, :long_description, :acquisitions, :allow_sharing,
+          :incubators, { incubators: [] },
           :target_markets, :headquarters, :formerly_known_as, :founded, :tags,
           :revenue, :recently_funded, :exec_summary,
           { tags: [] }, :incubator, :funding_stage, :employees, :funding_amount,

@@ -31,8 +31,8 @@
           return;
         }
 
-        controller.company.incubators.forEach(function(hub) {
-          controller.hubs.push({text: hub})
+        controller.company.incubators.forEach(function(incubator) {
+          controller.incubators.push({text: incubator})
         });
       }
 

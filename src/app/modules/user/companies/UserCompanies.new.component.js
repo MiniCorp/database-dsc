@@ -7,7 +7,7 @@
       controller: 'UserCompaniesNewController',
       templateUrl: 'app/modules/user/companies/companies.new.html'
     })
-    .controller('UserCompaniesNewController', function(userCreateCompanyService, $confirm, Notification, userListInvestorsService, listTagsService, $document) {
+    .controller('UserCompaniesNewController', function(userCreateCompanyService, $confirm, Notification, userListInvestorsService, userListHubsService, listTagsService, $document) {
       this.userCreateCompanyService = userCreateCompanyService;
       var controller = this;
 
@@ -16,7 +16,8 @@
           office_locations: [],
           founders: [],
           funding_rounds: [],
-          tags: []
+          tags: [],
+          incubators: []
         }
       };
 
@@ -44,6 +45,10 @@
 
       controller.queryTags = function(query) {
         return listTagsService.filter(query);
+      };
+
+      controller.queryHubs = function(query) {
+        return userListHubsService.filter(query);
       };
 
       controller.addFounder = function() {
@@ -84,6 +89,14 @@
 
       controller.removeTag = function(tag) {
         controller.company.tags.splice(controller.company.tags.indexOf(tag.text), 1);
+      };
+
+      controller.addIncubator = function(incubator) {
+        controller.company.incubators.push(incubator.text);
+      };
+
+      controller.removeIncubator = function(incubator) {
+        controller.company.incubators.splice(controller.company.incubators.indexOf(incubator.text), 1);
       };
 
       this.create = function() {

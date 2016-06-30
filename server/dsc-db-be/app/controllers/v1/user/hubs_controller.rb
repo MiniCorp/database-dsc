@@ -18,17 +18,23 @@ module V1
       end
 
       def index
+
         respond_to do |format|
           format.html {
-            # hubs assign to the current user
-            user_hubs = Hub.claimed_by_user(current_user).where(is_live: true)
-            # hubs awaiting action by admin
-            # first get all hubs where user assigned but not live (when user creates the profile)
-            pending_hubs = Hub.where(user: current_user, is_live: false)
-            # second get all hubs where user NOT assigned but has made a claim that is pending (profile already existed)
-            pending_hubs = pending_hubs + Hub.where("id in (?)", UserEntityClaim.where(user_id: current_user.id, entity_type: UserEntityClaim.entity_types['hub']).pluck(:entity_id))
+            if params[:typeahead] && params[:filter]
+              hubs = Hub.where("name ILIKE ?", "%#{params[:filter]}%")
+              render json: hubs.pluck(:name)
+            else
+              # hubs assign to the current user
+              user_hubs = Hub.claimed_by_user(current_user).where(is_live: true)
+              # hubs awaiting action by admin
+              # first get all hubs where user assigned but not live (when user creates the profile)
+              pending_hubs = Hub.where(user: current_user, is_live: false)
+              # second get all hubs where user NOT assigned but has made a claim that is pending (profile already existed)
+              pending_hubs = pending_hubs + Hub.where("id in (?)", UserEntityClaim.where(user_id: current_user.id, entity_type: UserEntityClaim.entity_types['hub']).pluck(:entity_id))
 
-            render json: { user_hubs: user_hubs, pending_hubs: pending_hubs }
+              render json: { user_hubs: user_hubs, pending_hubs: pending_hubs }
+            end
           }
           format.json {
             render json: Hub.unclaimed
@@ -40,6 +46,7 @@ module V1
             send_data hubs.to_csv
           end
         end
+
       end
 
       def show

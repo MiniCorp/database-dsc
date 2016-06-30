@@ -45,7 +45,8 @@
               "revenue": company.revenue,
               "recently_funded": company.recently_funded,
               "exec_summary": company.exec_summary,
-              "allow_sharing": company.allow_sharing
+              "allow_sharing": company.allow_sharing,
+              "incubators": company.incubators.length == 0 ? "" : company.incubators
             }
           },
           "arrayKey": "[]"

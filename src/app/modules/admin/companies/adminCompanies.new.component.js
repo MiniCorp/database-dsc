@@ -17,7 +17,7 @@
           founders: [],
           funding_rounds: [],
           tags: [],
-          hubs: []
+          incubators: []
         }
       };
 
@@ -85,12 +85,12 @@
         controller.company.tags.splice(controller.company.tags.indexOf(tag.text), 1);
       };
 
-      controller.addHub = function(hub) {
-        controller.company.incubators.push(hub.text);
+      controller.addIncubator = function(incubator) {
+        controller.company.incubators.push(incubator.text);
       };
 
-      controller.removeHub = function(hub) {
-        controller.company.incubators.splice(controller.company.incubators.indexOf(hub.text), 1);
+      controller.removeIncubator = function(incubator) {
+        controller.company.incubators.splice(controller.company.incubators.indexOf(incubator.text), 1);
       };
 
       this.create = function() {

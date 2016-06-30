@@ -7,14 +7,26 @@
       templateUrl: 'app/modules/user/companies/companies.edit.html',
       controller: 'UserCompaniesEditController'
     })
-    .controller('UserCompaniesEditController', function(store, $state, userGetCompanyService, userUpdateCompanyService, $stateParams, Notification, listTagsService, userListInvestorsService, $document) {
+    .controller('UserCompaniesEditController', function(store, $state, userGetCompanyService, userUpdateCompanyService, $stateParams, Notification, listTagsService, userListHubsService, userListInvestorsService, $document) {
       var controller = this;
       this.tags = [];
+      this.incubators = [];
       this.target_markets = {};
 
       function loadTags() {
         controller.company.tags.forEach(function(tag) {
           controller.tags.push({text: tag})
+        });
+      }
+
+      function loadIncubators() {
+        if (!controller.company.incubators || angular.isFunction(controller.company.incubators.forEach) == false) {
+          controller.company.incubators = [];
+          return;
+        }
+
+        controller.company.incubators.forEach(function(incubator) {
+          controller.incubators.push({text: incubator})
         });
       }
 
@@ -44,12 +56,13 @@
           $state.go('user.companies.index');
           return;
         }
-        
+
         controller.company = company;
         setFundingRounds();
         setOfficeLocations();
         setFounders();
         loadTags();
+        loadIncubators();
         loadTargetMarkets();
       });
 
@@ -73,12 +86,24 @@
         return listTagsService.filter(query);
       };
 
+      controller.queryHubs = function(query) {
+        return userListHubsService.filter(query);
+      };
+
       controller.addTag = function(tag) {
         controller.company.tags.push(tag.text);
       };
 
       controller.removeTag = function(tag) {
         controller.company.tags.splice(controller.company.tags.indexOf(tag.text), 1);
+      };
+
+      controller.addIncubator = function(incubator) {
+        controller.company.incubators.push(incubator.text);
+      };
+
+      controller.removeIncubator = function(incubator) {
+        controller.company.incubators.splice(controller.company.incubators.indexOf(incubator.text), 1);
       };
 
       controller.addFounder = function() {

@@ -3,6 +3,7 @@ module V1
     class MultinationalsController < AdminController
       def create
         multinational = Multinational.create(multinational_params)
+        multinational.update_attributes(is_live: true)
 
         render json: multinational
       end

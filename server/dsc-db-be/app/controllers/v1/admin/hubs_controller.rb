@@ -3,10 +3,13 @@ module V1
     class HubsController < AdminController
       def create
         hub = Hub.create(hub_params)
+        hub.update_attributes(is_live: true)
+
         render json: hub
       end
 
       def index
+
         if params[:filter].present?
           hubs = Hub.where("name ILIKE ?", "%#{params[:filter]}%")
           render json: hubs.pluck(:name)
@@ -22,6 +25,7 @@ module V1
             end
           end
         end
+
       end
 
       def show
