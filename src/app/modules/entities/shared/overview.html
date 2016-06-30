@@ -32,7 +32,7 @@
           </div>
           <div ng-show="$ctrl.entity.exec_summary_url && $ctrl.entity.exec_summary_url.length > 0">
             <br/>
-            <a href="{{$ctrl.serverUrl}}{{$ctrl.entity.exec_summary_url}}" class="btn btn-primary btn-sm" download>Download Executive Summary</a>
+            <a href="{{$ctrl.entity.exec_summary_url}}" class="btn btn-primary btn-sm" download>Download Executive Summary</a>
           </div>
           <cite ng-show="$ctrl.entity.tags.length > 0" style="margin-top:20px;margin-bottom:0;">Tags</cite>
           <p id="tags" style="font-size:14px;margin-top:10px" ng-show="$ctrl.entity.tags.length > 0">

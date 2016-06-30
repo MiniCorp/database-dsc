@@ -40,4 +40,17 @@ Rails.application.configure do
 
   # Preview and edit app mailer templates in Rails
   config.action_mailer.delivery_method = :letter_opener
+
+  # Paperclip configs
+  # AWS S3 Bucket to store imagery
+  config.paperclip_defaults = {
+    :storage => :s3,
+    :s3_region => "eu-west-1",
+    :s3_protocol => 'https',
+    :s3_credentials => {
+      :bucket => ENV['AWS_BUCKET'],
+      :access_key_id => ENV['AWS_ACCESS_KEY_ID'],
+      :secret_access_key => ENV['AWS_SECRET_ACCESS_KEY']
+    }
+  }
 end
