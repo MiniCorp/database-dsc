@@ -24,6 +24,11 @@
       }
 
       function loadFunctions() {
+        if (!controller.multinational.functions || angular.isFunction(controller.multinational.functions.forEach) == false) {
+          controller.multinational.functions = [];
+          return;
+        }
+        
         controller.multinational.functions.forEach(function(func) {
           controller.functions[func] = true;
         });

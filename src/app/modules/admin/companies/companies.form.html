@@ -162,7 +162,17 @@
 
         <div class="form-group">
           <label for="incubator">Accelerator/Incubator</label>
-          <input ng-model="$ctrl.company.incubator" id="incubator" class="form-control" type="">
+          <tags-input name="hubsInput"
+                      ng-model="$ctrl.incubators"
+                      add-on-enter="false"
+                      add-from-autocomplete-only="true"
+                      on-tag-added="$ctrl.addIncubator($tag)"
+                      on-tag-removed="$ctrl.removeIncubator($tag)">
+            <auto-complete source="$ctrl.queryHubs($query)"></auto-complete>
+          </tags-input>
+          <p class="help-block" style="color:red" ng-show="create.tagsInput.$invalid || edit.tagsInput.$invalid">
+            Sorry, you added a tag that does not exist in the system.
+          </p>
         </div>
 
         <div class="form-group">

@@ -177,6 +177,13 @@
           url: '/admin/hubs/:id/edit',
           template: '<admin-hubs-edit></admin-hubs-edit>'
         })
+        .state('admin.users', {
+          template: '<admin-users ui-view></admin-users>'
+        })
+        .state('admin.users.index', {
+          url: '/admin/users',
+          template: '<admin-users-index></admin-users-index>'
+        })
         .state('search', {
           controller: function($scope, $auth) {
             $scope.loggedIn = $auth.isAuthenticated();

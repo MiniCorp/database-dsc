@@ -7,14 +7,19 @@ module V1
       end
 
       def index
-        hubs = Hub.with_deleted.order(:name)
+        if params[:filter].present?
+          hubs = Hub.where("name ILIKE ?", "%#{params[:filter]}%")
+          render json: hubs.pluck(:name)
+        else
+          hubs = Hub.with_deleted.order(:name)
 
-        respond_to do |format|
-          format.html {
-            render json: hubs
-          }
-          format.csv do
-            send_data hubs.to_csv
+          respond_to do |format|
+            format.html {
+              render json: hubs
+            }
+            format.csv do
+              send_data hubs.to_csv
+            end
           end
         end
       end

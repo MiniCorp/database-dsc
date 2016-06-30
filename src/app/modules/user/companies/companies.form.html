@@ -353,7 +353,17 @@
             <div class="col-sm-8">
               <div class="form-group">
                 <label for="funding-type">Funding type</label>
-                <input ng-model="round.type" id="funding-type" class="form-control" type="text">
+                <select ng-model="round.type" id="funding-type" class="form-control">
+                  <option></option>
+                  <option>Undisclosed</option>
+                  <option>Pre-Seed</option>
+                  <option>Seed</option>
+                  <option>Series A</option>
+                  <option>Series B</option>
+                  <option>Series C</option>
+                  <option>Series D</option>
+                  <option>Series E</option>
+                </select>
                 <p>
                   Please note, for our purposes we would classify anything less than €100,000 as pre-seed.
                 </p>
