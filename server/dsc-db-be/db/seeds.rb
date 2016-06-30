@@ -16,7 +16,8 @@ unless Rails.env.production?
   User.create(
     email: 'admin@test.com',
     password: '12345678',
-    user_type: 1
+    user_type: 1,
+    email_confirmed: true
   )
 
   Hub.create(
@@ -33,7 +34,8 @@ unless Rails.env.production?
         "contact_urls": {},
         "events": [],
         "hub_type": ["A","I"],
-        "funding_provided": false
+        "funding_provided": false,
+        "is_live": true
       },
       {
         "name": "Dogpatch Labs",
@@ -53,7 +55,8 @@ unless Rails.env.production?
           { "id": 2, "name": "CoderDojo" },
           { "id": 3, "name": "Twilio" },
           { "id": 4, "name": "Pivotal" },
-        ]
+        ],
+        "is_live": true
       }
     ]
   )
@@ -87,7 +90,8 @@ unless Rails.env.production?
           "facebook": "https://www.facebook.com/frontlineventures/",
           "twitter": "https://twitter.com/Frontline",
           "linkedin": "http://www.linkedin.com/company/frontline-ventures"
-        }
+        },
+        "is_live": true
       },
       {
         "name": "Polaris Partners",
@@ -124,7 +128,8 @@ unless Rails.env.production?
           "facebook": "http://www.facebook.com/pages/Polaris-Partners/404737049642094",
           "twitter": "http://twitter.com/PolarisVC",
           "linkedin": "http://www.linkedin.com/company/20197"
-        }
+        },
+        "is_live": true
       }
     ]
   )
@@ -163,7 +168,8 @@ unless Rails.env.production?
         ],
         "events_space": true,
         "employees": 722,
-        "functions": ['S', 'CS', 'F', 'L', 'SI', 'E', 'M', 'O', 'PD']
+        "functions": ['S', 'CS', 'F', 'L', 'SI', 'E', 'M', 'O', 'PD'],
+        "is_live": true
       },
       {
         "name": "Microsoft",
@@ -192,7 +198,8 @@ unless Rails.env.production?
         ],
         "events_space": true,
         "employees": 1646,
-        "functions": ['S', 'CS', 'F', 'L', 'SI', 'E', 'M', 'RD', 'MF', 'O', 'PD']
+        "functions": ['S', 'CS', 'F', 'L', 'SI', 'E', 'M', 'RD', 'MF', 'O', 'PD'],
+        "is_live": true
       },
       {
         "name": "SquareSpace",
@@ -211,21 +218,24 @@ unless Rails.env.production?
         ],
         "events_space": true,
         "employees": 115,
-        "functions": ['S', 'CS', 'F', 'L', 'SI', 'E', 'M', 'O']
+        "functions": ['S', 'CS', 'F', 'L', 'SI', 'E', 'M', 'O'],
+        "is_live": true
       },
       {
         "name": "Airbnb",
         "logo": "https://crunchbase-production-res.cloudinary.com/image/upload/c_pad,h_140,w_250/v1405534850/vubc5kxhmw6jalain0ot.png",
         "short_description": "Airbnb is an online community marketplace for people to list, discover, and book accommodations around the world.",
         "headquarters": "San Francisco, CA",
-        "local_office": "	The Watermarque Building, Ringsend, D2"
+        "local_office": "	The Watermarque Building, Ringsend, D2",
+        "is_live": true
       },
       {
         "name": "Google",
         "logo": "https://crunchbase-production-res.cloudinary.com/image/upload/c_pad,h_140,w_250/v1441152509/jpwjd07xo0ycgumam7as.png",
         "short_description": "Google is a multinational corporation that is specialized in internet-related services and products.",
         "headquarters": "Mountain View, CA",
-        "local_office": "Gordon House, Barrow StreetDublin 4"
+        "local_office": "Gordon House, Barrow StreetDublin 4",
+        "is_live": true
       }
     ]
   )
@@ -269,7 +279,8 @@ unless Rails.env.production?
             "date": "June 2015",
             "type": "Seed"
           }
-        ]
+        ],
+        "is_live": true
       },
       {
         "name": "Boxever",
@@ -329,7 +340,8 @@ unless Rails.env.production?
             "date": "January 2016",
             "type": "Series B"
           }
-        ]
+        ],
+        "is_live": true
       },
       {
         "name": "Logentries",
@@ -370,7 +382,8 @@ unless Rails.env.production?
           {"amount": "Undisclosed", "date": "January 2010", type: "Pre-seed"},
           {"amount": "1.1m", "date": "January 2012", type: "Seed"},
           {"amount": "10m", "date": "January 2013", type: "Series A"}
-        ]
+        ],
+        "is_live": true
       },
       {
         "name": "Trustev",
@@ -414,7 +427,8 @@ unless Rails.env.production?
           {"amount": "3m", "date": "October 2013", "type": "Seed"},
           {"amount": "500k", "date": "December 2013", "type": "Seed"},
           {"amount": "3.21m", "date": "November 2013", "type": "Convertible Debt"}
-        ]
+        ],
+        "is_live": true
       },
       {
         "name": "Soundwave",
@@ -461,7 +475,8 @@ unless Rails.env.production?
             "date": "June 2015",
             "type": "Seed"
           }
-        ]
+        ],
+        "is_live": true
       },
       {
         "name": "Bizimply",
@@ -508,7 +523,8 @@ unless Rails.env.production?
             "date": "June 2015",
             "type": "Seed"
           }
-        ]
+        ],
+        "is_live": true
       },
     {
       "name": "Storyful",
@@ -547,7 +563,8 @@ unless Rails.env.production?
           "date": "June 2015",
           "type": "Seed"
         }
-      ]
+      ],
+      "is_live": true
     },
     {
       "name": "CurrencyFair",
@@ -594,7 +611,8 @@ unless Rails.env.production?
           "date": "June 2015",
           "type": "Seed"
         }
-      ]
+      ],
+      "is_live": true
     },
     {
       "name": "PageFair",
@@ -641,7 +659,8 @@ unless Rails.env.production?
           "date": "June 2015",
           "type": "Seed"
         }
-      ]
+      ],
+      "is_live": true
     },
     {
       "name": "Pointy",
@@ -684,7 +703,8 @@ unless Rails.env.production?
           "date": "June 2015",
           "type": "Seed"
         }
-      ]
+      ],
+      "is_live": true
     }
   ])
 end

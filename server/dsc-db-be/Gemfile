@@ -19,7 +19,7 @@ gem 'api-pagination'
 gem 'knock', '1.5'
 gem 'paranoia', github: 'rubysherpas/paranoia', branch: 'core'
 gem 'httpclient'
-gem 'scenic'
+gem 'scenic', '1.3.0'
 # Easy file attachment management for ActiveRecord
 gem 'paperclip', '~> 5.0.0.beta1'
 
