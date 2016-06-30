@@ -20,15 +20,20 @@ module V1
       def index
         respond_to do |format|
           format.html {
-            # companies assign to the current user
-            user_companies = Company.claimed_by_user(current_user).where(is_live: true)
-            # companies awaiting action by admin
-            # first get all companies where user assigned but not live (when user creates the profile)
-            pending_companies = Company.where(user: current_user, is_live: false)
-            # second get all companies where user NOT assigned but has made a claim that is pending (profile already existed)
-            pending_companies = pending_companies + Company.where("id in (?)", UserEntityClaim.where(user_id: current_user.id, entity_type: UserEntityClaim.entity_types['company']).pluck(:entity_id))
+            if params[:typeahead] && params[:filter]
+              companies = Company.live(true).select(:id, :name).where("name ILIKE ?", "%#{params[:filter]}%").order(:name)
+              render json: companies
+            else
+              # companies assign to the current user
+              user_companies = Company.claimed_by_user(current_user).where(is_live: true)
+              # companies awaiting action by admin
+              # first get all companies where user assigned but not live (when user creates the profile)
+              pending_companies = Company.where(user: current_user, is_live: false)
+              # second get all companies where user NOT assigned but has made a claim that is pending (profile already existed)
+              pending_companies = pending_companies + Company.where("id in (?)", UserEntityClaim.where(user_id: current_user.id, entity_type: UserEntityClaim.entity_types['company']).pluck(:entity_id))
 
-            render json: { user_companies: user_companies, pending_companies: pending_companies }
+              render json: { user_companies: user_companies, pending_companies: pending_companies }
+            end
           }
           format.json {
             render json: Company.unclaimed

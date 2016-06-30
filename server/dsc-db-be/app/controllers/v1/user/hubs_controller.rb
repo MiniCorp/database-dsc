@@ -18,10 +18,6 @@ module V1
       end
 
       def index
-        hubs = Hub.unclaimed_or_owned_by(current_user.id).with_deleted.order(:name)
-
-        hubs.each {|hub| hub.current_user = current_user} if current_user
-
         respond_to do |format|
           format.html {
             # hubs assign to the current user

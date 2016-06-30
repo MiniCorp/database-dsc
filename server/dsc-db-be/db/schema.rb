@@ -15,6 +15,28 @@ ActiveRecord::Schema.define(version: 20160630075253) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+  enable_extension "btree_gin"
+  enable_extension "btree_gist"
+  enable_extension "citext"
+  enable_extension "cube"
+  enable_extension "dblink"
+  enable_extension "dict_int"
+  enable_extension "dict_xsyn"
+  enable_extension "earthdistance"
+  enable_extension "fuzzystrmatch"
+  enable_extension "hstore"
+  enable_extension "intarray"
+  enable_extension "ltree"
+  enable_extension "pg_stat_statements"
+  enable_extension "pg_trgm"
+  enable_extension "pgcrypto"
+  enable_extension "pgrowlocks"
+  enable_extension "pgstattuple"
+  enable_extension "sslinfo"
+  enable_extension "tablefunc"
+  enable_extension "unaccent"
+  enable_extension "uuid-ossp"
+  enable_extension "xml2"
 
   create_table "ar_internal_metadata", primary_key: "key", force: :cascade do |t|
     t.string   "value"
@@ -77,8 +99,8 @@ ActiveRecord::Schema.define(version: 20160630075253) do
     t.string   "exec_summary_content_type"
     t.integer  "exec_summary_file_size"
     t.datetime "exec_summary_updated_at"
-    t.boolean  "allow_sharing",             default: false
     t.boolean  "is_live",                   default: false
+    t.boolean  "allow_sharing",             default: false
     t.string   "incubators",                default: [],                 array: true
   end
 
@@ -116,8 +138,8 @@ ActiveRecord::Schema.define(version: 20160630075253) do
     t.float    "lng"
     t.integer  "user_id"
     t.jsonb    "applications",      default: []
-    t.boolean  "allow_sharing",     default: false
     t.boolean  "is_live",           default: false
+    t.boolean  "allow_sharing",     default: false
   end
 
   add_index "hubs", ["alumni"], name: "index_hubs_on_alumni", using: :gin
@@ -160,8 +182,8 @@ ActiveRecord::Schema.define(version: 20160630075253) do
     t.string   "deal_structure"
     t.jsonb    "companies_invested_in", default: []
     t.integer  "user_id"
-    t.boolean  "allow_sharing",         default: false
     t.boolean  "is_live",               default: false
+    t.boolean  "allow_sharing",         default: false
   end
 
   add_index "investors", ["companies_invested_in"], name: "index_investors_on_companies_invested_in", using: :gin
@@ -199,8 +221,8 @@ ActiveRecord::Schema.define(version: 20160630075253) do
     t.float    "lng"
     t.boolean  "building_product_in_ireland", default: false
     t.integer  "user_id"
-    t.boolean  "allow_sharing",               default: false
     t.boolean  "is_live",                     default: false
+    t.boolean  "allow_sharing",               default: false
     t.boolean  "startup_evangelist"
   end
 
@@ -253,6 +275,8 @@ ActiveRecord::Schema.define(version: 20160630075253) do
     t.datetime "activation_sent_at"
     t.boolean  "email_confirmed",    default: false
   end
+
+  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
 
   add_foreign_key "user_entity_pendings", "users"
 

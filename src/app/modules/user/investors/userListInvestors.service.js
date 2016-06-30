@@ -17,7 +17,7 @@
       };
 
       this.filter = function(query) {
-        var basePath = serverUrl + '/user/investors?filter=' + query;
+        var basePath = serverUrl + '/user/investors?typeahead=true&filter=' + query;
         return $http.get(basePath);
       };
 

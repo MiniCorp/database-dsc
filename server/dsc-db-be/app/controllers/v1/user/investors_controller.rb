@@ -18,26 +18,22 @@ module V1
       end
 
       def index
-
-        if params[:filter].present?
-          investors = Investor.unclaimed_or_owned_by(current_user.id).select(:id, :name).where("name ILIKE ?", "%#{params[:filter]}%").order(:name)
-        else
-          investors = Investor.unclaimed_or_owned_by(current_user.id).with_deleted.order(:name)
-        end
-
-        investors.each {|investor| investor.current_user = current_user} if current_user
-
         respond_to do |format|
           format.html {
-            # investors assign to the current user
-            user_investors = Investor.claimed_by_user(current_user).where(is_live: true)
-            # investors awaiting action by admin
-            # first get all investors where user assigned but not live (when user creates the profile)
-            pending_investors = Investor.where(user: current_user, is_live: false)
-            # second get all investors where user NOT assigned but has made a claim that is pending (profile already existed)
-            pending_investors = pending_investors + Investor.where("id in (?)", UserEntityClaim.where(user_id: current_user.id, entity_type: UserEntityClaim.entity_types['investor']).pluck(:entity_id))
+            if params[:typeahead] && params[:filter]
+              investors = Investor.live(true).select(:id, :name).where("name ILIKE ?", "%#{params[:filter]}%").order(:name)
+              render json: investors
+            else
+              # investors assign to the current user
+              user_investors = Investor.claimed_by_user(current_user).where(is_live: true)
+              # investors awaiting action by admin
+              # first get all investors where user assigned but not live (when user creates the profile)
+              pending_investors = Investor.where(user: current_user, is_live: false)
+              # second get all investors where user NOT assigned but has made a claim that is pending (profile already existed)
+              pending_investors = pending_investors + Investor.where("id in (?)", UserEntityClaim.where(user_id: current_user.id, entity_type: UserEntityClaim.entity_types['investor']).pluck(:entity_id))
 
-            render json: { user_investors: user_investors, pending_investors: pending_investors }
+              render json: { user_investors: user_investors, pending_investors: pending_investors }
+            end
           }
           format.json {
             render json: Investor.unclaimed
