@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160629131741) do
+ActiveRecord::Schema.define(version: 20160630075253) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -79,6 +79,7 @@ ActiveRecord::Schema.define(version: 20160629131741) do
     t.datetime "exec_summary_updated_at"
     t.boolean  "allow_sharing",             default: false
     t.boolean  "is_live",                   default: false
+    t.string   "incubators",                default: [],                 array: true
   end
 
   add_index "companies", ["deleted_at"], name: "index_companies_on_deleted_at", using: :btree
