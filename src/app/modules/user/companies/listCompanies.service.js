@@ -11,8 +11,8 @@
         })
       };
 
-      this.filter = function(query) {
-        var basePath = serverUrl + '/user/companies?filter=' + query;
+      this.filterUnclaimedCompanies = function(query) {
+        var basePath = serverUrl + '/user/companies.json?filter=' + query;
         return $http.get(basePath);
       };
     });

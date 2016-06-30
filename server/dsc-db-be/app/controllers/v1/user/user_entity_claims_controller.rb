@@ -14,7 +14,7 @@ module V1
 
         AdminMailer.claim_notification(user_entity_claim).deliver_now!
 
-        render json: :nothing, status: 201
+        render json: user_entity_claim.entity, status: 201
       end
     end
   end

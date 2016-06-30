@@ -29,7 +29,21 @@ module V1
 
         respond_to do |format|
           format.html {
-            render json: investors
+            # investors assign to the current user
+            user_investors = Investor.claimed_by_user(current_user).where(is_live: true)
+            # investors awaiting action by admin
+            # first get all investors where user assigned but not live (when user creates the profile)
+            pending_investors = Investor.where(user: current_user, is_live: false)
+            # second get all investors where user NOT assigned but has made a claim that is pending (profile already existed)
+            pending_investors = pending_investors + Investor.where("id in (?)", UserEntityClaim.where(user_id: current_user.id, entity_type: UserEntityClaim.entity_types['investor']).pluck(:entity_id))
+
+            render json: { user_investors: user_investors, pending_investors: pending_investors }
+          }
+          format.json {
+            render json: Investor.unclaimed
+                                .select(:id, :name, :logo, :short_description, :website, :headquarters)
+                                .where("name ILIKE ?", "#{params[:filter]}%").order(:name).limit(10)
+                                .where.not("id in (?)", UserEntityClaim.where(user_id: current_user.id, entity_type: UserEntityClaim.entity_types['investor']).count > 0 ? UserEntityClaim.where(user_id: current_user.id, entity_type: UserEntityClaim.entity_types['investor']).pluck(:entity_id) : -1)
           }
           format.csv do
             send_data investors.to_csv

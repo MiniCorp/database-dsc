@@ -11,6 +11,11 @@
         })
       };
 
+      this.filterUnclaimedInvestors = function(query) {
+        var basePath = serverUrl + '/user/investors.json?filter=' + query;
+        return $http.get(basePath);
+      };
+
       this.filter = function(query) {
         var basePath = serverUrl + '/user/investors?filter=' + query;
         return $http.get(basePath);

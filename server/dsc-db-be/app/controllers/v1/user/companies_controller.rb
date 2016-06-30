@@ -20,15 +20,21 @@ module V1
       def index
         respond_to do |format|
           format.html {
-            if params[:filter].present?
-              companies = Company.unclaimed_or_owned_by(current_user.id).select(:id, :name).where("name ILIKE ?", "%#{params[:filter]}%").order(:name)
-            else
-              companies = Company.unclaimed_or_owned_by(current_user.id).with_deleted.order(:name)
-            end
+            # companies assign to the current user
+            user_companies = Company.claimed_by_user(current_user).where(is_live: true)
+            # companies awaiting action by admin
+            # first get all companies where user assigned but not live (when user creates the profile)
+            pending_companies = Company.where(user: current_user, is_live: false)
+            # second get all companies where user NOT assigned but has made a claim that is pending (profile already existed)
+            pending_companies = pending_companies + Company.where("id in (?)", UserEntityClaim.where(user_id: current_user.id, entity_type: UserEntityClaim.entity_types['company']).pluck(:entity_id))
 
-            companies.each {|company| company.current_user = current_user} if current_user
-
-            render json: companies
+            render json: { user_companies: user_companies, pending_companies: pending_companies }
+          }
+          format.json {
+            render json: Company.unclaimed
+                                .select(:id, :name, :logo, :short_description, :website, :headquarters)
+                                .where("name ILIKE ?", "#{params[:filter]}%").order(:name).limit(10)
+                                .where.not("id in (?)", UserEntityClaim.where(user_id: current_user.id, entity_type: UserEntityClaim.entity_types['company']).count > 0 ? UserEntityClaim.where(user_id: current_user.id, entity_type: UserEntityClaim.entity_types['company']).pluck(:entity_id) : -1)
           }
           format.csv do
             send_data PublicCompany.to_csv(PublicCompany.all)

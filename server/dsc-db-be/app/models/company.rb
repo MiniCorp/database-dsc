@@ -42,6 +42,8 @@ class Company < ApplicationRecord
 
   using Utils
 
+  belongs_to :user
+
   pg_search_scope :search_by_tag,
     against: {
       tags: 'A',
@@ -74,11 +76,12 @@ class Company < ApplicationRecord
     }
 
   has_attached_file :exec_summary, default_url: ""
-
   validates_attachment_content_type :exec_summary, :content_type => ["application/pdf"]
 
   scope :live, -> (live) { where is_live: live }
   scope :withIds, -> (company_ids) { where id: company_ids }
+  scope :claimed_by_user, -> (user) { where user: user }
+  scope :unclaimed, -> { where user: nil }
   scope :unclaimed_or_owned_by, -> (user_id) { where "(user_id is null) OR (user_id = #{user_id})" }
   scope :funding_stage, -> (funding_stage) { where funding_stage: funding_stage }
   scope :product_stage, -> (product_stage) { where product_stage: product_stage }

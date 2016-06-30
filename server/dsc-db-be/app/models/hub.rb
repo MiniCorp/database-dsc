@@ -25,6 +25,8 @@ class Hub < ApplicationRecord
   acts_as_paranoid
   include PgSearch
 
+  belongs_to :user
+
   APPLICATION_DEADLINES_DATE_RANGES = {
     'This Month' => DateTime.now..DateTime.now.end_of_month,
     'Next Month' => DateTime.now.next_month.beginning_of_month..DateTime.now.next_month.end_of_month,
@@ -61,6 +63,8 @@ class Hub < ApplicationRecord
   scope :live, -> (live) { where is_live: live }
   # scope :applications_deadline, -> (range_as_text) { where(application_deadline: APPLICATION_DEADLINES_DATE_RANGES[range_as_text]) }
   scope :funding_provided, -> (funding_provided) { where(funding_provided: funding_provided) }
+  scope :claimed_by_user, -> (user) { where user: user }
+  scope :unclaimed, -> { where user: nil }
   scope :unclaimed_or_owned_by, -> (user_id) { where "(user_id is null) OR (user_id = #{user_id})" }
 
   attr_accessor :current_user

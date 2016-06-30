@@ -28,6 +28,8 @@ class Multinational < ApplicationRecord
   acts_as_paranoid
   include PgSearch
 
+  belongs_to :user
+
   pg_search_scope :search_by_tag,
     against: {
       tags: 'A',
@@ -60,6 +62,8 @@ class Multinational < ApplicationRecord
   scope :live, -> (live) { where is_live: live }
   scope :emea_hq, -> (emea_hq) { where(emea_hq: emea_hq) }
   scope :empty_startup_packages, -> { where(startup_packages: '{}') }
+  scope :claimed_by_user, -> (user) { where user: user }
+  scope :unclaimed, -> { where user: nil }
   scope :unclaimed_or_owned_by, -> (user_id) { where "(user_id is null) OR (user_id = #{user_id})" }
   scope :have_startup_packages, -> { where.not(startup_packages: '{}') }
   scope :building_product_in_ireland, -> (building_product_in_ireland) {

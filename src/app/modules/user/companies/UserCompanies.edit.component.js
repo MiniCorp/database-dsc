@@ -40,6 +40,11 @@
       }
 
       userGetCompanyService.find($stateParams.id).then(function(company) {
+        if (company == undefined) {
+          $state.go('user.companies.index');
+          return;
+        }
+        
         controller.company = company;
         setFundingRounds();
         setOfficeLocations();

@@ -23,9 +23,23 @@ module V1
         multinationals.each {|multinational| multinational.current_user = current_user} if current_user
 
         respond_to do |format|
-          format.html do
-            render json: multinationals
-          end
+          format.html {
+            # multinationals assign to the current user
+            user_multinationals = multinationals.claimed_by_user(current_user).where(is_live: true)
+            # multinationals awaiting action by admin
+            # first get all multinationals where user assigned but not live (when user creates the profile)
+            pending_multinationals = Multinational.where(user: current_user, is_live: false)
+            # second get all multinationals where user NOT assigned but has made a claim that is pending (profile already existed)
+            pending_multinationals = pending_multinationals + Multinational.where("id in (?)", UserEntityClaim.where(user_id: current_user.id, entity_type: UserEntityClaim.entity_types['multinational']).pluck(:entity_id))
+
+            render json: { user_multinationals: user_multinationals, pending_multinationals: pending_multinationals }
+          }
+          format.json {
+            render json: Multinational.unclaimed
+                                .select(:id, :name, :logo, :short_description, :website, :headquarters)
+                                .where("name ILIKE ?", "#{params[:filter]}%").order(:name).limit(10)
+                                .where.not("id in (?)", UserEntityClaim.where(user_id: current_user.id, entity_type: UserEntityClaim.entity_types['multinational']).count > 0 ? UserEntityClaim.where(user_id: current_user.id, entity_type: UserEntityClaim.entity_types['multinational']).pluck(:entity_id) : -1)
+          }
           format.csv do
             send_data multinationals.to_csv
           end

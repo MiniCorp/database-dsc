@@ -10,5 +10,10 @@
           return responseObject.data;
         })
       };
+
+      this.filterUnclaimedHubs = function(query) {
+        var basePath = serverUrl + '/user/hubs.json?filter=' + query;
+        return $http.get(basePath);
+      };
     });
 })();

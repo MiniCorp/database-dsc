@@ -24,7 +24,21 @@ module V1
 
         respond_to do |format|
           format.html {
-            render json: hubs
+            # hubs assign to the current user
+            user_hubs = Hub.claimed_by_user(current_user).where(is_live: true)
+            # hubs awaiting action by admin
+            # first get all hubs where user assigned but not live (when user creates the profile)
+            pending_hubs = Hub.where(user: current_user, is_live: false)
+            # second get all hubs where user NOT assigned but has made a claim that is pending (profile already existed)
+            pending_hubs = pending_hubs + Hub.where("id in (?)", UserEntityClaim.where(user_id: current_user.id, entity_type: UserEntityClaim.entity_types['hub']).pluck(:entity_id))
+
+            render json: { user_hubs: user_hubs, pending_hubs: pending_hubs }
+          }
+          format.json {
+            render json: Hub.unclaimed
+                                .select(:id, :name, :logo, :short_description, :website)
+                                .where("name ILIKE ?", "#{params[:filter]}%").order(:name).limit(10)
+                                .where.not("id in (?)", UserEntityClaim.where(user_id: current_user.id, entity_type: UserEntityClaim.entity_types['hub']).count > 0 ? UserEntityClaim.where(user_id: current_user.id, entity_type: UserEntityClaim.entity_types['hub']).pluck(:entity_id) : -1)
           }
           format.csv do
             send_data hubs.to_csv

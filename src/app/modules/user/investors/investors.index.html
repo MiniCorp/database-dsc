@@ -12,48 +12,134 @@
   </div>
 </div>
 
-<div class="table-responsive">
-  <table class="table table-striped table-bordered table-hover">
-    <thead>
-    <tr>
-      <th></th>
-      <th>Name</th>
-      <th>Headquarters</th>
-      <th>Actions</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr ng-class="{deleted: investor.deleted_at}" ng-repeat="investor in $ctrl.investors">
-      <td>
-        <a ng-if="investor.user_id" ui-sref="user.investors.edit({id: investor.id})"><img ng-src="{{investor.logo}}" alt="{{investor.name}}" width="80" height="50"></a>
-        <a ng-if="!investor.user_id" ui-sref="search.investorProfile({id: investor.id})"><img ng-src="{{investor.logo}}" alt="{{investor.name}}" width="80" height="50"></a>
-      </td>
-      <td>
-        <strong>
-          <a ng-if="investor.user_id" ui-sref="user.investors.edit({id: investor.id})">{{investor.name}}</a>
-          <a ng-if="!investor.user_id" ui-sref="search.investorProfile({id: investor.id})">{{investor.name}}</a>
-        </strong>
-        <p style="color:#acacac"><i>{{investor.short_description}}</i> <a href="{{investor.website}}" ng-show="investor.website"><i class="fa fa-link"></i></a></p>
-      </td>
-      <td class="base">{{investor.headquarters}}</td>
-      <td class="actions">
+<div class="panel panel-default">
+  <div class="panel-heading">Search Investors</div>
+  <div class="panel-body">
+    <div class="row">
+      <input id="searchInvestors"
+             type="text"
+             ng-model="$ctrl.selected"
+             uib-typeahead="investor as investor.name for investor in $ctrl.filterUnclaimedInvestors($viewValue)"
+             class="form-control"
+             placeholder="Type here to search for your investor...">
+    </div>
+    <div ng-show="$ctrl.selected && $ctrl.selected.id" class="row">
+      <br/>
+      <p>
+        Click 'Claim' to request ownership of this investor.
+      </p>
+      <div class="table-responsive">
+        <table class="table table-striped table-bordered table-hover">
+          <thead>
+          <tr>
+            <th></th>
+            <th>Name</th>
+            <th>Headquarters</th>
+            <th>Actions</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td>
+              <a ui-sref="search.investorProfile({id: $ctrl.selected.id})"><img ng-src="{{$ctrl.selected.logo}}" alt="{{$ctrl.selected.name}}" width="80" height="50"></a>
+            </td>
+            <td>
+              <strong>
+                <a ui-sref="search.investorProfile({id: $ctrl.selected.id})">{{investor.name}}</a>
+              </strong>
+              <p style="color:#acacac"><i>{{$ctrl.selected.short_description}}</i> <a ng-href="{{$ctrl.selected.website}}" ng-show="$ctrl.selected.website"><i class="fa fa-link"></i></a></p>
+            </td>
+            <td class="base">{{$ctrl.selected.headquarters}}</td>
+            <td class="actions">
+              <div>
+                <a ng-if="!$ctrl.selected.claimed_requested_by_current_user" ng-click="$ctrl.claimInvestor($event, $ctrl.selected.id)" class="btn btn-xs btn-primary-blue">Claim</a>
+                <a ng-if="$ctrl.selected.claimed_requested_by_current_user" class="btn btn-xs btn-primary-blue" disabled>Requested</a>
+              </div>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
 
-        <div class="" ng-if="investor.user_id">
-          <span ng-hide="investor.deleted_at">
-            <a ui-sref="user.investors.edit({id: investor.id})"><i class="fa fa-2x fa-edit"></i></a>
-          </span>
-          <span ng-show="investor.deleted_at">
-            <a href="" ng-click="$ctrl.restoreInvestor(investor.id)"><i class="fa fa-2x fa-refresh"></i></a>
-          </span>
-        </div>
+<div ng-if="$ctrl.investors.user_investors.length > 0" class="panel panel-default">
+  <div class="panel-heading">My Profiles</div>
+  <div class="panel-body">
+    <div class="table-responsive">
+      <table class="table table-striped table-bordered table-hover">
+        <thead>
+        <tr>
+          <th></th>
+          <th>Name</th>
+          <th>Local Office</th>
+          <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-class="{deleted: investor.deleted_at}" ng-repeat="investor in $ctrl.investors.user_investors">
+          <td>
+            <a ng-if="investor.user_id" ui-sref="user.investors.edit({id: investor.id})"><img ng-src="{{investor.logo}}" alt="{{investor.name}}" width="80" height="50"></a>
+            <a ng-if="!investor.user_id" ui-sref="search.investorProfile({id: investor.id})"><img ng-src="{{investor.logo}}" alt="{{investor.name}}" width="80" height="50"></a>
+          </td>
+          <td>
+            <strong>
+              <a ng-if="investor.user_id" ui-sref="user.investors.edit({id: investor.id})">{{investor.name}}</a>
+              <a ng-if="!investor.user_id" ui-sref="search.investorProfile({id: investor.id})">{{investor.name}}</a>
+            </strong>
+            <p style="color:#acacac"><i>{{investor.short_description}}</i> <a ng-href="{{investor.website}}" ng-show="investor.website"><i class="fa fa-link"></i></a></p>
+          </td>
+          <td class="base">{{investor.headquarters}}</td>
+          <td class="actions">
+            <div class="" ng-if="investor.user_id">
+              <span ng-hide="investor.deleted_at">
+                <a ui-sref="user.investors.edit({id: investor.id})"><i class="fa fa-2x fa-edit"></i></a>
+              </span>
+            </div>
+            <div class="" ng-if="!investor.user_id && !investor.deleted_at">
+              <a ng-if="!investor.claimed_requested_by_current_user" ng-click="$ctrl.claimInvestor($event, investor.id)" class="btn btn-xs btn-primary-blue">Claim</a>
+              <a ng-if="investor.claimed_requested_by_current_user" class="btn btn-xs btn-primary-blue" disabled>Requested</a>
+            </div>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
 
-        <div class="" ng-if="!investor.user_id">
-          <a ng-if="!investor.claimed_requested_by_current_user" ng-click="$ctrl.claimInvestor($event, investor.id)" class="btn btn-xs btn-block btn-primary-blue">Claim</a>
-          <a ng-if="investor.claimed_requested_by_current_user" class="btn btn-xs btn-block btn-primary-blue" disabled>Requested</a>
-        </div>
-
-      </td>
-    </tr>
-    </tbody>
-  </table>
+<div ng-if="$ctrl.investors.pending_investors.length > 0" class="panel panel-default">
+  <div class="panel-heading">Pending Approval</div>
+  <div class="panel-body">
+    <div class="table-responsive">
+      <table class="table table-striped table-bordered table-hover">
+        <thead>
+        <tr>
+          <th></th>
+          <th>Name</th>
+          <th>Local Office</th>
+          <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-class="{deleted: investor.deleted_at}" ng-repeat="investor in $ctrl.investors.pending_investors">
+          <td>
+            <img ng-src="{{investor.logo}}" alt="{{investor.name}}" width="80" height="50">
+          </td>
+          <td>
+            <strong>
+              {{investor.name}}
+            </strong>
+            <p style="color:#acacac"><i>{{investor.short_description}}</i> <a ng-href="{{investor.website}}" ng-show="investor.website"><i class="fa fa-link"></i></a></p>
+          </td>
+          <td class="base">{{investor.headquarters}}</td>
+          <td class="actions">
+            <a class="btn btn-xs btn-primary-blue" disabled>Requested</a>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
 </div>

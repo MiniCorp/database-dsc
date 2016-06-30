@@ -33,6 +33,8 @@ class Investor < ApplicationRecord
   acts_as_paranoid
   include PgSearch
 
+  belongs_to :user
+
   pg_search_scope :search_by_tag,
     against: {
       tags: 'A',
@@ -67,6 +69,8 @@ class Investor < ApplicationRecord
   scope :greater_than, -> (column, limit) { where "#{column} > #{limit}" }
   scope :range_scope, -> (column, range) { where("#{column}" => range) }
   scope :deal_structure, -> (deal_structure) { where deal_structure: deal_structure }
+  scope :claimed_by_user, -> (user) { where user: user }
+  scope :unclaimed, -> { where user: nil }
   scope :unclaimed_or_owned_by, -> (user_id) { where "(user_id is null) OR (user_id = #{user_id})" }
 
   attr_accessor :current_user
