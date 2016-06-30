@@ -67,8 +67,7 @@
 
       expect($ctrl.searchHubsService.get).toHaveBeenCalledWith({searchText: 'NDRC'}, {
         hubType: '',
-        fundingProvided: '',
-        applicationDeadlines: ''
+        fundingProvided: ''
       }, {currentPage: 1, perPage: 9});
       expect($ctrl.results.length).toEqual(1);
     });
