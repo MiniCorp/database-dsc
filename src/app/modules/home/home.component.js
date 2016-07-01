@@ -54,20 +54,19 @@
       }, true);
 
       $scope.$watch('$ctrl.availableOptions.selected', function (selectedOption) {
-
         if (selectedOption == undefined) {
           return;
         }
 
         switch (selectedOption['itemType'])
         {
-           case 'Company': $location.path('/company/' + selectedOption['id'])
+           case 'Irish': $location.path('/company/' + selectedOption['id'])
            break;
 
-           case 'Investor': $location.path('/investor/' + selectedOption['id'])
+           case 'Investors': $location.path('/investor/' + selectedOption['id'])
            break;
 
-           case 'Multinationals': $location.path('/mtns/' + selectedOption['id'])
+           case 'International': $location.path('/mtns/' + selectedOption['id'])
            break;
 
            case 'Hubs': $location.path('/hub/' + selectedOption['id'])
