@@ -81,16 +81,23 @@
         }
       }
 
+      function getAllResults() {
+        return {
+          currentPage: 1,
+          perPage: 1000
+        }
+      }
+
       controller.availableOptions = [];
 
       this.gatherRecentlyFundedCompanies = function() {
-        searchCompaniesService.getCompanies({ recently_funded: true }, getPaginationDetails()).then(function(companies) {
+        searchCompaniesService.getCompanies({ recently_funded: true }, getAllResults()).then(function(companies) {
           controller.recentlyFunded = companies.data;
         });
       };
 
       this.gatherCompanies = function() {
-        searchCompaniesService.getCompanies({ recently_funded: false }, getPaginationDetails()).then(function(companies) {
+        searchCompaniesService.getCompanies({ recently_funded: false }, getAllResults()).then(function(companies) {
           controller.companyResults = companies.data;
           controller.totalCompanyItems = companies.headers('Total')
 
@@ -101,7 +108,7 @@
       };
 
       this.gatherMtns = function() {
-        searchMultinationalsService.get({searchText: controller.query}, getPaginationDetails()).then(function(multinationals) {
+        searchMultinationalsService.get({searchText: controller.query}, getAllResults()).then(function(multinationals) {
           controller.mtnsResults = multinationals.data;
           controller.totalMtnsItems = multinationals.headers('Total');
 
@@ -112,7 +119,7 @@
       }
 
       this.gatherInvestors = function() {
-        searchInvestorsService.get({searchText: this.query}, getPaginationDetails()).then(function(investors) {
+        searchInvestorsService.get({searchText: this.query}, getAllResults()).then(function(investors) {
           controller.investorResults = investors.data;
           controller.totalInvestorItems = investors.headers('Total');
 
@@ -123,7 +130,7 @@
       };
 
       this.gatherHubs = function() {
-        searchHubsService.get({searchText: controller.query}, getPaginationDetails()).then(function(hubs) {
+        searchHubsService.get({searchText: controller.query}, getAllResults()).then(function(hubs) {
           controller.hubResults = hubs.data;
           controller.totalHubItems = hubs.headers('Total');
 
