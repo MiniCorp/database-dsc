@@ -56,7 +56,7 @@
       <div class="company-info-value">{{$ctrl.investor.investment_size}}</div>
     </div>
 
-    <div class="col-md-4 m-b-md" ng-show="$ctrl.investor.office_locations">
+    <div class="col-md-4 m-b-md" ng-show="$ctrl.investor.office_locations && $ctrl.investor.office_locations.length > 0">
       <div class="company-info-title">Office Locations</div>
       <div class="company-info-value">
         <p ng-repeat="office in $ctrl.investor.office_locations">{{office.address}}</p>
@@ -69,7 +69,7 @@
     </div>
 
     <div class="col-md-4 m-b-md" ng-show="$ctrl.investor.contact_email">
-      <div class="company-info-title">Contact Number</div>
+      <div class="company-info-title">Contact Email</div>
       <div class="company-info-value">{{$ctrl.investor.contact_email}}</div>
     </div>
 

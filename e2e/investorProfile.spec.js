@@ -82,16 +82,6 @@ describe('InvestorProfile', function() {
       expect(page.details.getText()).toContain('info@frontline.vc');
     });
 
-    xit('should display Contact Number', function() {
-      //TODO: No data
-      expect(page.details.getText()).toContain('');
-    });
-
-    xit('should display Deal Structure', function() {
-      //TODO: No data
-      expect(page.details.getText()).toContain('Complete');
-    });
-
     it('should display Preferred Contact', function() {
       expect(page.details.getText()).toContain('Referral Only');
     });

@@ -61,7 +61,7 @@
       <div class="company-info-value">
         <p id="target-markets">
           <span ng-repeat="targetMarket in $ctrl.company.target_markets.split(',')">
-            {{targetMarket | regionCodeToHuman}}{{$last ? ' ' : ','}}
+            {{targetMarket | regionCodeToHuman}}{{$last ? '' : ', '}}
           </span>
         </p>
       </div>
