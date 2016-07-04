@@ -174,7 +174,7 @@
 
 <div class="panel panel-default">
   <div class="panel-heading">
-    Founders
+    Principals
     <a ng-click="$ctrl.addFounder()" class="btn btn-primary btn-sm pull-right">Add Founder</a>
   </div>
   <div class="panel-body">
@@ -184,7 +184,7 @@
     <div ng-if="$ctrl.investor.founders.length > 0" ng-repeat="founder in $ctrl.investor.founders track by $index">
       <div class="panel panel-default">
         <div class="panel-heading">
-          Founder
+          Principal
           <a ng-click="$ctrl.removeFounder(founder)" class="pull-right"><i class="fa fa-2x fa-trash"></i></a>
         </div>
         <div class="panel-body">
