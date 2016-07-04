@@ -43,7 +43,7 @@ module V1
                                 .where.not("id in (?)", UserEntityClaim.where(user_id: current_user.id, entity_type: UserEntityClaim.entity_types['hub']).count > 0 ? UserEntityClaim.where(user_id: current_user.id, entity_type: UserEntityClaim.entity_types['hub']).pluck(:entity_id) : -1)
           }
           format.csv do
-            send_data hubs.to_csv
+            send_data PublicHub.to_csv(PublicHub.all)
           end
         end
 

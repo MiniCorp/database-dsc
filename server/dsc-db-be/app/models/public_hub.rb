@@ -1,2 +1,2 @@
-class PublicHub < ActiveRecord::Base
+class PublicHub < ApplicationRecord
 end
