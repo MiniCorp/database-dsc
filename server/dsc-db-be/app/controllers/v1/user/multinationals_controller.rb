@@ -21,7 +21,7 @@ module V1
         respond_to do |format|
           format.html {
             # multinationals assign to the current user
-            user_multinationals = multinationals.claimed_by_user(current_user).where(is_live: true)
+            user_multinationals = Multinational.claimed_by_user(current_user).where(is_live: true)
             # multinationals awaiting action by admin
             # first get all multinationals where user assigned but not live (when user creates the profile)
             pending_multinationals = Multinational.where(user: current_user, is_live: false)

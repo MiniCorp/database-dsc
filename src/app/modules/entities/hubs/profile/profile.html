@@ -43,7 +43,7 @@
       <div class="company-info-value">{{$ctrl.hub.funding_provided ? 'Yes' : 'No'}}</div>
     </div>
 
-    <div class="col-md-4 m-b-md" ng-show="$ctrl.hub.applications">
+    <div class="col-md-4 m-b-md" ng-show="$ctrl.hub.applications && $ctrl.hub.applications.length > 0">
       <div class="company-info-title">Applications</div>
       <div class="company-info-value">
         <p id="hub-type">
