@@ -16,6 +16,8 @@ Rails.application.routes.draw do
     get 'hubs', to: 'hubs#index'
     get 'hubs/:id', to: 'hubs#show'
 
+    get 'home_search', to: 'home_searches#index'
+
     resources :password_resets, only: [:new, :create, :edit, :update]
 
     # Administration Routes

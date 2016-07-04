@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160630075253) do
+ActiveRecord::Schema.define(version: 20160704144927) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -280,86 +280,6 @@ ActiveRecord::Schema.define(version: 20160630075253) do
 
   add_foreign_key "user_entity_pendings", "users"
 
-  create_view :public_multinationals,  sql_definition: <<-SQL
-      SELECT multinationals.id,
-      multinationals.name,
-      multinationals.logo,
-      multinationals.short_description,
-      multinationals.long_description,
-      multinationals.headquarters,
-      multinationals.local_office,
-      multinationals.emea_hq,
-      multinationals.employees,
-      multinationals.events_space,
-      multinationals.functions,
-      multinationals.events_space_qualifiers,
-      multinationals.next_event,
-      multinationals.website,
-      multinationals.social_accounts,
-      multinationals.startup_packages,
-      multinationals.video_url,
-      multinationals.tags,
-      multinationals.lat,
-      multinationals.lng,
-      multinationals.building_product_in_ireland
-     FROM multinationals;
-  SQL
-
-  create_view :public_investors,  sql_definition: <<-SQL
-      SELECT investors.id,
-      investors.name,
-      investors.logo,
-      investors.short_description,
-      investors.long_description,
-      investors.headquarters,
-      investors.local_office,
-      investors.tags,
-      investors.funding_types,
-      investors.investment_size,
-      investors.funds_raised,
-      investors.regions,
-      investors.contact,
-      investors.contact_email,
-      investors.preferred_contact,
-      investors.co_investors,
-      investors.similar_investors,
-      investors.exits_ipos,
-      investors.founded,
-      investors.contact_urls,
-      investors.website,
-      investors.video_url,
-      investors.social_accounts,
-      investors.office_locations,
-      investors.deal_structure,
-      investors.companies_invested_in
-     FROM investors;
-  SQL
-
-  create_view :public_hubs,  sql_definition: <<-SQL
-      SELECT hubs.id,
-      hubs.name,
-      hubs.logo,
-      hubs.short_description,
-      hubs.long_description,
-      hubs.hub_type,
-      hubs.applications,
-      hubs.founded,
-      hubs.contact,
-      hubs.contact_detail,
-      hubs.address,
-      hubs.contact_urls,
-      hubs.events,
-      hubs.alumni,
-      hubs.website,
-      hubs.video_url,
-      hubs.social_accounts,
-      hubs.tags,
-      hubs.funding_provided,
-      hubs.lat,
-      hubs.lng
-     FROM hubs;
-  SQL
-
   create_view :public_companies,  sql_definition: <<-SQL
       SELECT companies.id,
       companies.name,
@@ -394,4 +314,112 @@ ActiveRecord::Schema.define(version: 20160630075253) do
       companies.recently_funded
      FROM companies;
   SQL
+
+  create_view :public_hubs,  sql_definition: <<-SQL
+      SELECT hubs.id,
+      hubs.name,
+      hubs.logo,
+      hubs.short_description,
+      hubs.long_description,
+      hubs.hub_type,
+      hubs.applications,
+      hubs.founded,
+      hubs.contact,
+      hubs.contact_detail,
+      hubs.address,
+      hubs.contact_urls,
+      hubs.events,
+      hubs.alumni,
+      hubs.website,
+      hubs.video_url,
+      hubs.social_accounts,
+      hubs.tags,
+      hubs.funding_provided,
+      hubs.lat,
+      hubs.lng
+     FROM hubs;
+  SQL
+
+  create_view :public_investors,  sql_definition: <<-SQL
+      SELECT investors.id,
+      investors.name,
+      investors.logo,
+      investors.short_description,
+      investors.long_description,
+      investors.headquarters,
+      investors.local_office,
+      investors.tags,
+      investors.funding_types,
+      investors.investment_size,
+      investors.funds_raised,
+      investors.regions,
+      investors.contact,
+      investors.contact_email,
+      investors.preferred_contact,
+      investors.co_investors,
+      investors.similar_investors,
+      investors.exits_ipos,
+      investors.founded,
+      investors.contact_urls,
+      investors.website,
+      investors.video_url,
+      investors.social_accounts,
+      investors.office_locations,
+      investors.deal_structure,
+      investors.companies_invested_in
+     FROM investors;
+  SQL
+
+  create_view :public_multinationals,  sql_definition: <<-SQL
+      SELECT multinationals.id,
+      multinationals.name,
+      multinationals.logo,
+      multinationals.short_description,
+      multinationals.long_description,
+      multinationals.headquarters,
+      multinationals.local_office,
+      multinationals.emea_hq,
+      multinationals.employees,
+      multinationals.events_space,
+      multinationals.functions,
+      multinationals.events_space_qualifiers,
+      multinationals.next_event,
+      multinationals.website,
+      multinationals.social_accounts,
+      multinationals.startup_packages,
+      multinationals.video_url,
+      multinationals.tags,
+      multinationals.lat,
+      multinationals.lng,
+      multinationals.building_product_in_ireland
+     FROM multinationals;
+  SQL
+
+  create_view :home_searches,  sql_definition: <<-SQL
+      SELECT companies.id,
+      companies.name,
+      'Irish'::text AS itemtype
+     FROM companies
+    WHERE ((companies.deleted_at IS NULL) AND (companies.is_live = true))
+  UNION
+   SELECT multinationals.id,
+      multinationals.name,
+      'International'::text AS itemtype
+     FROM multinationals
+    WHERE ((multinationals.deleted_at IS NULL) AND (multinationals.is_live = true))
+  UNION
+   SELECT investors.id,
+      investors.name,
+      'Investors'::text AS itemtype
+     FROM investors
+    WHERE ((investors.deleted_at IS NULL) AND (investors.is_live = true))
+  UNION
+   SELECT hubs.id,
+      hubs.name,
+      'Hubs'::text AS itemtype
+     FROM hubs
+    WHERE ((hubs.deleted_at IS NULL) AND (hubs.is_live = true))
+    ORDER BY 2;
+  SQL
+
 end

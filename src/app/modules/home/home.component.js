@@ -37,9 +37,10 @@
       templateUrl: 'app/modules/home/home.html',
       controller: 'HomeController'
     })
-    .controller('HomeController', function ($scope, $location, $interval, searchCompaniesService, searchInvestorsService, searchHubsService, searchMultinationalsService) {
+    .controller('HomeController', function ($scope, $location, $interval, searchCompaniesService, searchInvestorsService, searchHubsService, searchMultinationalsService, homeSearchService) {
       var controller = this;
       this.searchCompaniesService = searchCompaniesService;
+      this.homeSearchService = homeSearchService;
 
       controller.currentPage = 1;
       controller.perPage = 4;
@@ -48,9 +49,9 @@
       $scope.$watch('currentPage', function () {
         controller.gatherRecentlyFundedCompanies();
         controller.gatherCompanies();
+        controller.gatherMtns();
         controller.gatherInvestors();
         controller.gatherHubs();
-        controller.gatherMtns();
       }, true);
 
       $scope.$watch('$ctrl.availableOptions.selected', function (selectedOption) {
@@ -81,56 +82,64 @@
         }
       }
 
-      function getAllResults() {
-        return {
-          currentPage: 1,
-          perPage: 1000
-        }
-      }
-
       controller.availableOptions = [];
 
+      this.getData = function(searchText) {
+        return homeSearchService.getData(searchText).then(function(response) {
+          return response.data;
+        });
+      };
+
+      this.onSearchItemSelected = function($item) {
+        if ($item == undefined) {
+          return;
+        }
+
+        switch ($item.itemtype)
+        {
+           case 'Irish': $location.path('/company/' + $item.id)
+           break;
+
+           case 'Investors': $location.path('/investor/' + $item.id)
+           break;
+
+           case 'International': $location.path('/mtns/' + $item.id)
+           break;
+
+           case 'Hubs': $location.path('/hub/' + $item.id)
+           break;
+        }
+      };
+
       this.gatherRecentlyFundedCompanies = function() {
-        searchCompaniesService.getCompanies({ recently_funded: true }, getAllResults()).then(function(companies) {
+        searchCompaniesService.getCompanies({ recently_funded: true }).then(function(companies) {
           controller.recentlyFunded = companies.data;
         });
       };
 
       this.gatherCompanies = function() {
-        searchCompaniesService.getCompanies({ recently_funded: false }, getAllResults()).then(function(companies) {
+        searchCompaniesService.getCompanies({ recently_funded: false }).then(function(companies) {
           controller.companyResults = companies.data;
           controller.totalCompanyItems = companies.headers('Total')
-
-          angular.forEach(companies.data, function(company){
-            controller.availableOptions.push({name: company.name, itemType: 'Irish', id: company.id});
-          });
         });
       };
 
       this.gatherMtns = function() {
-        searchMultinationalsService.get({searchText: controller.query}, getAllResults()).then(function(multinationals) {
+        searchMultinationalsService.get({searchText: controller.query}).then(function(multinationals) {
           controller.mtnsResults = multinationals.data;
           controller.totalMtnsItems = multinationals.headers('Total');
-
-          angular.forEach(multinationals.data, function(multinational){
-            controller.availableOptions.push({name: multinational.name, itemType: 'International', id: multinational.id});
-          });
         })
       }
 
       this.gatherInvestors = function() {
-        searchInvestorsService.get({searchText: this.query}, getAllResults()).then(function(investors) {
+        searchInvestorsService.get({searchText: this.query}).then(function(investors) {
           controller.investorResults = investors.data;
           controller.totalInvestorItems = investors.headers('Total');
-
-          angular.forEach(investors.data, function(investor){
-            controller.availableOptions.push({name: investor.name, itemType: 'Investors', id: investor.id});
-          });
         });
       };
 
       this.gatherHubs = function() {
-        searchHubsService.get({searchText: controller.query}, getAllResults()).then(function(hubs) {
+        searchHubsService.get({searchText: controller.query}).then(function(hubs) {
           controller.hubResults = hubs.data;
           controller.totalHubItems = hubs.headers('Total');
 
@@ -139,8 +148,5 @@
           });
         })
       }
-
-
-
     });
 })();

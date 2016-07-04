@@ -5,12 +5,13 @@
     <div class="row">
       <div class="col-md-offset-2 col-md-8">
         <div class="form-group">
-          <ui-select ng-model="$ctrl.availableOptions.selected" theme="bootstrap">
-            <ui-select-match placeholder="Search for Irish technology companies, international tech companies, investors and hubs">{{$select.selected.name}}</ui-select-match>
-            <ui-select-choices group-by="'itemType'" repeat="item in $ctrl.availableOptions | filter: $select.search">
-              <span ng-bind-html="item.name | highlight: $select.search"></span>
-            </ui-select-choices>
-          </ui-select>
+          <input id="homeSearch"
+                 type="text"
+                 ng-model="$ctrl.selected"
+                 typeahead-on-select="$ctrl.onSearchItemSelected($item, $model, $label)"
+                 uib-typeahead="result as result.name for result in $ctrl.getData($viewValue)"
+                 class="form-control"
+                 placeholder="Search for Irish technology companies, international tech companies, investors and hubs">
         </div>
         <p style="padding-top:20px;font-size:18px;">
           Add Your Irish Company Here
