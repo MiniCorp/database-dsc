@@ -1,2 +1,2 @@
-class PublicCompany < ActiveRecord::Base
+class PublicCompany < ApplicationRecord
 end

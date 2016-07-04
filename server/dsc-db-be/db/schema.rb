@@ -15,28 +15,6 @@ ActiveRecord::Schema.define(version: 20160704144927) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-  enable_extension "btree_gin"
-  enable_extension "btree_gist"
-  enable_extension "citext"
-  enable_extension "cube"
-  enable_extension "dblink"
-  enable_extension "dict_int"
-  enable_extension "dict_xsyn"
-  enable_extension "earthdistance"
-  enable_extension "fuzzystrmatch"
-  enable_extension "hstore"
-  enable_extension "intarray"
-  enable_extension "ltree"
-  enable_extension "pg_stat_statements"
-  enable_extension "pg_trgm"
-  enable_extension "pgcrypto"
-  enable_extension "pgrowlocks"
-  enable_extension "pgstattuple"
-  enable_extension "sslinfo"
-  enable_extension "tablefunc"
-  enable_extension "unaccent"
-  enable_extension "uuid-ossp"
-  enable_extension "xml2"
 
   create_table "ar_internal_metadata", primary_key: "key", force: :cascade do |t|
     t.string   "value"
@@ -99,8 +77,8 @@ ActiveRecord::Schema.define(version: 20160704144927) do
     t.string   "exec_summary_content_type"
     t.integer  "exec_summary_file_size"
     t.datetime "exec_summary_updated_at"
-    t.boolean  "is_live",                   default: false
     t.boolean  "allow_sharing",             default: false
+    t.boolean  "is_live",                   default: false
     t.string   "incubators",                default: [],                 array: true
   end
 
@@ -138,8 +116,8 @@ ActiveRecord::Schema.define(version: 20160704144927) do
     t.float    "lng"
     t.integer  "user_id"
     t.jsonb    "applications",      default: []
-    t.boolean  "is_live",           default: false
     t.boolean  "allow_sharing",     default: false
+    t.boolean  "is_live",           default: false
   end
 
   add_index "hubs", ["alumni"], name: "index_hubs_on_alumni", using: :gin
@@ -182,8 +160,8 @@ ActiveRecord::Schema.define(version: 20160704144927) do
     t.string   "deal_structure"
     t.jsonb    "companies_invested_in", default: []
     t.integer  "user_id"
-    t.boolean  "is_live",               default: false
     t.boolean  "allow_sharing",         default: false
+    t.boolean  "is_live",               default: false
   end
 
   add_index "investors", ["companies_invested_in"], name: "index_investors_on_companies_invested_in", using: :gin
@@ -221,8 +199,8 @@ ActiveRecord::Schema.define(version: 20160704144927) do
     t.float    "lng"
     t.boolean  "building_product_in_ireland", default: false
     t.integer  "user_id"
-    t.boolean  "is_live",                     default: false
     t.boolean  "allow_sharing",               default: false
+    t.boolean  "is_live",                     default: false
     t.boolean  "startup_evangelist"
   end
 
@@ -276,9 +254,87 @@ ActiveRecord::Schema.define(version: 20160704144927) do
     t.boolean  "email_confirmed",    default: false
   end
 
-  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
-
   add_foreign_key "user_entity_pendings", "users"
+
+  create_view :public_multinationals,  sql_definition: <<-SQL
+      SELECT multinationals.id,
+      multinationals.name,
+      multinationals.logo,
+      multinationals.short_description,
+      multinationals.long_description,
+      multinationals.headquarters,
+      multinationals.local_office,
+      multinationals.emea_hq,
+      multinationals.employees,
+      multinationals.events_space,
+      multinationals.functions,
+      multinationals.events_space_qualifiers,
+      multinationals.next_event,
+      multinationals.website,
+      multinationals.social_accounts,
+      multinationals.startup_packages,
+      multinationals.video_url,
+      multinationals.tags,
+      multinationals.lat,
+      multinationals.lng,
+      multinationals.building_product_in_ireland
+     FROM multinationals;
+  SQL
+
+  create_view :public_investors,  sql_definition: <<-SQL
+      SELECT investors.id,
+      investors.name,
+      investors.logo,
+      investors.short_description,
+      investors.long_description,
+      investors.headquarters,
+      investors.local_office,
+      investors.tags,
+      investors.funding_types,
+      investors.investment_size,
+      investors.funds_raised,
+      investors.regions,
+      investors.contact,
+      investors.contact_email,
+      investors.preferred_contact,
+      investors.co_investors,
+      investors.similar_investors,
+      investors.exits_ipos,
+      investors.founded,
+      investors.contact_urls,
+      investors.website,
+      investors.video_url,
+      investors.social_accounts,
+      investors.office_locations,
+      investors.deal_structure,
+      investors.companies_invested_in
+     FROM investors;
+  SQL
+
+  create_view :public_hubs,  sql_definition: <<-SQL
+      SELECT hubs.id,
+      hubs.name,
+      hubs.logo,
+      hubs.short_description,
+      hubs.long_description,
+      hubs.hub_type,
+      hubs.applications,
+      hubs.founded,
+      hubs.contact,
+      hubs.contact_detail,
+      hubs.address,
+      hubs.contact_urls,
+      hubs.events,
+      hubs.alumni,
+      hubs.website,
+      hubs.video_url,
+      hubs.social_accounts,
+      hubs.tags,
+      hubs.funding_provided,
+      hubs.lat,
+      hubs.lng
+     FROM hubs;
+  SQL
 
   create_view :public_companies,  sql_definition: <<-SQL
       SELECT companies.id,
@@ -313,86 +369,6 @@ ActiveRecord::Schema.define(version: 20160704144927) do
       companies.revenue,
       companies.recently_funded
      FROM companies;
-  SQL
-
-  create_view :public_hubs,  sql_definition: <<-SQL
-      SELECT hubs.id,
-      hubs.name,
-      hubs.logo,
-      hubs.short_description,
-      hubs.long_description,
-      hubs.hub_type,
-      hubs.applications,
-      hubs.founded,
-      hubs.contact,
-      hubs.contact_detail,
-      hubs.address,
-      hubs.contact_urls,
-      hubs.events,
-      hubs.alumni,
-      hubs.website,
-      hubs.video_url,
-      hubs.social_accounts,
-      hubs.tags,
-      hubs.funding_provided,
-      hubs.lat,
-      hubs.lng
-     FROM hubs;
-  SQL
-
-  create_view :public_investors,  sql_definition: <<-SQL
-      SELECT investors.id,
-      investors.name,
-      investors.logo,
-      investors.short_description,
-      investors.long_description,
-      investors.headquarters,
-      investors.local_office,
-      investors.tags,
-      investors.funding_types,
-      investors.investment_size,
-      investors.funds_raised,
-      investors.regions,
-      investors.contact,
-      investors.contact_email,
-      investors.preferred_contact,
-      investors.co_investors,
-      investors.similar_investors,
-      investors.exits_ipos,
-      investors.founded,
-      investors.contact_urls,
-      investors.website,
-      investors.video_url,
-      investors.social_accounts,
-      investors.office_locations,
-      investors.deal_structure,
-      investors.companies_invested_in
-     FROM investors;
-  SQL
-
-  create_view :public_multinationals,  sql_definition: <<-SQL
-      SELECT multinationals.id,
-      multinationals.name,
-      multinationals.logo,
-      multinationals.short_description,
-      multinationals.long_description,
-      multinationals.headquarters,
-      multinationals.local_office,
-      multinationals.emea_hq,
-      multinationals.employees,
-      multinationals.events_space,
-      multinationals.functions,
-      multinationals.events_space_qualifiers,
-      multinationals.next_event,
-      multinationals.website,
-      multinationals.social_accounts,
-      multinationals.startup_packages,
-      multinationals.video_url,
-      multinationals.tags,
-      multinationals.lat,
-      multinationals.lng,
-      multinationals.building_product_in_ireland
-     FROM multinationals;
   SQL
 
   create_view :home_searches,  sql_definition: <<-SQL

@@ -37,7 +37,7 @@ module V1
                                 .where.not("id in (?)", UserEntityClaim.where(user_id: current_user.id, entity_type: UserEntityClaim.entity_types['multinational']).count > 0 ? UserEntityClaim.where(user_id: current_user.id, entity_type: UserEntityClaim.entity_types['multinational']).pluck(:entity_id) : -1)
           }
           format.csv do
-            send_data multinationals.to_csv
+            send_data PublicMultinational.to_csv(PublicMultinational.all)
           end
         end
       end

@@ -42,7 +42,7 @@ module V1
                                 .where.not("id in (?)", UserEntityClaim.where(user_id: current_user.id, entity_type: UserEntityClaim.entity_types['investor']).count > 0 ? UserEntityClaim.where(user_id: current_user.id, entity_type: UserEntityClaim.entity_types['investor']).pluck(:entity_id) : -1)
           }
           format.csv do
-            send_data investors.to_csv
+            send_data PublicInvestor.to_csv(PublicInvestor.all)
           end
         end
       end

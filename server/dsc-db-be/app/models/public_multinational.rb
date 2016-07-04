@@ -1,2 +1,2 @@
-class PublicMultinational < ActiveRecord::Base
+class PublicMultinational < ApplicationRecord
 end

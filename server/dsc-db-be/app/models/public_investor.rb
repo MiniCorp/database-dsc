@@ -1,2 +1,2 @@
-class PublicInvestor < ActiveRecord::Base
+class PublicInvestor < ApplicationRecord
 end
