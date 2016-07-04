@@ -75,8 +75,9 @@ class Investor < ApplicationRecord
 
   attr_accessor :current_user
 
-  def self.select_numeric_scope(column, range_as_string)
-    lower, upper = range_as_string.split('-').map(&:to_i)
+  def self.select_numeric_scope(column, selected_value)
+    lower = 0
+    upper = selected_value.to_i
     return greater_than(column, lower) if upper == 100000000
     range_scope(column, lower..upper)
   end

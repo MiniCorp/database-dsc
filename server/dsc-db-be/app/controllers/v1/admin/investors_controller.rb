@@ -53,7 +53,7 @@ module V1
       def investor_params
         params.require(:investor).permit(
           :name, :logo, :short_description, :long_description, :video_url,
-          :exits_ipos, :headquarters, :founded, :local_office,
+          :exits_ipos, :headquarters, :founded, :local_office, :funding_types,
           :funds_raised, { funding_types: [] }, :investment_size, :regions, :office_locations,
           { office_locations: [:id, :address, :lat, :lng] }, :contact, :contact_email, :preferred_contact,
           :co_investors, :similar_investors, :similar_investors, :founders,
