@@ -114,7 +114,11 @@
 
         <div class="form-group">
           <label for="investment_size">Maximum Investment Size:</label>
-          <input ng-model="$ctrl.investor.investment_size" id="investment_size" class="form-control" type="text">
+          <div class="input-group">
+            <span class="input-group-addon">&euro;</span>
+            <input ng-model="$ctrl.investor.investment_size" id="investment_size" class="form-control" type="text">
+          </div>
+
         </div>
 
         <div class="form-group">
