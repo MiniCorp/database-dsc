@@ -4,6 +4,7 @@
   angular
     .module('dscFe')
     .filter('regionCodeToHuman', function() {
+
       var regions = {
         G: 'Global',
         EU: 'Europe',
