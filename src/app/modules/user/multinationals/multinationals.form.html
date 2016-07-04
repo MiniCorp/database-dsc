@@ -11,7 +11,22 @@
 
       <div class="col-md-6">
         <div class="form-group">
-          <label>European HQ in Ireland</label>
+          <label for="headquarters">Irish Headquarters:</label>
+          <input ng-model="$ctrl.multinational.headquarters" id="headquarters" class="form-control" type="text">
+        </div>
+
+        <div class="form-group">
+          <label for="headquarters">Latitude:</label>
+          <input ng-model="$ctrl.multinational.lat" id="headquarters" class="form-control" type="text">
+        </div>
+
+        <div class="form-group">
+          <label for="headquarters">Longitude:</label>
+          <input ng-model="$ctrl.multinational.lng" id="headquarters" class="form-control" type="text">
+        </div>
+
+        <div class="form-group">
+          <label>European/EMEA HQ in Ireland</label>
           <br>
           <input type="radio" ng-model="$ctrl.multinational.emea_hq" ng-value="true"> Yes
           &nbsp;
@@ -51,8 +66,6 @@
           <div class="checkbox"><label> <input ng-model="$ctrl.functions.SI" type="checkbox"
                                                value="SI">Server Infrastructure</label><br/>
           </div>
-          <div class="checkbox"><label> <input ng-model="$ctrl.functions.E" type="checkbox"
-                                               value="E">Africa</label><br/></div>
           <div class="checkbox"><label> <input ng-model="$ctrl.functions.M" type="checkbox"
                                                value="M">Marketing</label><br/></div>
           <div class="checkbox"><label> <input ng-model="$ctrl.functions.RD" type="checkbox"
@@ -104,31 +117,6 @@
   </div>
 </div>
 
-<div class="panel panel-default">
-  <div class="panel-heading">Location</div>
-  <div class="panel-body">
-    <div class="row">
-      <div class="col-md-12">
-        <div class="alert alert-info" role="alert">
-          To get longitude and latitude coordinates: Find your location on google maps, right click on the red marker, select "what's here" and you'll find them at the bottom of the dialog box (first one is latitude, second one is longitude).
-        </div>
-        <div class="form-group">
-          <label for="headquarters">Latitude:</label>
-          <input ng-model="$ctrl.multinational.lat" id="headquarters" class="form-control" type="text">
-        </div>
-
-        <div class="form-group">
-          <label for="headquarters">Longitude:</label>
-          <input ng-model="$ctrl.multinational.lng" id="headquarters" class="form-control" type="text">
-        </div>
-        <div class="form-group">
-          <label for="headquarters">Headquarters:</label>
-          <input ng-model="$ctrl.multinational.headquarters" id="headquarters" class="form-control" type="text">
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
 
 <div class="panel panel-default">
   <div class="panel-heading">

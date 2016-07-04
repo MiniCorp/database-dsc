@@ -32,7 +32,7 @@
     </div>
 
     <div class="col-md-4 m-b-md" ng-show="$ctrl.investor.founded">
-      <div class="company-info-title">Founded</div>
+      <div class="company-info-title">Founded Year</div>
       <div class="company-info-value">{{$ctrl.investor.founded}}</div>
     </div>
 
@@ -41,18 +41,18 @@
       <div class="company-info-value">${{$ctrl.investor.funds_raised}}</div>
     </div>
 
-    <div class="col-md-4 m-b-md" ng-show="$ctrl.investor.funding_types">
+    <div class="col-md-4 m-b-md" ng-show="$ctrl.investor.funding_types && $ctrl.investor.funding_types.length > 0">
       <div class="company-info-title">Type of Funding</div>
       <div class="company-info-value">{{$ctrl.investor.funding_types | fundingCodeToHuman : 'array' }}</div>
     </div>
 
-    <div class="col-md-4 m-b-md" ng-show="$ctrl.investor.deal_structure">
+    <!-- <div class="col-md-4 m-b-md" ng-show="$ctrl.investor.deal_structure">
       <div class="company-info-title">Deal Structure</div>
       <div class="company-info-value">{{$ctrl.investor.deal_structure}}</div>
-    </div>
+    </div> -->
 
     <div class="col-md-4 m-b-md" ng-show="$ctrl.investor.investment_size">
-      <div class="company-info-title">Investment Size</div>
+      <div class="company-info-title">Maximum Investment Size</div>
       <div class="company-info-value">{{$ctrl.investor.investment_size}}</div>
     </div>
 
@@ -74,7 +74,7 @@
     </div>
 
     <div class="col-md-4 m-b-md" ng-show="$ctrl.investor.preferred_contact">
-      <div class="company-info-title">Preferred Contact</div>
+      <div class="company-info-title">Preferred Contact Method</div>
       <div class="company-info-value">{{$ctrl.investor.preferred_contact}}</div>
     </div>
 

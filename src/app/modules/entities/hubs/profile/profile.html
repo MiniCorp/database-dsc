@@ -24,7 +24,7 @@
     </div>
 
     <div class="col-md-4 m-b-md" ng-show="$ctrl.hub.founded">
-      <div class="company-info-title">Founded</div>
+      <div class="company-info-title">Founded Year</div>
       <div class="company-info-value">{{$ctrl.hub.founded}}</div>
     </div>
 
@@ -34,7 +34,7 @@
     </div>
 
     <div class="col-md-4 m-b-md" ng-show="$ctrl.hub.contact_detail">
-      <div class="company-info-title">Contact Details</div>
+      <div class="company-info-title">Public Contact Email (Optional)</div>
       <div class="company-info-value">{{$ctrl.hub.contact_detail}}</div>
     </div>
 
@@ -44,7 +44,7 @@
     </div>
 
     <div class="col-md-4 m-b-md" ng-show="$ctrl.hub.applications && $ctrl.hub.applications.length > 0">
-      <div class="company-info-title">Applications</div>
+      <div class="company-info-title">Program Details</div>
       <div class="company-info-value">
         <p id="hub-type">
           <div ng-repeat="application in $ctrl.hub.applications">

@@ -42,7 +42,7 @@
         emeaHq: {
           type: 'dropdown',
           id: 'emea-hq',
-          label: 'European HQ in Ireland',
+          label: 'European/EMEA HQ in Ireland',
           selectedValue: '',
           noSelectionString: 'Yes & No',
           values: ['Yes', 'No']

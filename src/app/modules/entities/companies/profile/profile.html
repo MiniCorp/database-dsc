@@ -37,7 +37,7 @@
     </div>
 
     <div class="col-md-4 m-b-md" ng-show="$ctrl.company.founded">
-      <div class="company-info-title">Founded</div>
+      <div class="company-info-title">Founded Year</div>
       <div class="company-info-value">{{$ctrl.company.founded}}</div>
     </div>
 
@@ -53,7 +53,7 @@
 
     <div class="col-md-4 m-b-md" ng-show="$ctrl.company.funding_amount">
       <div class="company-info-title">Total Funding</div>
-      <div class="company-info-value">{{$ctrl.company.funding_amount | shortFmt:0}}</div>
+      <div class="company-info-value">{{$ctrl.company.funding_amount | currency:"€":0}}</div>
     </div>
 
     <div class="col-md-4 m-b-md" ng-show="$ctrl.company.target_markets">
