@@ -37,6 +37,7 @@
       'truncate',
       'duScroll',
       'ngFileUpload',
-      'hm.readmore'
+      'hm.readmore',
+      'angulartics.google.analytics'
     ]);
 })();
