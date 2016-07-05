@@ -7,10 +7,11 @@
       templateUrl: 'app/modules/entities/hubs/index.html',
       controller: 'SearchHubsController'
     })
-    .controller('SearchHubsController', function($scope, $stateParams, $document, searchHubsService, filterHubsService) {
+    .controller('SearchHubsController', function($rootScope, $scope, $stateParams, $document, searchHubsService, filterHubsService) {
       var controller = this;
       this.searchHubsService = searchHubsService;
       this.filterHubsService = filterHubsService;
+      $rootScope.title = "Tech Ireland | Hubs";
 
       if ($stateParams.tag) {
         this.tag = $stateParams.tag;

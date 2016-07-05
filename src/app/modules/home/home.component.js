@@ -37,10 +37,11 @@
       templateUrl: 'app/modules/home/home.html',
       controller: 'HomeController'
     })
-    .controller('HomeController', function ($scope, $location, $interval, searchCompaniesService, searchInvestorsService, searchHubsService, searchMultinationalsService, homeSearchService) {
+    .controller('HomeController', function ($rootScope, $scope, $location, $interval, searchCompaniesService, searchInvestorsService, searchHubsService, searchMultinationalsService, homeSearchService) {
       var controller = this;
       this.searchCompaniesService = searchCompaniesService;
       this.homeSearchService = homeSearchService;
+      $rootScope.title = "Tech Ireland | Search for Irish Innovation Here";
 
       controller.currentPage = 1;
       controller.perPage = 4;

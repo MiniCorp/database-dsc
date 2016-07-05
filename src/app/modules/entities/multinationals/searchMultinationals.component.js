@@ -7,10 +7,11 @@
       templateUrl: 'app/modules/entities/multinationals/index.html',
       controller: 'SearchMultinationalsController'
     })
-    .controller('SearchMultinationalsController', function($scope, $stateParams, $document, searchMultinationalsService, filterMultinationalsService) {
+    .controller('SearchMultinationalsController', function($rootScope, $scope, $stateParams, $document, searchMultinationalsService, filterMultinationalsService) {
       var controller = this;
       this.searchMultinationalsService = searchMultinationalsService;
       this.filterCompaniesService = filterMultinationalsService;
+      $rootScope.title = "Tech Ireland | Multinationals";
 
       if ($stateParams.tag) {
         this.tag = $stateParams.tag;

@@ -8,7 +8,7 @@
       controller: 'HubProfileController'
     })
 
-    .controller('HubProfileController', function($stateParams, getHubService, searchCompaniesService){
+    .controller('HubProfileController', function($rootScope, $stateParams, getHubService, searchCompaniesService){
       var controller = this;
 
       this.getHubService = getHubService;
@@ -21,6 +21,7 @@
 
       getHubService.find($stateParams.id).then(function(hub){
         controller.hub = hub;
+        $rootScope.title = "Tech Ireland | " + hub.name;
         setAlumni();
         var companyIds = hub.alumni.map(function(a) { return a.id; });
         searchCompaniesService.getCompaniesWithIDs(companyIds.join(',')).then(function(companies){

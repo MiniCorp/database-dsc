@@ -7,7 +7,12 @@
       $stateProvider
         .state('userLogin', {
           url: '/user/login',
-          template: '<div class="container"><user-login></user-login></div>'
+          template: '<div class="container"><user-login></user-login></div>',
+          resolve: {
+            'title': ['$rootScope', function($rootScope){
+              $rootScope.title = "Tech Ireland | User Login";
+            }],
+          }
         })
         .state('userSignUp', {
           url: '/user/signup',
@@ -213,7 +218,12 @@
         })
         .state('search.companyProfile', {
           url: '/company/:id',
-          template: '<company-profile></company-profile>'
+          template: '<company-profile></company-profile>',
+          resolve: {
+            'title': ['$rootScope', function($rootScope){
+              $rootScope.title = "Tech Ireland";
+            }],
+          }
         })
         .state('search.searchMultinationals', {
           url: '/mtns',
@@ -229,7 +239,12 @@
         })
         .state('search.multinationalProfile', {
           url: '/mtns/:id',
-          template: '<multinational-profile></multinational-profile>'
+          template: '<multinational-profile></multinational-profile>',
+          resolve: {
+            'title': ['$rootScope', function($rootScope){
+              $rootScope.title = "Tech Ireland";
+            }],
+          }
         })
         .state('search.searchInvestors', {
           url: '/investors',
@@ -245,7 +260,12 @@
         })
         .state('search.investorProfile', {
           url: '/investor/:id',
-          template: '<investor-profile></investor-profile>'
+          template: '<investor-profile></investor-profile>',
+          resolve: {
+            'title': ['$rootScope', function($rootScope){
+              $rootScope.title = "Tech Ireland";
+            }],
+          }
         })
         .state('search.searchHubs', {
           url: '/hubs',
@@ -261,7 +281,12 @@
         })
         .state('search.hubProfile', {
           url: '/hub/:id',
-          template: '<hub-profile></hub-profile>'
+          template: '<hub-profile></hub-profile>',
+          resolve: {
+            'title': ['$rootScope', function($rootScope){
+              $rootScope.title = "Tech Ireland";
+            }],
+          }
         })
         ,
 

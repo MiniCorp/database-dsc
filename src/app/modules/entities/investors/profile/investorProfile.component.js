@@ -7,7 +7,7 @@
       templateUrl: 'app/modules/entities/investors/profile/profile.html',
       controller: 'InvestorProfileController'
     })
-    .controller('InvestorProfileController', function($scope, $stateParams, getInvestorService, NgMap, searchCompaniesService) {
+    .controller('InvestorProfileController', function($rootScope, $scope, $stateParams, getInvestorService, NgMap, searchCompaniesService) {
       var controller = this;
       this.getInvestorService = getInvestorService;
 
@@ -29,7 +29,8 @@
 
       this.investor = getInvestorService.find($stateParams.id).then(function(investor) {
         controller.investor = investor;
-        
+        $rootScope.title = "Tech Ireland | " + investor.name;
+
         var companyIds = investor.companies_invested_in.map(function(a) { return a.id; });
         if (companyIds.length == 0)
           return

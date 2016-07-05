@@ -37,9 +37,10 @@
       templateUrl: 'app/modules/about/about.html',
       controller: 'AboutController'
     })
-    .controller('AboutController', function ($scope, $location, $interval, searchCompaniesService, searchInvestorsService, searchHubsService, searchMultinationalsService) {
+    .controller('AboutController', function ($rootScope, $scope, $location, $interval, searchCompaniesService, searchInvestorsService, searchHubsService, searchMultinationalsService) {
       var controller = this;
       this.searchCompaniesService = searchCompaniesService;
+      $rootScope.title = "Tech Ireland | What is Tech Ireland";
 
       controller.currentPage = 1;
       controller.perPage = 4;

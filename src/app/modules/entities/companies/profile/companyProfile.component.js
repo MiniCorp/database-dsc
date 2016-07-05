@@ -7,7 +7,7 @@
       templateUrl: 'app/modules/entities/companies/profile/profile.html',
       controller: 'CompaniesProfilesController'
     })
-    .controller('CompaniesProfilesController', function($scope, $stateParams, getCompanyService, NgMap) {
+    .controller('CompaniesProfilesController', function($rootScope, $scope, $stateParams, getCompanyService, NgMap) {
       var controller = this;
       this.getCompanyService = getCompanyService;
 
@@ -27,11 +27,9 @@
         this.map.panTo(markerPosition);
       };
 
-
-
       this.company = getCompanyService.find($stateParams.id).then(function(company) {
         controller.company = company;
-
+        $rootScope.title = "Tech Ireland | " + company.name;
 
         switch (true) {
           case (company.employees > 1 && company.employees < 6):
