@@ -7,7 +7,7 @@
       controller: 'UserCompaniesNewController',
       templateUrl: 'app/modules/user/companies/companies.new.html'
     })
-    .controller('UserCompaniesNewController', function(userCreateCompanyService, $confirm, Notification, userListInvestorsService, userListHubsService, listTagsService, $document) {
+    .controller('UserCompaniesNewController', function(userCreateCompanyService, $confirm, $location, Notification, userListInvestorsService, userListHubsService, listTagsService, $document) {
       this.userCreateCompanyService = userCreateCompanyService;
       var controller = this;
 
@@ -104,7 +104,7 @@
           setTargetMarkets();
           controller.userCreateCompanyService.create(controller.company).then(function() {
             Notification.success('Company Saved sucessfully!');
-            setEmptyCompany();
+            $location.path( "/user/companies" );
           });
         })
       };

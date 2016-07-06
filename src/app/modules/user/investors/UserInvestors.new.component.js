@@ -77,7 +77,7 @@
           setFundingTypes();
           controller.userCreateInvestorService.create(controller.investor).then(function() {
             Notification.success('Investor Saved sucessfully!');
-            setEmptyInvestor();
+            $location.path( "/user/investors" );
           });
         })
       };

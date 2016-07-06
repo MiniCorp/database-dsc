@@ -84,7 +84,7 @@
         $confirm({text: "Are you sure you want to submit?"}).then(function() {
           controller.userCreateHubService.create(controller.hub).then(function() {
             Notification.success('Hub Saved sucessfully!');
-            setEmptyHub();
+            $location.path( "/user/hubs" );
           });
         })
       };
