@@ -2,7 +2,8 @@
   <div class="col-md-12">
     <h2 style="margin-bottom:0;">Multinationals</h2>
     <p class="text-muted" style="margin-bottom:20px;">
-      All multinationals listed on Tech Ireland are listed below. Please claim any multinational you own or alternativly create a new multinational.
+      <br/>
+      <user-header-text entity="Multinational"></user-header-text>
     </p>
     <p class="pull-right">
       <button ng-click="$ctrl.export()" class="btn btn-primary btn-xs">Export Multinations</button>
@@ -10,52 +11,134 @@
     </p>
   </div>
 </div>
+<div class="panel panel-default">
+  <div class="panel-heading">Search Multinationals</div>
+  <div class="panel-body">
+    <div class="row">
+      <input id="searchMultinationals"
+             type="text"
+             ng-model="$ctrl.selected"
+             uib-typeahead="multinational as multinational.name for multinational in $ctrl.filterUnclaimedMultinationals($viewValue)"
+             class="form-control"
+             placeholder="Type here to search for your multinational...">
+    </div>
+    <div ng-show="$ctrl.selected && $ctrl.selected.id" class="row">
+      <br/>
+      <p>
+        Click 'Claim' to request ownership of this multinational.
+      </p>
+      <div class="table-responsive">
+        <table class="table table-striped table-bordered table-hover">
+          <thead>
+          <tr>
+            <th></th>
+            <th>Name</th>
+            <th>Headquarters</th>
+            <th>Actions</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td>
+              <a ui-sref="search.multinationalProfile({id: $ctrl.selected.id})"><img ng-src="{{$ctrl.selected.logo}}" alt="{{$ctrl.selected.name}}" width="80" height="50"></a>
+            </td>
+            <td>
+              <strong>
+                <a ui-sref="search.multinationalProfile({id: $ctrl.selected.id})">{{multinational.name}}</a>
+              </strong>
+              <p style="color:#acacac"><i>{{$ctrl.selected.short_description}}</i> <a ng-href="{{$ctrl.selected.website}}" ng-show="$ctrl.selected.website"><i class="fa fa-link"></i></a></p>
+            </td>
+            <td class="base">{{$ctrl.selected.headquarters}}</td>
+            <td class="actions">
+              <div>
+                <a ng-if="!$ctrl.selected.claimed_requested_by_current_user" ng-click="$ctrl.claimMultinational($event, $ctrl.selected.id)" class="btn btn-xs btn-primary-blue">Claim</a>
+                <a ng-if="$ctrl.selected.claimed_requested_by_current_user" class="btn btn-xs btn-primary-blue" disabled>Requested</a>
+              </div>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
 
-<div class="table-responsive">
-  <table class="table table-striped table-bordered table-hover">
-    <thead>
-    <tr>
-      <th></th>
-      <th>Name</th>
-      <th>Headquarters</th>
-      <th>Status</th>
-      <th>Actions</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr ng-class="{deleted: multinational.deleted_at}" ng-repeat="multinational in $ctrl.multinationals">
-      <td>
-        <a ng-if="multinational.user_id" ui-sref="user.multinationals.edit({id: multinational.id})"><img ng-src="{{multinational.logo}}" alt="{{multinational.name}}" width="80" height="50"></a>
-        <a ng-if="!multinational.user_id" ui-sref="search.multinationalProfile({id: multinational.id})"><img ng-src="{{multinational.logo}}" alt="{{multinational.name}}" width="80" height="50"></a>
-      </td>
-      <td>
-        <strong>
-          <a ng-if="multinational.user_id" ui-sref="user.multinationals.edit({id: multinational.id})">{{multinational.name}}</a>
-          <a ng-if="!multinational.user_id" ui-sref="search.multinationalProfile({id: multinational.id})">{{multinational.name}}</a>
-          <span ng-show="multinational.deleted_at">{{multinational.name}}</span>
-        </strong>
-        <p style="color:#acacac"><i>{{multinational.short_description}}</i> <a ng-href="{{multinational.website}}" ng-show="multinational.website"><i class="fa fa-link"></i></a></p>
-      </td>
-      <td class="base">{{multinational.headquarters}}</td>
-      <td class="base">{{multinational.status}}</td>
-      <td class="actions">
+<div ng-if="$ctrl.multinationals.user_multinationals.length > 0" class="panel panel-default">
+  <div class="panel-heading">My Profiles</div>
+  <div class="panel-body">
+    <div class="table-responsive">
+      <table class="table table-striped table-bordered table-hover">
+        <thead>
+        <tr>
+          <th></th>
+          <th>Name</th>
+          <th>Local Office</th>
+          <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-class="{deleted: multinational.deleted_at}" ng-repeat="multinational in $ctrl.multinationals.user_multinationals">
+          <td>
+            <a ng-if="multinational.user_id" ui-sref="user.multinationals.edit({id: multinational.id})"><img ng-src="{{multinational.logo}}" alt="{{multinational.name}}" width="80" height="50"></a>
+            <a ng-if="!multinational.user_id" ui-sref="search.multinationalProfile({id: multinational.id})"><img ng-src="{{multinational.logo}}" alt="{{multinational.name}}" width="80" height="50"></a>
+          </td>
+          <td>
+            <strong>
+              <a ng-if="multinational.user_id" ui-sref="user.multinationals.edit({id: multinational.id})">{{multinational.name}}</a>
+              <a ng-if="!multinational.user_id" ui-sref="search.multinationalProfile({id: multinational.id})">{{multinational.name}}</a>
+            </strong>
+            <p style="color:#acacac"><i>{{multinational.short_description}}</i> <a ng-href="{{multinational.website}}" ng-show="multinational.website"><i class="fa fa-link"></i></a></p>
+          </td>
+          <td class="base">{{multinational.headquarters}}</td>
+          <td class="actions">
+            <div class="" ng-if="multinational.user_id">
+              <span ng-hide="multinational.deleted_at">
+                <a ui-sref="user.multinationals.edit({id: multinational.id})"><i class="fa fa-2x fa-edit"></i></a>
+              </span>
+            </div>
+            <div class="" ng-if="!multinational.user_id && !multinational.deleted_at">
+              <a ng-if="!multinational.claimed_requested_by_current_user" ng-click="$ctrl.claimMultinational($event, multinational.id)" class="btn btn-xs btn-primary-blue">Claim</a>
+              <a ng-if="multinational.claimed_requested_by_current_user" class="btn btn-xs btn-primary-blue" disabled>Requested</a>
+            </div>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
 
-        <div class="" ng-if="multinational.user_id">
-          <span ng-hide="multinational.deleted_at">
-            <a ui-sref="user.multinationals.edit({id: multinational.id})"><i class="fa fa-2x fa-edit"></i></a>
-          </span>
-          <span ng-show="multinational.deleted_at">
-            <a href="" ng-click="$ctrl.restoreMultinational(multinational.id)"><i class="fa fa-2x fa-refresh"></i></a>
-          </span>
-        </div>
-
-        <div class="" ng-if="!multinational.user_id">
-          <a ng-if="!multinational.claimed_requested_by_current_user" ng-click="$ctrl.claimMultinational($event, multinational.id)" class="btn btn-xs btn-block btn-default">Claim</a>
-          <a ng-if="multinational.claimed_requested_by_current_user" class="btn btn-xs btn-block btn-default" disabled>Requested</a>
-        </div>
-
-      </td>
-    </tr>
-    </tbody>
-  </table>
+<div ng-if="$ctrl.multinationals.pending_multinationals.length > 0" class="panel panel-default">
+  <div class="panel-heading">Pending Approval</div>
+  <div class="panel-body">
+    <div class="table-responsive">
+      <table class="table table-striped table-bordered table-hover">
+        <thead>
+        <tr>
+          <th></th>
+          <th>Name</th>
+          <th>Local Office</th>
+          <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-class="{deleted: multinational.deleted_at}" ng-repeat="multinational in $ctrl.multinationals.pending_multinationals">
+          <td>
+            <img ng-src="{{multinational.logo}}" alt="{{multinational.name}}" width="80" height="50">
+          </td>
+          <td>
+            <strong>
+              {{multinational.name}}
+            </strong>
+            <p style="color:#acacac"><i>{{multinational.short_description}}</i> <a ng-href="{{multinational.website}}" ng-show="multinational.website"><i class="fa fa-link"></i></a></p>
+          </td>
+          <td class="base">{{multinational.headquarters}}</td>
+          <td class="actions">
+            <a class="btn btn-xs btn-primary-blue" disabled>Requested</a>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
 </div>

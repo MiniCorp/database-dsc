@@ -1,8 +1,6 @@
 module V1
   module User
-    class UserEntityClaimsController < ApplicationController
-      before_action :authenticate
-
+    class UserEntityClaimsController < UserController
       def create
         user_entity_claim = UserEntityClaim.where(
           user_id: current_user.id,
@@ -16,7 +14,7 @@ module V1
 
         AdminMailer.claim_notification(user_entity_claim).deliver_now!
 
-        render json: :nothing, status: 201
+        render json: user_entity_claim.entity, status: 201
       end
     end
   end

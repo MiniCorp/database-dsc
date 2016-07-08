@@ -7,13 +7,28 @@
       templateUrl: 'app/modules/user/multinationals/multinationals.index.html',
       controller: 'UserMultinationalsIndexController'
     })
-    .controller('UserMultinationalsIndexController', function(store, $state, $confirm, userListMultinationalsService, userClaimEntityService, Notification, exportToCSV) {
+    .controller('UserMultinationalsIndexController', function(store, $state, $confirm, userListMultinationalsService, userClaimEntityService, Notification, exportToCSV, $document) {
       this.userClaimEntityService = userClaimEntityService;
+      var searchMultinationals = angular.element($document[0].getElementById("searchMultinationals"))
+
       var controller = this;
 
-      function getMultinationals() {
+      controller.multinationals = {
+        "user_multinationals": [],
+        "pending_multinationals": []
+      }
+
+      getUserMultinationals();
+
+      function getUserMultinationals() {
         userListMultinationalsService.getAll().then(function(multinationals) {
           controller.multinationals = multinationals;
+        });
+      }
+
+      this.filterUnclaimedMultinationals = function(query) {
+        return userListMultinationalsService.filterUnclaimedMultinationals(query).then(function(response){
+          return response.data;
         });
       }
 
@@ -24,16 +39,14 @@
         }
 
         $confirm({text: "Are you sure you want request ownership of this multinational?"}).then(function() {
-          controller.userClaimEntityService.create(requestedClaim).then(function() {
-            var element = angular.element(e.target)
-            element.text('Requested');
-            element.attr('disabled', true);
+          controller.userClaimEntityService.create(requestedClaim).then(function(response) {
+            searchMultinationals.val("");
+            controller.selected = null;
+            controller.multinationals.pending_multinationals.push(response.data);
             Notification.success('Claim has been requested sucessfully. The Admin team will review this shortly!');
           });
         })
       };
-
-      getMultinationals();
 
       this.export = function() {
         exportToCSV.export('user', 'multinationals').then(function(data) {

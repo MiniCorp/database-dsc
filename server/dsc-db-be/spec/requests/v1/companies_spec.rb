@@ -19,7 +19,6 @@ RSpec.describe 'V1::Companies', :type => :request do
           }
         ],
         "tags": ["Technology, Social Recruiting, Event Management"],
-        "investors": "Undisclosed",
         "office_locations": [
           {"id": 1, "address": "NDRC at the Digital Exchange, Crane Street, Dublin 8", "lat": 42.4076806, "lng": -71.2764524}
         ],
@@ -59,7 +58,6 @@ RSpec.describe 'V1::Companies', :type => :request do
       expect(company_json['formerly_known_as']).to eq('Ketchup')
       expect(company_json['founders'].size).to eq(1)
       expect(company_json['tags']).to match_array(['Technology, Social Recruiting, Event Management'])
-      expect(company_json['investors']).to eq('Undisclosed')
       expect(company_json['office_locations'].size).to eq(1)
       expect(company_json['incubator']).to eq('NDRC')
       expect(company_json['funding_stage']).to eq('Seed')
@@ -94,7 +92,6 @@ RSpec.describe 'V1::Companies', :type => :request do
           }
         ],
         tags: 'Personalisation',
-        investors: '',
         office_locations: '',
         incubator: 'NDRC',
         employees: 140,
@@ -109,7 +106,6 @@ RSpec.describe 'V1::Companies', :type => :request do
         headquarters: 'Cork',
         formerly_known_as: '',
         tags: ['Event Management'],
-        investors: 'Delta Partners',
         office_locations: [
           {"id": 1, "address": "Tara Street", "lat": 42.4076806, "lng": -71.2764524}
         ],
@@ -195,13 +191,6 @@ RSpec.describe 'V1::Companies', :type => :request do
 
       it 'should return companies filtered by tags field' do
         get '/v1/companies?searchText=Event+Management'
-        companies_json = JSON.parse(response.body)
-        expect(response).to have_http_status(200)
-        expect(companies_json.size).to eq(1)
-      end
-
-      it 'should return companies filtered by investors field' do
-        get '/v1/companies?searchText=Delta+Partners'
         companies_json = JSON.parse(response.body)
         expect(response).to have_http_status(200)
         expect(companies_json.size).to eq(1)

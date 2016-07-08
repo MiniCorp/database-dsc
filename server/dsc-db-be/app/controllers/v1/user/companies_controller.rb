@@ -1,32 +1,48 @@
 module V1
   module User
-    class CompaniesController < ApplicationController
-      before_action :authenticate
-      before_action :is_user
-
+    class CompaniesController < UserController
       def create
         company = Company.new(company_params)
         company.user_id = current_user.id
         company.save
 
+        if company.persisted?
+          user_entity_pending = UserEntityPending.create(
+            user_id: current_user.id,
+            entity_type: UserEntityPending.entity_types["company"],
+            entity_id: company.id
+          )
+        end
+
         render json: company
       end
 
       def index
-        if params[:filter].present?
-          companies = Company.unclaimed_or_owned_by(current_user.id).select(:id, :name).where("name ILIKE ?", "%#{params[:filter]}%")
-        else
-          companies = Company.unclaimed_or_owned_by(current_user.id).with_deleted.order(:id)
-        end
-
-        companies.each {|company| company.current_user = current_user} if current_user
-
         respond_to do |format|
           format.html {
-            render json: companies
+            if params[:typeahead] && params[:filter]
+              companies = Company.live(true).select(:id, :name).where("name ILIKE ?", "%#{params[:filter]}%").order(:name)
+              render json: companies
+            else
+              # companies assign to the current user
+              user_companies = Company.claimed_by_user(current_user).where(is_live: true)
+              # companies awaiting action by admin
+              # first get all companies where user assigned but not live (when user creates the profile)
+              pending_companies = Company.where(user: current_user, is_live: false)
+              # second get all companies where user NOT assigned but has made a claim that is pending (profile already existed)
+              pending_companies = pending_companies + Company.where("id in (?)", UserEntityClaim.where(user_id: current_user.id, entity_type: UserEntityClaim.entity_types['company']).pluck(:entity_id))
+
+              render json: { user_companies: user_companies, pending_companies: pending_companies }
+            end
+          }
+          format.json {
+            render json: Company.unclaimed
+                                .select(:id, :name, :logo, :short_description, :website, :headquarters)
+                                .where("name ILIKE ?", "#{params[:filter]}%").order(:name).limit(10)
+                                .where.not("id in (?)", UserEntityClaim.where(user_id: current_user.id, entity_type: UserEntityClaim.entity_types['company']).count > 0 ? UserEntityClaim.where(user_id: current_user.id, entity_type: UserEntityClaim.entity_types['company']).pluck(:entity_id) : -1)
           }
           format.csv do
-            send_data companies.to_csv
+            send_data PublicCompany.to_csv(PublicCompany.all)
           end
         end
       end
@@ -40,13 +56,8 @@ module V1
         render json: company
       end
 
-      protected
-
-      def is_user
-        if current_user.user_type != "user"
-          render json: :nothing, status: 401
-          return
-        end
+      def remove_exec_summary
+        company.update_attributes(exec_summary: nil)
       end
 
       private
@@ -57,17 +68,18 @@ module V1
 
       def company_params
         params.require(:company).permit(
-          :name, :logo, :short_description, :long_description, :acquisitions,
-          :target_markets, :headquarters, :formerly_known_as, :founded,
+          :name, :logo, :short_description, :long_description, :acquisitions, :allow_sharing,
+          :incubators, { incubators: [] },
+          :target_markets, :headquarters, :formerly_known_as, :founded, :tags,
+          :revenue, :recently_funded, :exec_summary,
           { tags: [] }, :incubator, :funding_stage, :employees, :funding_amount,
           :business_model, :company_stage, :operational_status,
-          :government_assistance, :looking_for, :contact,
+          :government_assistance, :looking_for, :contact, :founders, :funding_rounds,
           { founders: [:name, :linkedin] },
           { office_locations: [:id, :address, :lat, :lng] }, :video_url, :website, :custom_field_1,
           :custom_field_2, :custom_field_3, :custom_field_4, :acquired,
           { social_accounts: [:twitter, :linkedin, :facebook] }, :product_stage,
-          { funding_rounds: [:type, :amount, :date, investors: [:id, :name] ] },
-          :revenue, :recently_funded
+          { funding_rounds: [:type, :amount, :date, investors: [:id, :name] ] }
         )
       end
 

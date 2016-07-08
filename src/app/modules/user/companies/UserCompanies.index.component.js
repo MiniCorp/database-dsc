@@ -7,34 +7,33 @@
       controller: 'UserCompaniesIndexController',
       templateUrl: 'app/modules/user/companies/companies.index.html'
     })
-    .controller('UserCompaniesIndexController', function(store, $state, $confirm, jwtHelper, listCompaniesService, userClaimEntityService, deleteCompanyService, restoreCompanyService, Notification, exportToCSV) {
+    .controller('UserCompaniesIndexController', function(store, $state, $confirm, $location, jwtHelper, listCompaniesService, userClaimEntityService, deleteCompanyService, restoreCompanyService, Notification, exportToCSV, $document) {
       this.listCompaniesService = listCompaniesService;
       this.deleteCompanyService = deleteCompanyService;
       this.restoreCompanyService = restoreCompanyService;
       this.userClaimEntityService = userClaimEntityService;
+
+      var searchCompanies = angular.element($document[0].getElementById("searchCompanies"))
+
       var controller = this;
+      controller.companies = {
+        "user_companies": [],
+        "pending_companies": []
+      }
 
-      getCompanies();
+      getUserCompanies();
 
-      function getCompanies() {
+      function getUserCompanies() {
         listCompaniesService.getAll().then(function(companies) {
           controller.companies = companies;
         });
       }
 
-      this.deleteCompany = function(id) {
-        controller.deleteCompanyService.delete(id).then(function() {
-          getCompanies();
-          Notification.success('The entry has been deleted.')
+      this.filterUnclaimedCompanies = function(query) {
+        return listCompaniesService.filterUnclaimedCompanies(query).then(function(response){
+          return response.data;
         });
-      };
-
-      this.restoreCompany = function(id) {
-        controller.restoreCompanyService.restore(id).then(function() {
-          getCompanies();
-          Notification.success('The entry has been restored!')
-        });
-      };
+      }
 
       this.claimCompany = function(e, id) {
         var requestedClaim = {
@@ -42,11 +41,11 @@
           entity_type: 'company'
         }
 
-        $confirm({text: "Are you sure you want request ownership of this company?"}).then(function() {
-          controller.userClaimEntityService.create(requestedClaim).then(function() {
-            var element = angular.element(e.target)
-            element.text('Requested');
-            element.attr('disabled', true);
+        $confirm({text: "Are you the owner of this company?"}).then(function() {
+          controller.userClaimEntityService.create(requestedClaim).then(function(response) {
+            searchCompanies.val("");
+            controller.selected = null;
+            controller.companies.pending_companies.push(response.data);
             Notification.success('Claim has been requested sucessfully. The Admin team will review this shortly!');
           });
         })
@@ -60,6 +59,12 @@
             target: '_blank',
             download: 'companies.csv'
           })[0].click();
+        })
+      };
+
+      this.ensureIrish = function() {
+        $confirm({text: "TechIreland is for Irish tech companies with products (not services for hire). Are you a product based company?"}).then(function() {
+          $location.path('/user/companies/new');
         })
       };
     });

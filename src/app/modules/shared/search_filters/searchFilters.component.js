@@ -39,14 +39,6 @@
       };
 
       $scope.$on("slideEnded", function() {
-        for (var filterKey in controller.filters){
-          if (controller.filters.hasOwnProperty(filterKey)) {
-            var filter = controller.filters[filterKey];
-            if (filter.type == 'slider') {
-              filter.selectedValue = filter.range.min + '-' + filter.range.max;
-            }
-          }
-        }
         controller.search()
       });
     });

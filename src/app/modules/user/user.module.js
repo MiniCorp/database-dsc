@@ -6,7 +6,7 @@
     .config(function(serverUrl, $authProvider, $windowProvider) {
       var $window = $windowProvider.$get();
       $authProvider.linkedin({
-        clientId: '77kusgvv1604kj',
+        clientId: '77kpi794noo8d1',
         url: serverUrl + '/auth/linkedin',
         authorizationEndpoint: 'https://www.linkedin.com/uas/oauth2/authorization',
         redirectUri: $window.location.origin,

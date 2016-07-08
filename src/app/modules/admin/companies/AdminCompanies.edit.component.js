@@ -7,14 +7,32 @@
       templateUrl: 'app/modules/admin/companies/companies.edit.html',
       controller: 'AdminCompaniesEditController'
     })
-    .controller('AdminCompaniesEditController', function(store, $state, adminGetCompanyService, updateCompanyService, $stateParams, Notification, listTagsService, adminListInvestorsService) {
+    .controller('AdminCompaniesEditController', function(store, $state, adminGetCompanyService, updateCompanyService, $stateParams, Notification, listTagsService, adminListInvestorsService, listHubsService) {
       var controller = this;
       this.tags = [];
+      this.incubators = [];
       this.target_markets = {};
 
       function loadTags() {
+
+        if (!controller.company.tags || angular.isFunction(controller.company.tags.forEach) == false) {
+          controller.company.tags = [];
+          return;
+        }
+
         controller.company.tags.forEach(function(tag) {
           controller.tags.push({text: tag})
+        });
+      }
+
+      function loadIncubators() {
+        if (!controller.company.incubators || angular.isFunction(controller.company.incubators.forEach) == false) {
+          controller.company.incubators = [];
+          return;
+        }
+
+        controller.company.incubators.forEach(function(incubator) {
+          controller.incubators.push({text: incubator})
         });
       }
 
@@ -24,9 +42,28 @@
         });
       }
 
+      function setFundingRounds() {
+        if (!controller.company.funding_rounds || angular.isFunction(controller.company.funding_rounds.push) == false)
+          controller.company.funding_rounds = [];
+      }
+
+      function setOfficeLocations() {
+        if (!controller.company.office_locations || angular.isFunction(controller.company.office_locations.push) == false)
+          controller.company.office_locations = [];
+      }
+
+      function setFounders() {
+        if (!controller.company.founders || angular.isFunction(controller.company.founders.push) == false)
+          controller.company.founders = [];
+      }
+
       adminGetCompanyService.find($stateParams.id).then(function(company) {
         controller.company = company;
+        setFundingRounds();
+        setOfficeLocations();
+        setFounders();
         loadTags();
+        loadIncubators();
         loadTargetMarkets();
       });
 
@@ -42,8 +79,20 @@
         controller.company.tags.push(tag.text);
       };
 
+      controller.queryHubs = function(query) {
+        return listHubsService.filter(query);
+      };
+
       controller.removeTag = function(tag) {
         controller.company.tags.splice(controller.company.tags.indexOf(tag.text), 1);
+      };
+
+      controller.addIncubator = function(incubator) {
+        controller.company.incubators.push(incubator.text);
+      };
+
+      controller.removeIncubator = function(incubator) {
+        controller.company.incubators.splice(controller.company.incubators.indexOf(incubator.text), 1);
       };
 
       controller.addFounder = function() {
@@ -85,7 +134,7 @@
             controller.company.target_markets.push(key);
           }
         }
-        controller.company.target_markets = controller.company.target_markets.join(',')
+        controller.company.target_markets = controller.company.target_markets.join(', ')
       }
 
       this.update = function() {
@@ -94,6 +143,9 @@
         updateCompanyService.update(controller.company)
           .then(function(company) {
             controller.company = company;
+            setFundingRounds();
+            setOfficeLocations();
+            setFounders();
             Notification.success('Company Updated!')
           }, function() {
             Notification.error('Error: Company could not be saved!')

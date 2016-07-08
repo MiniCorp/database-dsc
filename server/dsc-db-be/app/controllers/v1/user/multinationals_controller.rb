@@ -1,28 +1,43 @@
 module V1
   module User
-    class MultinationalsController < ApplicationController
-      before_action :authenticate
-      before_action :is_user
-
+    class MultinationalsController < UserController
       def create
         multinational = Multinational.new(multinational_params)
         multinational.user_id = current_user.id
         multinational.save
 
+        if multinational.persisted?
+          user_entity_pending = UserEntityPending.create(
+            user_id: current_user.id,
+            entity_type: UserEntityPending.entity_types["multinational"],
+            entity_id: multinational.id
+          )
+        end
+
         render json: multinational
       end
 
       def index
-        multinationals = Multinational.unclaimed_or_owned_by(current_user.id).with_deleted.order(:id)
-
-        multinationals.each {|multinational| multinational.current_user = current_user} if current_user
-
         respond_to do |format|
-          format.html do
-            render json: multinationals
-          end
+          format.html {
+            # multinationals assign to the current user
+            user_multinationals = Multinational.claimed_by_user(current_user).where(is_live: true)
+            # multinationals awaiting action by admin
+            # first get all multinationals where user assigned but not live (when user creates the profile)
+            pending_multinationals = Multinational.where(user: current_user, is_live: false)
+            # second get all multinationals where user NOT assigned but has made a claim that is pending (profile already existed)
+            pending_multinationals = pending_multinationals + Multinational.where("id in (?)", UserEntityClaim.where(user_id: current_user.id, entity_type: UserEntityClaim.entity_types['multinational']).pluck(:entity_id))
+
+            render json: { user_multinationals: user_multinationals, pending_multinationals: pending_multinationals }
+          }
+          format.json {
+            render json: Multinational.unclaimed
+                                .select(:id, :name, :logo, :short_description, :website, :headquarters)
+                                .where("name ILIKE ?", "#{params[:filter]}%").order(:name).limit(10)
+                                .where.not("id in (?)", UserEntityClaim.where(user_id: current_user.id, entity_type: UserEntityClaim.entity_types['multinational']).count > 0 ? UserEntityClaim.where(user_id: current_user.id, entity_type: UserEntityClaim.entity_types['multinational']).pluck(:entity_id) : -1)
+          }
           format.csv do
-            send_data multinationals.to_csv
+            send_data PublicMultinational.to_csv(PublicMultinational.all)
           end
         end
       end
@@ -45,13 +60,6 @@ module V1
         Multinational.restore(params[:id])
       end
 
-      def is_user
-        if current_user.user_type != "user"
-          render json: :nothing, status: 401
-          return
-        end
-      end
-
       private
 
       def multinational
@@ -62,6 +70,8 @@ module V1
         params.require(:multinational).permit(
           :name,
           :logo,
+          :allow_sharing,
+          :startup_evangelist,
           :short_description,
           :long_description,
           :headquarters,
@@ -78,6 +88,8 @@ module V1
           :lng,
           :building_product_in_ireland,
           :events_space_qualifiers,
+          :tags,
+          :startup_packages,
           :custom_field_1, :custom_field_2, :custom_field_3, :custom_field_4,
           functions: [],
           startup_packages: [:name, :link, :description],

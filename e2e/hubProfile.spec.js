@@ -29,7 +29,7 @@ describe('HubProfile', function() {
     });
 
     it('should display the description', function() {
-      expect(page.overview.getText()).toContain("Dogpatch Labs was founded in San Francisco in 2009 by Polaris Ventures. Since then it has housed a litany of successful startups including Instagram (sold to Facebook for $1 billion). Domestically it has been home to such success stories as Logentries and Intercom who have raised $10 million and $30 million respectively. In total @dogpatchlabs companies have raised over $250 million in angel and venture financing from investors such as Ron Conway, Ray Ozzie and Chris Sacca, and funds including Sequoia Capital, Benchmark Capital, Andreessen Horowitz, USV and many more. Today Dogpatch Labs is a pay-to-play co-working space for startups. Located in one of Dublin's most iconic buildings, The CHQ building, we have over 20,000 square feet of co-working and meeting space and house some of Ireland's leading local and international startups who are focused on scaling from seed to series A and beyond.");
+      expect(page.overview.getText()).toContain("Dogpatch Labs was founded in San Francisco in 2009 by Polaris Ventures. Since then it has housed a litany of successful startups including Instagram (sold to Facebook for $1 billion). Domestically it has been home to such success stories as Logentries and Intercom who have raised $10 million and $30 million respectively. In total @dogpatchlabs companies have raised over $250 million in angel and v ... read more");
     });
   });
 

@@ -1,0 +1,2 @@
+class PublicInvestor < ApplicationRecord
+end

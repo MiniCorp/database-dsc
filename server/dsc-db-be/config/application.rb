@@ -46,5 +46,7 @@ module DscDbBe
       end # end if File.exists?
     end # end config.before_configuration
 
+    config.active_record.raise_in_transactional_callbacks = true
+
   end
 end

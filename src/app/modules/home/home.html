@@ -1,16 +1,23 @@
 <div class="block app-block-intro" style="overflow:visible;">
   <div class="container text-center m-t-lg">
-    <h1 class="statcard-number block-title m-b-md" style="font-size:56px;">Where <span style="color:#f0008c">Irish</span> Innovation is Found</h1>
+    <h1 class="statcard-number block-title m-b-md" style="font-size:56px;">Search for <span style="color:#f0008c">Irish</span> Innovation Here</h1>
 
     <div class="row">
       <div class="col-md-offset-2 col-md-8">
         <div class="form-group">
-          <ui-select ng-model="$ctrl.availableOptions.selected" theme="bootstrap">
-            <ui-select-match placeholder="Search for Irish Startups, Investors, Multinationals and Hubs">{{$select.selected.name}}</ui-select-match>
-            <ui-select-choices group-by="'itemType'" repeat="item in $ctrl.availableOptions | filter: $select.search">
-              <span ng-bind-html="item.name | highlight: $select.search"></span>
-            </ui-select-choices>
-          </ui-select>
+          <input id="homeSearch"
+                 type="text"
+                 ng-model="$ctrl.selected"
+                 typeahead-on-select="$ctrl.onSearchItemSelected($item, $model, $label)"
+                 uib-typeahead="result as result.name for result in $ctrl.getData($viewValue)"
+                 class="form-control"
+                 placeholder="Search for Irish technology companies, multinational tech companies, investors and hubs">
+        </div>
+        <p style="padding-top:20px;font-size:18px;">
+          Add Your Irish Company Here
+        </p>
+        <div class="">
+          <a class="btn btn-primary" data-ui-sref="userLogin">Join</a>
         </div>
       </div>
     </div>
@@ -31,7 +38,7 @@
         <a ui-sref="search.companyProfile({id: entity.id})" class="no-decoration">
         <div class="panel panel-default" style="border-bottom: 5px solid #e92a8b;">
           <div class="panel-body result-item-panel">
-            <img ng-src="{{entity.logo}}" class="img-responsive" style="margin: 10px auto;">
+            <img ng-src="{{entity.logo}}" class="img-responsive" style="margin: 10px auto;max-height: 115px;">
             <h2 class="text-left" style="margin-bottom:0;margin-top:30px;font-size:22px;font-weight:300;">{{entity.name}}</h2>
             <p class="text-left" style="font-size:16px;font-weight:300;margin-bottom:0;color:#999999;">
               {{entity.short_description | characters:140 }}
@@ -51,7 +58,6 @@
 <div class="block block-bordered-lg" style="padding-top:60px;padding-bottom:60px;">
   <div class="container text-center app-translate-15" data-transition="entrance">
     <blockquote class="pull-quote">
-      <cite style="margin-top:0;">Explore Irish Companies</cite>
       <p style="margin-top:0px;font-size:26px;">
         Companies
       </p>
@@ -61,7 +67,7 @@
         <a ui-sref="search.companyProfile({id: entity.id})" class="no-decoration">
         <div class="panel panel-default" style="border-bottom: 5px solid #e92a8b;">
           <div class="panel-body result-item-panel">
-            <img ng-src="{{entity.logo}}" class="img-responsive" style="margin: 10px auto;">
+            <img ng-src="{{entity.logo}}" class="img-responsive" style="margin: 10px auto;max-height: 115px;">
             <h2 class="text-left" style="margin-bottom:0;margin-top:30px;font-size:22px;font-weight:300;">{{entity.name}}</h2>
             <p class="text-left" style="font-size:16px;font-weight:300;margin-bottom:0;color:#999999;">
               {{entity.short_description | characters:140 }}
@@ -80,7 +86,6 @@
 <div class="block block-bordered-lg" style="padding-top:60px;padding-bottom:60px;">
   <div class="container text-center app-translate-15" data-transition="entrance">
     <blockquote class="pull-quote">
-      <cite style="margin-top:0;">Explore Multinations in Ireland</cite>
       <p style="margin-top:0px;font-size:26px;">
         Multinationals
       </p>
@@ -90,7 +95,7 @@
         <a ui-sref="search.multinationalProfile({id: entity.id})" class="no-decoration">
         <div class="panel panel-default" style="border-bottom: 5px solid #e92a8b;">
           <div class="panel-body result-item-panel">
-            <img ng-src="{{entity.logo}}" class="img-responsive" style="margin: 10px auto;">
+            <img ng-src="{{entity.logo}}" class="img-responsive" style="margin: 10px auto;max-height: 115px;">
             <h2 class="text-left" style="margin-bottom:0;margin-top:30px;font-size:22px;font-weight:300;">{{entity.name}}</h2>
             <p class="text-left" style="font-size:16px;font-weight:300;margin-bottom:0;color:#999999;">
               {{entity.short_description | characters:140 }}
@@ -109,7 +114,6 @@
 <div class="block block-bordered-lg" style="padding-top:60px;padding-bottom:60px;">
   <div class="container text-center app-translate-15" data-transition="entrance">
     <blockquote class="pull-quote">
-      <cite style="margin-top:0;">Explore Investors in Ireland</cite>
       <p style="margin-top:0px;font-size:26px;">
         Investors
       </p>
@@ -119,7 +123,7 @@
         <a ui-sref="search.investorProfile({id: entity.id})" class="no-decoration">
         <div class="panel panel-default" style="border-bottom: 5px solid #e92a8b;">
           <div class="panel-body result-item-panel">
-            <img ng-src="{{entity.logo}}" class="img-responsive" style="margin: 10px auto;">
+            <img ng-src="{{entity.logo}}" class="img-responsive" style="margin: 10px auto;max-height: 115px;">
             <h2 class="text-left" style="margin-bottom:0;margin-top:30px;font-size:22px;font-weight:300;">{{entity.name}}</h2>
             <p class="text-left" style="font-size:16px;font-weight:300;margin-bottom:0;color:#999999;">
               {{entity.short_description | characters:140 }}
@@ -138,7 +142,6 @@
 <div class="block block-bordered-lg" style="padding-top:60px;padding-bottom:60px;">
   <div class="container text-center app-translate-15" data-transition="entrance">
     <blockquote class="pull-quote">
-      <cite style="margin-top:0;">Explore Digial Hubs in Ireland</cite>
       <p style="margin-top:0px;font-size:26px;">
         Hubs
       </p>
@@ -148,7 +151,7 @@
         <a ui-sref="search.hubProfile({id: entity.id})" class="no-decoration">
         <div class="panel panel-default" style="border-bottom: 5px solid #e92a8b;">
           <div class="panel-body result-item-panel">
-            <img ng-src="{{entity.logo}}" class="img-responsive" style="margin: 10px auto;">
+            <img ng-src="{{entity.logo}}" class="img-responsive" style="margin: 10px auto;max-height: 115px;">
             <h2 class="text-left" style="margin-bottom:0;margin-top:30px;font-size:22px;font-weight:300;">{{entity.name}}</h2>
             <p class="text-left" style="font-size:16px;font-weight:300;margin-bottom:0;color:#999999;">
               {{entity.short_description | characters:140 }}

@@ -11,13 +11,14 @@
 
         <div class="form-group">
           <label for="logo">Logo:</label>
-          <input required ng-model="$ctrl.entity.logo" ng-model-options="{ updateOn: 'blur' }" id="logo" class="form-control" type="text">
-          <p>Recommended image dimensions: 250Wx140H</p>
+          <input required ng-model="$ctrl.entity.logo" ng-model-options="{ updateOn: 'blur' }" id="logo" class="form-control" type="text" placeholder="http://">
+          <p>Please insert a link to your logo. Recommended image dimensions: 250Wx140H</p>
         </div>
 
-        <div class="form-group">
+        <div class="form-group" ng-class="{ 'has-error':1==1 }">
           <label for="short-description">Tagline:</label>
-          <textarea required ng-model="$ctrl.entity.short_description" id="short-description" class="form-control" type="text" maxlength="128"></textarea>
+          <textarea required ng-model="$ctrl.entity.short_description" id="short-description" class="form-control" type="text" maxlength="150"></textarea>
+          <p>Up to 150 characters. This will appear under your logo in search results" beside tagline field.</p>
         </div>
       </div>
       <div class="col-md-3">
@@ -28,31 +29,38 @@
 
     <div class="form-group">
       <label for="long-description">Description:</label>
-      <textarea required ng-model="$ctrl.entity.long_description" id="long-description" class="form-control" type="text"></textarea>
+      <textarea required ng-model="$ctrl.entity.long_description" id="long-description" class="form-control" type="text" style="min-height:200px;"></textarea>
+      <p>
+        Up to 1500 characters.
+      </p>
     </div>
     <div class="form-group">
       <label for="video-url">Video Url:</label>
       <textarea ng-model="$ctrl.entity.video_url" id="video-url" class="form-control" type="text"></textarea>
-      <p><b>Note:</b> Make sure to grab the embed version of the video URL.</p>
+      <p><b>Note:</b> Make sure to grab the embed version of the video URL. E.g. https://www.youtube.com/embed/Dn9XqxaUQUY</p>
     </div>
     <div class="row">
       <div class="form-group col-md-3">
         <label for="website"><i class="fa fa-globe"></i> Website:</label>
-        <input ng-model="$ctrl.entity.website" id="website" class="form-control" type="text">
+        <input ng-model="$ctrl.entity.website" id="website" class="form-control" type="text" placeholder="http://">
       </div>
 
       <div class="form-group col-md-3">
-        <label for="twitter"><i class="fa fa-twitter"></i> Twitter:</label>
-        <input ng-model="$ctrl.entity.social_accounts.twitter" id="twitter" class="form-control" type="text">
+        <label for="twitter"><i class="fa fa-twitter"></i> Twitter Username:</label>
+
+        <div class="input-group">
+          <span class="input-group-addon">@</span>
+          <input ng-model="$ctrl.entity.social_accounts.twitter" id="twitter" class="form-control" type="text">
+        </div>
       </div>
 
       <div class="form-group col-md-3">
-        <label for="linkedin"><i class="fa fa-linkedin"></i> LinkedIn:</label>
+        <label for="linkedin"><i class="fa fa-linkedin"></i> LinkedIn Username:</label>
         <input ng-model="$ctrl.entity.social_accounts.linkedin" id="linkedin" class="form-control" type="text">
       </div>
 
       <div class="form-group col-md-3">
-        <label for="facebook"><i class="fa fa-facebook"></i> Facebook:</label>
+        <label for="facebook"><i class="fa fa-facebook"></i> Facebook Username:</label>
         <input ng-model="$ctrl.entity.social_accounts.facebook" id="facebook" class="form-control" type="text">
       </div>
     </div>

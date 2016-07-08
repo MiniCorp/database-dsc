@@ -169,13 +169,13 @@ RSpec.describe 'V1::Multinationals', :type => :request do
       Multinational.all.order(:id)
     end
 
-    xit 'should return the multinationals paginated' do
-      get '/v1/multinationals?page=2&per_page=2'
-      multinationals_json = JSON.parse(response.body)
-      expect(response).to have_http_status(200)
-      expect(multinationals_json.size).to eq(2)
-      expect(multinationals_json[0]['name']).to eq('Multi 3')
-      expect(multinationals_json[1]['name']).to eq('Multi 4')
-    end
+    # xit 'should return the multinationals paginated' do
+    #   get '/v1/multinationals?page=2&per_page=2'
+    #   multinationals_json = JSON.parse(response.body)
+    #   expect(response).to have_http_status(200)
+    #   expect(multinationals_json.size).to eq(2)
+    #   expect(multinationals_json[0]['name']).to eq('Multi 3')
+    #   expect(multinationals_json[1]['name']).to eq('Multi 4')
+    # end
   end
 end

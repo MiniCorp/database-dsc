@@ -7,7 +7,7 @@
 
       <div class="col-md-6">
         <div class="form-group">
-          <label for="headquarters">Headquarters:</label>
+          <label for="headquarters">Irish Headquarters:</label>
           <input ng-model="$ctrl.multinational.headquarters" id="headquarters" class="form-control" type="text">
         </div>
 
@@ -22,7 +22,7 @@
         </div>
 
         <div class="form-group">
-          <label>European HQ in Ireland</label>
+          <label>European/EMEA HQ in Ireland</label>
           <br>
           <input type="radio" ng-model="$ctrl.multinational.emea_hq" ng-value="true"> Yes
           &nbsp;
@@ -62,15 +62,13 @@
           <div class="checkbox"><label> <input ng-model="$ctrl.functions.SI" type="checkbox"
                                                value="SI">Server Infrastructure</label><br/>
           </div>
-          <div class="checkbox"><label> <input ng-model="$ctrl.functions.E" type="checkbox"
-                                               value="E">Africa</label><br/></div>
           <div class="checkbox"><label> <input ng-model="$ctrl.functions.M" type="checkbox"
                                                value="M">Marketing</label><br/></div>
           <div class="checkbox"><label> <input ng-model="$ctrl.functions.RD" type="checkbox"
                                                value="RD">Research and Development</label><br/>
           </div>
           <div class="checkbox"><label> <input ng-model="$ctrl.functions.MF" type="checkbox"
-                                               value="MF">Manufactoring</label><br/>
+                                               value="MF">Manufacturing</label><br/>
           </div>
           <div class="checkbox"><label> <input ng-model="$ctrl.functions.O" type="checkbox"
                                                value="O">Operations</label><br/>
@@ -155,12 +153,17 @@
 <div class="panel panel-default">
   <div class="panel-heading">Tags</div>
   <div class="panel-body">
-    <tags-input ng-model="$ctrl.tags"
+    <tags-input name="tagsInput"
+                ng-model="$ctrl.tags"
                 add-on-enter="false"
+                add-from-autocomplete-only="true"
                 on-tag-added="$ctrl.addTag($tag)"
                 on-tag-removed="$ctrl.removeTag($tag)">
       <auto-complete source="$ctrl.queryTags($query)"></auto-complete>
     </tags-input>
+    <p class="help-block" style="color:red" ng-show="create.tagsInput.$invalid || edit.tagsInput.$invalid">
+      Sorry, you added a tag that does not exist in the system.
+    </p>
   </div>
   </div>
 </div>

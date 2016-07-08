@@ -52,7 +52,7 @@
           setFunctions();
           userCreateMultinationalService.create(controller.multinational).then(function() {
             Notification.success('Multinational has been created!');
-            setEmptyMultinational();
+            $location.path( "/user/multinationals" );
           })
         })
       }

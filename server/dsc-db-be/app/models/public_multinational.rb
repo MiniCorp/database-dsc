@@ -1,0 +1,2 @@
+class PublicMultinational < ApplicationRecord
+end

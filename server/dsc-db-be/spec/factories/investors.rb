@@ -39,5 +39,6 @@ FactoryGirl.define do
     local_office "MyString"
     tags ["MyText"]
     office_locations "MyText"
+    is_live true
   end
 end

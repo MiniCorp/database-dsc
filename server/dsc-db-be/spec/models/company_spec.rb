@@ -40,8 +40,8 @@ require 'rails_helper'
 
 RSpec.describe Company, :type => :model do
   [
-    :name, :logo, :acquisitions, :founded,  :short_description,:long_description, :headquarters, :formerly_known_as,
-    :founders, :tags, :investors, :office_locations, :incubator, :employees, :funding_stage, :funding_amount,
+    :name, :logo, :acquisitions, :founded, :short_description, :long_description, :headquarters, :formerly_known_as,
+    :founders, :tags, :office_locations, :incubator, :employees, :funding_stage, :funding_amount,
     :product_stage, :target_markets, :business_model, :contact, :company_stage, :operational_status, :government_assistance,
     :looking_for, :funding_rounds
   ].each do |column|

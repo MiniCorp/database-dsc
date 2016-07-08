@@ -65,11 +65,6 @@ describe('SearchResults', function() {
         expect(page.searchResultsContainer.getText()).toContain('Boxever');
         expect(page.searchResultsContainer.getText()).not.toContain('Mustard');
 
-        // Investors
-        page.searchField.clear().sendKeys("Stanley").sendKeys(protractor.Key.ENTER);
-        expect(page.searchResultsContainer.getText()).toContain('Boxever');
-        expect(page.searchResultsContainer.getText()).not.toContain('CurrencyFair');
-
         // Office Locations
         page.searchField.clear().sendKeys("Digital Exchange").sendKeys(protractor.Key.ENTER);
         expect(page.searchResultsContainer.getText()).toContain('Mustard');

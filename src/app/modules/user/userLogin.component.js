@@ -21,8 +21,15 @@
 
       this.login = function() {
         loginService.authenticate(this.userCredentials).then(function(response) {
-          $auth.setToken(response.jwt);
-          $state.go('user.companies.index');
+          if (response.error) {
+            controller.loginFail = false
+            controller.customFail = true;
+            controller.customFailMessage = response.error;
+          }
+          else {
+            $auth.setToken(response.jwt);
+            $state.go('user.companies.index');
+          }
         }).catch(function () {
           controller.loginFail = true;
         })

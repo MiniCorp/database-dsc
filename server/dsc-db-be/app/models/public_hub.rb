@@ -1,0 +1,2 @@
+class PublicHub < ApplicationRecord
+end

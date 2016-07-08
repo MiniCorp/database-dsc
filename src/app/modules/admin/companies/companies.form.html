@@ -26,7 +26,7 @@
         </div>
 
         <div class="form-group">
-          <label for="headquarters">Headquarters:</label>
+          <label for="headquarters">Irish Headquarters:</label>
           <input ng-model="$ctrl.company.headquarters" id="headquarters" class="form-control" type="text">
         </div>
 
@@ -36,7 +36,7 @@
         </div>
 
         <div class="form-group">
-          <label for="founded">Founded:</label>
+          <label for="founded">Founded Year:</label>
           <input integer ng-model="$ctrl.company.founded" id="founded" class="form-control" type="text">
         </div>
 
@@ -144,7 +144,7 @@
         </div>
 
         <div class="form-group">
-          <label for="contact">Contact:</label>
+          <label for="contact">Contact Email (Optional):</label>
           <input ng-model="$ctrl.company.contact" id="contact" class="form-control" type="text">
         </div>
 
@@ -154,6 +154,7 @@
             <option></option>
             <option>Growth</option>
             <option>Complete</option>
+            <option>Early-stage</option>
             <option>Late-stage</option>
             <option>Public</option>
             <option>Acquired</option>
@@ -161,8 +162,19 @@
         </div>
 
         <div class="form-group">
-          <label for="incubator">Incubator/Accelator</label>
-          <input ng-model="$ctrl.company.incubator" id="incubator" class="form-control" type="">
+          <label for="incubator">Accelerator/Incubator</label>
+          <tags-input name="hubsInput"
+                      ng-model="$ctrl.incubators"
+                      add-on-enter="false"
+                      add-from-autocomplete-only="true"
+                      on-tag-added="$ctrl.addIncubator($tag)"
+                      on-tag-removed="$ctrl.removeIncubator($tag)"
+                      placeholder="Add an Incubator">
+            <auto-complete source="$ctrl.queryHubs($query)"></auto-complete>
+          </tags-input>
+          <p class="help-block" style="color:red" ng-show="create.tagsInput.$invalid || edit.tagsInput.$invalid">
+            Sorry, you added a tag that does not exist in the system.
+          </p>
         </div>
 
         <div class="form-group">
@@ -175,12 +187,19 @@
         </div>
 
         <div class="form-group">
-          <label for="government-assistance">Government Assistance</label>
-          <input ng-model="$ctrl.company.government_assistance" id="government-assistance" class="form-control" type="text">
+          <label for="government-assistance">Government Support</label>
+          <select ng-model="$ctrl.company.government_assistance" id="government-assistance" class="form-control">
+            <option></option>
+            <option>High Potential Start Up Funding from Enterprise Ireland</option>
+            <option>New Frontiers Entreprener Development Program from Enterprise Ireland</option>
+            <option>Competitive Start Fund from Enterprise Ireland</option>
+            <option>Innovation Voucher from Enterprise Ireland</option>
+            <option>Feasibility Grant from Local Enterprise Office</option>
+          </select>
         </div>
 
         <div class="form-group">
-          <label for="looking-for">We're looking for</label>
+          <label for="looking-for">We're looking for eg. front-end web developers</label>
           <input ng-model="$ctrl.company.looking_for" id="looking-for" class="form-control" type="text">
         </div>
 
@@ -271,7 +290,7 @@
           <div class="row">
             <div class="col-sm-12">
               <div class="form-group">
-                <label for="founder-linkedin">LinkedIn</label>
+                <label for="founder-linkedin">LinkedIn Username</label>
                 <input type="text" ng-model="founder.linkedin" id="founder-linkedin" class="form-control">
                 </textarea>
               </div>
@@ -315,16 +334,20 @@
               </div>
               <div class="form-group">
                 <label for="funding-date">Investors</label>
-                <tags-input ng-model="round.investors"
+                <tags-input name="investorsInput"
+                            ng-model="round.investors"
                             replace-spaces-with-dashes="false"
                             placeholder="Add an investor"
                             add-on-enter="false"
-                            add-from-auto-complete-only="true"
+                            add-from-autocomplete-only="true"
                             key-property="id"
                             display-property="name">
                   <auto-complete source="$ctrl.queryInvestors($query)" display-property="name">
                   </auto-complete>
                 </tags-input>
+                <p class="help-block" style="color:red" ng-show="create.investorsInput.$invalid || edit.investorsInput.$invalid">
+                  Sorry, you added an investor that does not exist in the system.
+                </p>
               </div>
             </div>
           </div>
@@ -337,12 +360,17 @@
 <div class="panel panel-default">
   <div class="panel-heading">Tags</div>
   <div class="panel-body">
-    <tags-input ng-model="$ctrl.tags"
+    <tags-input name="tagsInput"
+                ng-model="$ctrl.tags"
                 add-on-enter="false"
+                add-from-autocomplete-only="true"
                 on-tag-added="$ctrl.addTag($tag)"
                 on-tag-removed="$ctrl.removeTag($tag)">
       <auto-complete source="$ctrl.queryTags($query)"></auto-complete>
     </tags-input>
+    <p class="help-block" style="color:red" ng-show="create.tagsInput.$invalid || edit.tagsInput.$invalid">
+      Sorry, you added a tag that does not exist in the system.
+    </p>
   </div>
   </div>
 </div>

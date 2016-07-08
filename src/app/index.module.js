@@ -16,6 +16,7 @@
       'ngTagsInput',
       'rzModule',
       'home',
+      'about',
       'ngMap',
       'admin',
       'user',
@@ -33,6 +34,10 @@
       'hubProfile',
       'searchFilters',
       'socialLinks',
-      'truncate'
+      'truncate',
+      'duScroll',
+      'ngFileUpload',
+      'hm.readmore',
+      'angulartics.google.analytics'
     ]);
 })();

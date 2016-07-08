@@ -23,17 +23,16 @@
             { label: 'Series A', code: 'SA' },
             { label: 'Series B', code: 'SB' },
             { label: 'Series C', code: 'SC'},
-            { label: 'Series C+', code: 'SC+'}
+            { label: 'Series C+', code: 'SCP'}
           ]
         },
         investmentSize: {
           type: 'slider',
           id: 'investment-size',
-          label: 'Investment Size',
-          selectedValue: '',
-          defaultRange: {min: 10000, max: 100000000},
-          range: {min: 10000, max: 100000000},
+          label: 'Maximum Investment Size',
+          selectedValue: 100000000,
           options: {
+            ceil: 100000000,
             precision: 0,
             step: 100000,
             noSwitching: true,
@@ -48,14 +47,6 @@
               }
             }
           }
-        },
-        dealStructure: {
-          type: 'dropdown',
-          id: 'deal-structure',
-          label: 'Deal Structure',
-          selectedValue: '',
-          noSelectionString: 'Any structure',
-          values: ['Equity (Minority)', 'Equity (Majority)', 'Venture Debt', 'Convertible Debt', 'Mezzanine']
         }
       };
     })

@@ -10,5 +10,10 @@
           return responseObject.data;
         })
       };
+
+      this.filterUnclaimedMultinationals = function(query) {
+        var basePath = serverUrl + '/user/multinationals.json?filter=' + query;
+        return $http.get(basePath);
+      };
     });
 })();

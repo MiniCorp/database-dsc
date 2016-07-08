@@ -6,11 +6,9 @@
 #  name                 :string
 #  logo                 :string
 #  short_description    :text
-#  programs             :text
 #  created_at           :datetime         not null
 #  updated_at           :datetime         not null
 #  hub_type             :text             default([]), is an Array
-#  application_deadline :date
 #  long_description     :text
 #  founded              :string
 #  contact              :string
@@ -26,7 +24,7 @@ require 'rails_helper'
 
 RSpec.describe Hub, :type => :model do
   [
-    :name, :logo, :short_description, :programs, :application_deadline, :hub_type,
+    :name, :logo, :short_description, :applications, :hub_type,
     :long_description, :founded, :contact, :contact_detail, :address, :contact_urls,
     :events, :alumni
   ].each do |column|

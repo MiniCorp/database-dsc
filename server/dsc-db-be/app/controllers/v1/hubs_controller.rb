@@ -7,7 +7,7 @@ class V1::HubsController < ApplicationController
   end
 
   def show
-    hub = Hub.find(params[:id])
+    hub = Hub.live(true).find(params[:id])
     render json: hub, status: 200
   end
 

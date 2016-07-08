@@ -6,12 +6,12 @@
     <div class="row">
       <div class="col-md-6">
         <div class="form-group">
-          <label for="headquarters">Headquarters:</label>
+          <label for="headquarters">Headquarters (City, Country):</label>
           <input ng-model="$ctrl.investor.headquarters" id="headquarters" class="form-control" type="text">
         </div>
 
         <div class="form-group">
-          <label for="founded">Founded:</label>
+          <label for="founded">Founded Year:</label>
           <input ng-model="$ctrl.investor.founded" id="founded" class="form-control" type="text">
         </div>
       </div>
@@ -24,13 +24,9 @@
     </div>
     <div class="row">
       <div class="col-md-6">
-        <div class="form-group">
-          <label for="contact">Contact:</label>
-          <input ng-model="$ctrl.investor.contact" id="contact" class="form-control" type="text">
-        </div>
 
         <div class="form-group">
-          <label for="contact_email">Contact Email:</label>
+          <label for="contact_email">Contact Email (Optional):</label>
           <input ng-model="$ctrl.investor.contact_email" id="contact_email" class="form-control" type="text">
         </div>
 
@@ -38,7 +34,7 @@
       <div class="col-md-6">
 
         <div class="form-group">
-          <label for="preferred_contact">Preferred Contact:</label>
+          <label for="preferred_contact">Preferred Contact Method:</label>
           <input ng-model="$ctrl.investor.preferred_contact" id="preferred_contact" class="form-control" type="text">
         </div>
 
@@ -57,7 +53,7 @@
           <input ng-model="$ctrl.investor.exits_ipos" id="exits_ipos" class="form-control" type="text">
         </div>
 
-        <div class="form-group">
+        <!-- <div class="form-group">
           <label for="deal-structure">Deal Structure</label>
           <select ng-model="$ctrl.investor.deal_structure" id="deal-structure" class="form-control">
             <option></option>
@@ -67,7 +63,7 @@
             <option>Convertible Debt</option>
             <option>Mezzanine</option>
           </select>
-        </div>
+        </div> -->
 
         <div class="form-group">
           <label>Type of Funding</label>
@@ -101,14 +97,24 @@
             </label>
             <br/>
           </div>
+          <div class="checkbox">
+            <label>
+              <input ng-model="$ctrl.fundingTypes.SCP" type="checkbox" value="SCP"> Series C+
+            </label>
+            <br/>
+          </div>
         </div>
 
       </div>
       <div class="col-md-6">
 
         <div class="form-group">
-          <label for="investment_size">Investment Size:</label>
-          <input ng-model="$ctrl.investor.investment_size" id="investment_size" class="form-control" type="text">
+          <label for="investment_size">Maximum Investment Size:</label>
+          <div class="input-group">
+            <span class="input-group-addon">&euro;</span>
+            <input ng-model="$ctrl.investor.investment_size" id="investment_size" class="form-control" type="text">
+          </div>
+
         </div>
 
         <div class="form-group">
@@ -139,6 +145,9 @@
         <div class="panel-body">
           <div class="row">
             <div class="col-sm-12">
+              <div class="alert alert-info" role="alert">
+                To get longitude and latitude coordinates: Find your location on google maps, right click on the red marker, select "what's here" and you'll find them at the bottom of the dialog box (first one is latitude, second one is longitude).
+              </div>
 
               <div class="form-group">
                 <label for="location-address">Address</label>
@@ -168,7 +177,7 @@
 
 <div class="panel panel-default">
   <div class="panel-heading">
-    Founders
+    Principals
     <a ng-click="$ctrl.addFounder()" class="btn btn-primary btn-sm pull-right">Add Founder</a>
   </div>
   <div class="panel-body">
@@ -178,7 +187,7 @@
     <div ng-if="$ctrl.investor.founders.length > 0" ng-repeat="founder in $ctrl.investor.founders track by $index">
       <div class="panel panel-default">
         <div class="panel-heading">
-          Founder
+          Principal
           <a ng-click="$ctrl.removeFounder(founder)" class="pull-right"><i class="fa fa-2x fa-trash"></i></a>
         </div>
         <div class="panel-body">
@@ -194,7 +203,7 @@
           <div class="row">
             <div class="col-sm-12">
               <div class="form-group">
-                <label for="founder-linkedin">LinkedIn</label>
+                <label for="founder-linkedin">LinkedIn Username</label>
                 <input type="text" ng-model="founder.linkedin" id="founder-linkedin" class="form-control">
                 </textarea>
               </div>
@@ -209,29 +218,48 @@
 <div class="panel panel-default">
   <div class="panel-heading">Companies Invested In</div>
   <div class="panel-body">
-    <tags-input ng-model="$ctrl.investor.companies_invested_in"
+    <tags-input name="companiesInput"
+                ng-model="$ctrl.investor.companies_invested_in"
                 replace-spaces-with-dashes="false"
                 placeholder="Add a company"
                 add-on-enter="false"
-                add-from-auto-complete-only="true"
+                add-from-autocomplete-only="true"
                 key-property="id"
                 display-property="name">
       <auto-complete source="$ctrl.queryCompanies($query)" display-property="name">
       </auto-complete>
     </tags-input>
+    <p class="help-block" style="color:red" ng-show="create.companiesInput.$invalid || edit.companiesInput.$invalid">
+      Sorry, looks like you are trying to add company that does not exist in our system. If you'd like to suggest a new company, please email <a href="mailto:ciaran@startupdublin.com?Subject=I%20Have%20A%20New%20Startup%20For%20You%21&Body=Hi%20Ciaran%2C%0A%0AI%20was%20editing%20a%20profile%20%28INSERT%20PROFILE%20NAME%20HERE%29%20on%20TechIreland.org%20and%20wanted%20to%20suggest%20a%20new%20Irish%20company%20-%20%28INSERT%20COMPANY%20HERE%29.%0A%0AThanks%21">ciaran@startupdublin.com</a>
+    </p>
   </div>
 </div>
 
 <div class="panel panel-default">
   <div class="panel-heading">Tags</div>
   <div class="panel-body">
-    <tags-input ng-model="$ctrl.tags"
+    <p>
+      Please add as many as are relevant. If you'd like to suggest a new tag, please email <a href="mailto:ciaran@startupdublin.com?Subject=I%20Have%20A%20New%20Tag%20For%20You%21&Body=Hi%20Ciaran%2C%0A%0AI%20was%20editing%20a%20profile%20%28INSERT%20PROFILE%20NAME%20HERE%29%20on%20TechIreland.org%20and%20wanted%20to%20suggest%20a%20new%20tag%20-%20%28INSERT%20TAG%20HERE%29.%0A%0AThanks%21">ciaran@startupdublin.com</a>
+    </p>
+    <tags-input name="tagsInput"
+                ng-model="$ctrl.tags"
                 add-on-enter="false"
+                add-from-autocomplete-only="true"
                 on-tag-added="$ctrl.addTag($tag)"
                 on-tag-removed="$ctrl.removeTag($tag)">
       <auto-complete source="$ctrl.queryTags($query)"></auto-complete>
     </tags-input>
+    <p class="help-block" style="color:red" ng-show="create.tagsInput.$invalid || edit.tagsInput.$invalid">
+      Sorry, looks like you are trying to use a tag that does not exist in our system.
+    </p>
   </div>
 </div>
 
-<custom-fields entity="$ctrl.investor"></custom-fields>
+<div class="form-group">
+  <label>We'd like to spread this information across the world through other media outlets (Crunchbase/Mattermark/CBInsights etc) so that I can spread my info beyond the database.</label>
+  <div class="checkbox">
+    <label>
+      <input ng-model="$ctrl.investor.allow_sharing" type="checkbox">Please acknowledge that you're happy to have your publicly available details shared.</label>
+    <br/>
+  </div>
+</div>

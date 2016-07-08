@@ -7,34 +7,33 @@
       controller: 'UserHubsIndexController',
       templateUrl: 'app/modules/user/hubs/hubs.index.html'
     })
-    .controller('UserHubsIndexController', function(store, $state, $confirm, userListHubsService, userClaimEntityService, deleteHubService, restoreHubService, Notification, exportToCSV) {
+    .controller('UserHubsIndexController', function(store, $state, $confirm, userListHubsService, userClaimEntityService, deleteHubService, restoreHubService, Notification, exportToCSV, $document) {
       this.userListHubsService = userListHubsService;
       this.deleteHubService = deleteHubService;
       this.restoreHubService = restoreHubService;
       this.userClaimEntityService = userClaimEntityService;
+
+      var searchHubs = angular.element($document[0].getElementById("searchHubs"))
+
       var controller = this;
+      controller.hubs = {
+        "user_hubs": [],
+        "pending_hubs": []
+      }
 
-      getHubs();
+      getUserHubs();
 
-      function getHubs() {
+      function getUserHubs() {
         userListHubsService.getAll().then(function(hubs) {
           controller.hubs = hubs;
         });
       }
 
-      this.deleteHub = function(id) {
-        controller.deleteHubService.delete(id).then(function() {
-          getHubs();
-          Notification.success('The entry has been deleted.')
-        })
-      };
-
-      this.restoreHub = function(id) {
-        controller.restoreHubService.restore(id).then(function() {
-          getHubs();
-          Notification.success('The entry has been restored!')
-        })
-      };
+      this.filterUnclaimedHubs = function(query) {
+        return userListHubsService.filterUnclaimedHubs(query).then(function(response){
+          return response.data;
+        });
+      }
 
       this.claimHub = function(e, id) {
         var requestedClaim = {
@@ -43,10 +42,10 @@
         }
 
         $confirm({text: "Are you sure you want request ownership of this hub?"}).then(function() {
-          controller.userClaimEntityService.create(requestedClaim).then(function() {
-            var element = angular.element(e.target)
-            element.text('Requested');
-            element.attr('disabled', true);
+          controller.userClaimEntityService.create(requestedClaim).then(function(response) {
+            searchHubs.val("");
+            controller.selected = null;
+            controller.hubs.pending_hubs.push(response.data);
             Notification.success('Claim has been requested sucessfully. The Admin team will review this shortly!');
           });
         })

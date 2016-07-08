@@ -15,6 +15,7 @@ require 'securerandom'
 
 class User < ApplicationRecord
   attr_accessor :reset_token
+  attr_accessor :activation_token
 
   has_secure_password
   has_many :user_entity_claims
@@ -63,6 +64,18 @@ class User < ApplicationRecord
     authorization.user_id ||= user.id
     authorization.save
     user
+  end
+
+  # Sets the account activation attributes.
+  def create_activation_digest
+    self.activation_token = User.new_token
+    update_attribute(:activation_digest,  User.digest(activation_token))
+    update_attribute(:activation_sent_at, Time.zone.now)
+  end
+
+  # Sends account activation email.
+  def send_email_verification_mail
+    UserMailer.email_confirmation(self).deliver_now
   end
 
   # Sets the password reset attributes.

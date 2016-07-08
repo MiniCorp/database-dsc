@@ -22,7 +22,7 @@
         </div>
 
         <div class="form-group">
-          <label for="contact">Contact:</label>
+          <label for="contact">Contact Email (Optional):</label>
           <input ng-model="$ctrl.hub.contact" id="contact" class="form-control" type="text">
         </div>
 
@@ -66,18 +66,23 @@
               <input ng-model="$ctrl.hub_type.C" type="checkbox" value="C">Community</label>
             <br/>
           </div>
+          <div class="checkbox">
+            <label>
+              <input ng-model="$ctrl.hub_type.R" type="checkbox" value="R">Research Centre</label>
+            <br/>
+          </div>
         </div>
 
       </div>
       <div class="col-md-6">
 
         <div class="form-group">
-          <label for="founded">Founded:</label>
+          <label for="founded">Founded Year:</label>
           <input ng-model="$ctrl.hub.founded" id="founded" class="form-control" type="text">
         </div>
 
         <div class="form-group">
-          <label for="contact_detail">Contact Detail:</label>
+          <label for="contact_detail">Public Contact Email (Optional):</label>
           <input ng-model="$ctrl.hub.contact_detail" id="contact_detail" class="form-control" type="text">
         </div>
 
@@ -87,35 +92,59 @@
 </div>
 
 <div class="panel panel-default">
-  <div class="panel-heading">Application Details</div>
+  <div class="panel-heading">
+    Program Details
+    <a ng-click="$ctrl.addApplication()" class="btn btn-primary btn-sm pull-right">Add Application</a>
+  </div>
   <div class="panel-body">
-    <div class="row">
-      <div class="col-md-6">
-
-        <div class="form-group">
-          <label for="application-deadline-name">Application Title:</label>
-          <input ng-model="$ctrl.hub.programs" id="application-deadline-name" class="form-control" type="text">
+    <div ng-if="$ctrl.hub.applications.length == 0">
+      <p>There are no applications.</p>
+    </div>
+    <div ng-if="$ctrl.hub.applications.length > 0" ng-repeat="application in $ctrl.hub.applications track by $index">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          Application
+          <a ng-click="$ctrl.removeApplication(application)" class="pull-right"><i class="fa fa-2x fa-trash"></i></a>
         </div>
-
-      </div>
-      <div class="col-md-6">
-
-        <div class="form-group col-xs-12 col-sm-12 col-md-6">
-          <label for="application-deadline-date">Application Deadline:</label>
-          <div class="input-group">
-            <input id="application-deadline-date"
-                   class="form-control"
-                   type="text"
-                   ng-model="$ctrl.hub.application_deadline"
-                   uib-datepicker-popup="dd/MM/yyyy"
-                   is-open="$ctrl.appDeadlineDatePicker.opened"
-                   close-text="Close">
-            <span class="input-group-btn">
-              <button type="button" class="btn btn-default" ng-click="$ctrl.toggleCalendar()"><i class="fa fa-calendar"></i></button>
-            </span>
+        <div class="panel-body">
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="form-group">
+                <label for="contact-name">Title</label>
+                <input type="text" ng-model="application.title" class="form-control" />
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="form-group">
+                <label for="contact-email">Deadline</label>
+                <div class="input-group">
+                  <input class="form-control"
+                         type="text"
+                         ng-model="application.deadline"
+                         uib-datepicker-popup="dd/MM/yyyy"
+                         is-open="application.opened"
+                         close-text="Close"
+                         ng-click="$ctrl.toggleCalendar(application)"
+                         style="background-color: white;"
+                         readonly>
+                  <span class="input-group-btn">
+                    <button type="button" class="btn btn-default" ng-click="$ctrl.toggleCalendar(application)"><i class="fa fa-calendar"></i></button>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="form-group">
+                <label for="contact-phone">Link</label>
+                <input ng-model="application.link" class="form-control" />
+              </div>
+            </div>
           </div>
         </div>
-
       </div>
     </div>
   </div>
@@ -173,29 +202,37 @@
 <div class="panel panel-default">
   <div class="panel-heading">Alumni</div>
   <div class="panel-body">
-    <tags-input ng-model="$ctrl.hub.alumni"
+    <tags-input name="alumniInput"
+                ng-model="$ctrl.hub.alumni"
                 replace-spaces-with-dashes="false"
                 placeholder="Add a company"
                 add-on-enter="false"
-                add-from-auto-complete-only="true"
+                add-from-autocomplete-only="true"
                 key-property="id"
                 display-property="name">
       <auto-complete source="$ctrl.queryCompanies($query)" display-property="name">
       </auto-complete>
     </tags-input>
+    <p class="help-block" style="color:red" ng-show="create.alumniInput.$invalid || edit.alumniInput.$invalid">
+      Sorry, you added a company that does not exist in the system.
+    </p>
   </div>
 </div>
 
 <div class="panel panel-default">
   <div class="panel-heading">Tags</div>
   <div class="panel-body">
-    <tags-input ng-model="$ctrl.tags"
+    <tags-input name="tagsInput"
+                ng-model="$ctrl.tags"
                 add-on-enter="false"
+                add-from-autocomplete-only="true"
                 on-tag-added="$ctrl.addTag($tag)"
                 on-tag-removed="$ctrl.removeTag($tag)">
       <auto-complete source="$ctrl.queryTags($query)"></auto-complete>
     </tags-input>
-    <span ng-show="create.newTag.$invalid" class="label label-danger">At least 1 tag is required.</span>
+    <p class="help-block" style="color:red" ng-show="create.tagsInput.$invalid || edit.tagsInput.$invalid">
+      Sorry, you added a tag that does not exist in the system.
+    </p>
   </div>
 </div>
 

@@ -50,7 +50,7 @@
 }
 
 .result-item-panel {
-  height:360px;
+  height:400px;
 }
 
 .pagination > .active > a, .pagination > .active > span, .pagination > .active > a:hover, .pagination > .active > span:hover, .pagination > .active > a:focus, .pagination > .active > span:focus {
@@ -89,6 +89,16 @@ a {
 .btn-primary-outline:focus, .btn-primary-outline.focus, .btn-primary-outline:hover, .btn-primary-outline:active, .btn-primary-outline.active, .open > .dropdown-toggle.btn-primary-outline {
   background-color: #e92a8b;
   color:#fff;
+}
+
+.btn-primary-blue {
+  background-color: #2196f3;
+  color: #FFFFFF;
+}
+.btn-primary-blue:hover {
+  color: #FFFFFF;
+  background-color: #2196f3;
+  border-color: #2196f3;
 }
 
 @media only screen and (max-width: 767px) {

@@ -21,7 +21,7 @@
         var credentials = {email: 'test@example.com', password: 'secret'};
         var jwt = { "jwt": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9" }
 
-        $httpBackend.expectPOST('http://test.example.com/knock/auth_token').respond(jwt);
+        $httpBackend.expectPOST('http://test.example.com/auth_token').respond(jwt);
 
         loginService.authenticate(credentials).then(function (response) {
           expect(response).toEqual(jwt);
