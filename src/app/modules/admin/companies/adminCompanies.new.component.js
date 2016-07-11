@@ -19,6 +19,7 @@
           tags: [],
           incubators: []
         }
+        controller.company.recently_funded = false;
       };
 
       setEmptyCompany();
