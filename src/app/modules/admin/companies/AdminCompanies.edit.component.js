@@ -134,7 +134,7 @@
             controller.company.target_markets.push(key);
           }
         }
-        controller.company.target_markets = controller.company.target_markets.join(', ')
+        controller.company.target_markets = controller.company.target_markets.join(',')
       }
 
       this.update = function() {

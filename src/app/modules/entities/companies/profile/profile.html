@@ -60,7 +60,7 @@
       <div class="company-info-title">Target Markets</div>
       <div class="company-info-value">
         <p id="target-markets">
-          <span ng-repeat="targetMarket in $ctrl.company.target_markets.split(',')">
+          <span ng-repeat="targetMarket in $ctrl.company.target_markets.split(',') | emptyFilter">
             {{targetMarket | regionCodeToHuman}}{{$last ? '' : ', '}}
           </span>
         </p>

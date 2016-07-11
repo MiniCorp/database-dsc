@@ -18,7 +18,7 @@
       }
 
       return function(regionCode) {
-        return regions[regionCode] || '';
+        return regions[regionCode.replace(/ /g,'')] || '';
       }
 
     })
