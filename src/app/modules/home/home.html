@@ -38,7 +38,9 @@
         <a ui-sref="search.companyProfile({id: entity.id})" class="no-decoration">
         <div class="panel panel-default" style="border-bottom: 5px solid #e92a8b;">
           <div class="panel-body result-item-panel">
-            <img ng-src="{{entity.logo}}" class="img-responsive" style="margin: 10px auto;max-height: 115px;">
+            <div class=image-container>
+              <span class="helper"></span><img ng-src="{{entity.logo}}" />
+            </div>
             <h2 class="text-left" style="margin-bottom:0;margin-top:30px;font-size:22px;font-weight:300;">{{entity.name}}</h2>
             <p class="text-left" style="font-size:16px;font-weight:300;margin-bottom:0;color:#999999;">
               {{entity.short_description | characters:140 }}
@@ -67,7 +69,11 @@
         <a ui-sref="search.companyProfile({id: entity.id})" class="no-decoration">
         <div class="panel panel-default" style="border-bottom: 5px solid #e92a8b;">
           <div class="panel-body result-item-panel">
-            <img ng-src="{{entity.logo}}" class="img-responsive" style="margin: 10px auto;max-height: 115px;">
+
+            <div class=image-container>
+              <span class="helper"></span><img ng-src="{{entity.logo}}" />
+            </div>
+
             <h2 class="text-left" style="margin-bottom:0;margin-top:30px;font-size:22px;font-weight:300;">{{entity.name}}</h2>
             <p class="text-left" style="font-size:16px;font-weight:300;margin-bottom:0;color:#999999;">
               {{entity.short_description | characters:140 }}
@@ -95,7 +101,9 @@
         <a ui-sref="search.multinationalProfile({id: entity.id})" class="no-decoration">
         <div class="panel panel-default" style="border-bottom: 5px solid #e92a8b;">
           <div class="panel-body result-item-panel">
-            <img ng-src="{{entity.logo}}" class="img-responsive" style="margin: 10px auto;max-height: 115px;">
+            <div class=image-container>
+              <span class="helper"></span><img ng-src="{{entity.logo}}" />
+            </div>
             <h2 class="text-left" style="margin-bottom:0;margin-top:30px;font-size:22px;font-weight:300;">{{entity.name}}</h2>
             <p class="text-left" style="font-size:16px;font-weight:300;margin-bottom:0;color:#999999;">
               {{entity.short_description | characters:140 }}
@@ -123,7 +131,10 @@
         <a ui-sref="search.investorProfile({id: entity.id})" class="no-decoration">
         <div class="panel panel-default" style="border-bottom: 5px solid #e92a8b;">
           <div class="panel-body result-item-panel">
-            <img ng-src="{{entity.logo}}" class="img-responsive" style="margin: 10px auto;max-height: 115px;">
+            <div class=image-container>
+              <span class="helper"></span><img ng-src="{{entity.logo}}" />
+            </div>
+
             <h2 class="text-left" style="margin-bottom:0;margin-top:30px;font-size:22px;font-weight:300;">{{entity.name}}</h2>
             <p class="text-left" style="font-size:16px;font-weight:300;margin-bottom:0;color:#999999;">
               {{entity.short_description | characters:140 }}
@@ -151,7 +162,9 @@
         <a ui-sref="search.hubProfile({id: entity.id})" class="no-decoration">
         <div class="panel panel-default" style="border-bottom: 5px solid #e92a8b;">
           <div class="panel-body result-item-panel">
-            <img ng-src="{{entity.logo}}" class="img-responsive" style="margin: 10px auto;max-height: 115px;">
+            <div class=image-container>
+              <span class="helper"></span><img ng-src="{{entity.logo}}" />
+            </div>
             <h2 class="text-left" style="margin-bottom:0;margin-top:30px;font-size:22px;font-weight:300;">{{entity.name}}</h2>
             <p class="text-left" style="font-size:16px;font-weight:300;margin-bottom:0;color:#999999;">
               {{entity.short_description | characters:140 }}
