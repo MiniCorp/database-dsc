@@ -176,7 +176,8 @@
                 add-on-enter="false"
                 add-from-autocomplete-only="true"
                 on-tag-added="$ctrl.addTag($tag)"
-                on-tag-removed="$ctrl.removeTag($tag)">
+                on-tag-removed="$ctrl.removeTag($tag)"
+                replace-spaces-with-dashes="false">
       <auto-complete source="$ctrl.queryTags($query)"></auto-complete>
     </tags-input>
     <p class="help-block" style="color:red" ng-show="create.tagsInput.$invalid || edit.tagsInput.$invalid">
