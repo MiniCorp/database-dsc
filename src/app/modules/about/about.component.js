@@ -40,7 +40,7 @@
     .controller('AboutController', function ($rootScope, $scope, $location, $interval, searchCompaniesService, searchInvestorsService, searchHubsService, searchMultinationalsService) {
       var controller = this;
       this.searchCompaniesService = searchCompaniesService;
-      $rootScope.title = "Tech Ireland | What is Tech Ireland";
+      $rootScope.title = "TechIreland | What is TechIreland";
 
       controller.currentPage = 1;
       controller.perPage = 4;

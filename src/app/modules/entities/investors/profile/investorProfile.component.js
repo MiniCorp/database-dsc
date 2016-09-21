@@ -29,7 +29,7 @@
 
       this.investor = getInvestorService.find($stateParams.id).then(function(investor) {
         controller.investor = investor;
-        $rootScope.title = "Tech Ireland | " + investor.name;
+        $rootScope.title = "TechIreland | " + investor.name;
 
         var companyIds = investor.companies_invested_in.map(function(a) { return a.id; });
         if (companyIds.length == 0)

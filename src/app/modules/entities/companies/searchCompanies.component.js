@@ -11,7 +11,7 @@
       var controller = this;
       this.searchCompaniesService = searchCompaniesService;
       this.filterCompaniesService = filterCompaniesService;
-      $rootScope.title = "Tech Ireland | Companies";
+      $rootScope.title = "TechIreland | Companies";
 
       if ($stateParams.tag) {
         this.tag = $stateParams.tag;

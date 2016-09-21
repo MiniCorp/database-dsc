@@ -13,7 +13,7 @@
 
       this.multinational = getMultinationalService.find($stateParams.id).then(function(multinational) {
         controller.multinational = multinational;
-        $rootScope.title = "Tech Ireland | " + multinational.name;
+        $rootScope.title = "TechIreland | " + multinational.name;
       });
     });
 })();

@@ -10,7 +10,7 @@
           template: '<div class="container"><user-login></user-login></div>',
           resolve: {
             'title': ['$rootScope', function($rootScope){
-              $rootScope.title = "Tech Ireland | User Login";
+              $rootScope.title = "TechIreland | User Login";
             }],
           }
         })
@@ -221,7 +221,7 @@
           template: '<company-profile></company-profile>',
           resolve: {
             'title': ['$rootScope', function($rootScope){
-              $rootScope.title = "Tech Ireland";
+              $rootScope.title = "TechIreland";
             }],
           }
         })
@@ -242,7 +242,7 @@
           template: '<multinational-profile></multinational-profile>',
           resolve: {
             'title': ['$rootScope', function($rootScope){
-              $rootScope.title = "Tech Ireland";
+              $rootScope.title = "TechIreland";
             }],
           }
         })
@@ -263,7 +263,7 @@
           template: '<investor-profile></investor-profile>',
           resolve: {
             'title': ['$rootScope', function($rootScope){
-              $rootScope.title = "Tech Ireland";
+              $rootScope.title = "TechIreland";
             }],
           }
         })
@@ -284,7 +284,7 @@
           template: '<hub-profile></hub-profile>',
           resolve: {
             'title': ['$rootScope', function($rootScope){
-              $rootScope.title = "Tech Ireland";
+              $rootScope.title = "TechIreland";
             }],
           }
         })

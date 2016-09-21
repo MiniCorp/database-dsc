@@ -11,7 +11,7 @@
       var controller = this;
       this.searchMultinationalsService = searchMultinationalsService;
       this.filterCompaniesService = filterMultinationalsService;
-      $rootScope.title = "Tech Ireland | Multinationals";
+      $rootScope.title = "TechIreland | Multinationals";
 
       if ($stateParams.tag) {
         this.tag = $stateParams.tag;

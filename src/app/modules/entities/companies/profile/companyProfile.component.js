@@ -29,7 +29,7 @@
 
       this.company = getCompanyService.find($stateParams.id).then(function(company) {
         controller.company = company;
-        $rootScope.title = "Tech Ireland | " + company.name;
+        $rootScope.title = "TechIreland | " + company.name;
 
         switch (true) {
           case (company.employees > 1 && company.employees < 6):

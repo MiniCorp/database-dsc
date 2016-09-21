@@ -21,7 +21,7 @@
 
       getHubService.find($stateParams.id).then(function(hub){
         controller.hub = hub;
-        $rootScope.title = "Tech Ireland | " + hub.name;
+        $rootScope.title = "TechIreland | " + hub.name;
         setAlumni();
         var companyIds = hub.alumni.map(function(a) { return a.id; });
         searchCompaniesService.getCompaniesWithIDs(companyIds.join(',')).then(function(companies){

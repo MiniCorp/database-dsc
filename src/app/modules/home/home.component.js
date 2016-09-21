@@ -41,7 +41,7 @@
       var controller = this;
       this.searchCompaniesService = searchCompaniesService;
       this.homeSearchService = homeSearchService;
-      $rootScope.title = "Tech Ireland | Search for Irish Innovation Here";
+      $rootScope.title = "TechIreland | Search for Irish Innovation Here";
 
       controller.currentPage = 1;
       controller.perPage = 4;

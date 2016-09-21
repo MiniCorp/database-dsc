@@ -1,4 +1,4 @@
-# Tech Ireland Project
+# TechIreland Project
 
 ![TRAVIS CI](https://travis-ci.org/databasedsc/database-dsc.svg?branch=master)
 
