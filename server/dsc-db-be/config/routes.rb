@@ -25,6 +25,7 @@ Rails.application.routes.draw do
       resources :user_entity_claims, only: [:index, :update]
       resources :user_entity_pending, only: [:index, :update]
 
+      get 'companies/export'
       resources :companies, only: [:create, :index, :show, :update, :destroy] do
         member do
           put :restore

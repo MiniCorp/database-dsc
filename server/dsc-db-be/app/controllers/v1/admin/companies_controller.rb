@@ -15,14 +15,22 @@ module V1
           companies = Company.with_deleted.order(:name)
         end
 
-        respond_to do |format|
-          format.html {
-            render json: companies
-          }
-          format.csv do
-            send_data companies.to_csv
-          end
-        end
+        render json: companies
+      end
+
+      def export
+        companies = Company.with_deleted.order(:name)
+
+        ee = EntityExport.create(
+          user_id: current_user.id,
+          csv_file: StringIO.new(companies.to_csv),
+          csv_file_file_name: "companies_#{current_user.id}_#{Time.current.to_i}.csv",
+          entity_type: 'company'
+        )
+
+        AdminMailer.export_ready_notification(ee).deliver_now
+
+        render nothing: true, status: 200
       end
 
       def show
