@@ -7,7 +7,7 @@ class AdminMailer < ApplicationMailer
 
   def export_ready_notification(entity_export)
     @entity_export = entity_export
-    mail to: 'brian@minicorp.ie', subject: "TechIreland - Your export is ready"
+    mail to: ENV['CLAIM_MAIL_TO'], subject: "TechIreland - Your export is ready"
   end
 
 end
