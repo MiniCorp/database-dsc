@@ -1,8 +1,27 @@
 (function() {
   'use strict';
 
-  angular
+  var app = angular
     .module('dscFe')
+    .run(function($rootScope, $window, $auth) {
+      $rootScope.$on('$stateChangeSuccess', function($rootScope) {
+        if ($auth.isAuthenticated()) {
+          window.Intercom('boot', {
+            app_id: 'veilum45',
+            email: $window.sessionStorage.getItem('userEmail'),
+            first_name: $window.sessionStorage.getItem('userFirstName'),
+            last_name: $window.sessionStorage.getItem('userLastName'),
+            created_at: $window.sessionStorage.getItem('createdAt')
+          });
+        } else {
+          window.Intercom("boot", {
+            app_id: "veilum45"
+          });
+        }
+      });
+      // debugger;
+
+    })
     .config(function routerConfig($stateProvider, $urlRouterProvider) {
       $stateProvider
         .state('userLogin', {
@@ -292,4 +311,7 @@
 
       $urlRouterProvider.otherwise('/');
     });
+
+
+
 })();

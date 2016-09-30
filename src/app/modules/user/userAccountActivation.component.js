@@ -27,6 +27,7 @@
         controller.accountActivationSuccess = false;
 
         userAccountActivateService.verifyEmail(token, this.params).then(function(response) {
+          debugger;
           $auth.setToken(response.jwt);
           controller.accountActivationSuccess = true;
         }).catch(function () {
