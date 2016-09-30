@@ -61,6 +61,7 @@ Rails.application.routes.draw do
     namespace :user do
       resources :user_entity_claims, only: [:create, :update]
 
+      get 'companies/export'
       resources :companies, only: [:create, :index, :show, :update, :destroy] do
         member do
           put :restore

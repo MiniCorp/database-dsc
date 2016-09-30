@@ -20,5 +20,10 @@
         var basePath = serverUrl + '/user/companies?typeahead=true&filter=' + query;
         return $http.get(basePath);
       };
+
+      this.export = function() {
+        var basePath = serverUrl + '/user/companies/export'
+        return $http.get(basePath);
+      };
     });
 })();

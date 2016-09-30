@@ -41,10 +41,22 @@ module V1
                                 .where("name ILIKE ?", "#{params[:filter]}%").order(:name).limit(10)
                                 .where.not("id in (?)", UserEntityClaim.where(user_id: current_user.id, entity_type: UserEntityClaim.entity_types['company']).count > 0 ? UserEntityClaim.where(user_id: current_user.id, entity_type: UserEntityClaim.entity_types['company']).pluck(:entity_id) : -1)
           }
-          format.csv do
-            send_data PublicCompany.to_csv(PublicCompany.all)
-          end
         end
+      end
+
+      def export
+        companies = Company.with_deleted.order(:name)
+
+        ee = EntityExport.create(
+          user_id: current_user.id,
+          csv_file: StringIO.new(PublicCompany.to_csv(PublicCompany.all)),
+          csv_file_file_name: "companies_#{current_user.id}_#{Time.current.to_i}.csv",
+          entity_type: 'company'
+        )
+
+        UserMailer.export_ready_notification(ee).deliver_now
+
+        render nothing: true, status: 200
       end
 
       def show
