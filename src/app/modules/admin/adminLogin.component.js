@@ -14,7 +14,7 @@
 
       this.login = function() {
         loginService.authenticate(this.userCredentials).then(function(response) {
-          $auth.setToken(response.jwt);
+          $auth.setToken(response.token);
           $state.go('admin.dashboard');
         }).catch(function () {
           controller.loginFail = true;
