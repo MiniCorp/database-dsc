@@ -7,7 +7,7 @@
       controller: 'UserCompaniesNewController',
       templateUrl: 'app/modules/user/companies/companies.new.html'
     })
-    .controller('UserCompaniesNewController', function(userCreateCompanyService, $confirm, Notification, adminListInvestorsService, listTagsService) {
+    .controller('UserCompaniesNewController', function(userCreateCompanyService, $confirm, $location, Notification, userListInvestorsService, userListHubsService, listTagsService, $document) {
       this.userCreateCompanyService = userCreateCompanyService;
       var controller = this;
 
@@ -16,7 +16,8 @@
           office_locations: [],
           founders: [],
           funding_rounds: [],
-          tags: []
+          tags: [],
+          incubators: []
         }
       };
 
@@ -29,15 +30,25 @@
             controller.company.target_markets.push(key);
           }
         }
-        controller.company.target_markets = controller.company.target_markets.join(',')
+        controller.company.target_markets = controller.company.target_markets.join(', ')
       }
 
+      controller.clearExecutiveSummary = function() {
+        angular.element($document[0].getElementById('fileInput')).val('');
+        controller.company.exec_summary = undefined;
+        controller.company.exec_summary_file_name = null;
+      };
+
       controller.queryInvestors = function(query) {
-        return adminListInvestorsService.filter(query);
+        return userListInvestorsService.filter(query);
       };
 
       controller.queryTags = function(query) {
         return listTagsService.filter(query);
+      };
+
+      controller.queryHubs = function(query) {
+        return userListHubsService.filter(query);
       };
 
       controller.addFounder = function() {
@@ -80,12 +91,20 @@
         controller.company.tags.splice(controller.company.tags.indexOf(tag.text), 1);
       };
 
+      controller.addIncubator = function(incubator) {
+        controller.company.incubators.push(incubator.text);
+      };
+
+      controller.removeIncubator = function(incubator) {
+        controller.company.incubators.splice(controller.company.incubators.indexOf(incubator.text), 1);
+      };
+
       this.create = function() {
         $confirm({text: "Are you sure you want to submit?"}).then(function() {
           setTargetMarkets();
           controller.userCreateCompanyService.create(controller.company).then(function() {
             Notification.success('Company Saved sucessfully!');
-            setEmptyCompany();
+            $location.path( "/user/companies" );
           });
         })
       };

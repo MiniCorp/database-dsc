@@ -7,7 +7,7 @@
       controller: 'AdminCompaniesNewController',
       templateUrl: 'app/modules/admin/companies/companies.new.html'
     })
-    .controller('AdminCompaniesNewController', function(createCompanyService, $confirm, Notification, listInvestorsService, listTagsService) {
+    .controller('AdminCompaniesNewController', function(createCompanyService, $confirm, Notification, adminListInvestorsService, listTagsService, listHubsService) {
       this.createCompanyService = createCompanyService;
       var controller = this;
 
@@ -16,8 +16,10 @@
           office_locations: [],
           founders: [],
           funding_rounds: [],
-          tags: []
+          tags: [],
+          incubators: []
         }
+        controller.company.recently_funded = false;
       };
 
       setEmptyCompany();
@@ -33,11 +35,15 @@
       }
 
       controller.queryInvestors = function(query) {
-        return listInvestorsService.filter(query);
+        return adminListInvestorsService.filter(query);
       };
 
       controller.queryTags = function(query) {
         return listTagsService.filter(query);
+      };
+
+      controller.queryHubs = function(query) {
+        return listHubsService.filter(query);
       };
 
       controller.addFounder = function() {
@@ -78,6 +84,14 @@
 
       controller.removeTag = function(tag) {
         controller.company.tags.splice(controller.company.tags.indexOf(tag.text), 1);
+      };
+
+      controller.addIncubator = function(incubator) {
+        controller.company.incubators.push(incubator.text);
+      };
+
+      controller.removeIncubator = function(incubator) {
+        controller.company.incubators.splice(controller.company.incubators.indexOf(incubator.text), 1);
       };
 
       this.create = function() {

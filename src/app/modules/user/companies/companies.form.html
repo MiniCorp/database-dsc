@@ -16,7 +16,7 @@
           </select>
         </div>
 
-        <div class="form-group">
+        <div class="form-group hide">
           <label for="acquired">Acquired/IPO Status</label>
           <select ng-model="$ctrl.company.acquired " id="acquired" class="form-control">
             <option></option>
@@ -26,7 +26,7 @@
         </div>
 
         <div class="form-group">
-          <label for="headquarters">Headquarters:</label>
+          <label for="headquarters">Irish Headquarters:</label>
           <input ng-model="$ctrl.company.headquarters" id="headquarters" class="form-control" type="text">
         </div>
 
@@ -36,13 +36,16 @@
         </div>
 
         <div class="form-group">
-          <label for="founded">Founded:</label>
+          <label for="founded">Founded Year:</label>
           <input integer ng-model="$ctrl.company.founded" id="founded" class="form-control" type="text">
         </div>
 
         <div class="form-group">
           <label for="employees">Employees:</label>
           <input integer ng-model="$ctrl.company.employees" id="employees" class="form-control" type="number">
+          <p class="help-block">
+            Please give an accurate number, we'll round it in to one the following brackets - 1-5, 6-10, 11-25, 26-50, 50-100, 101-250, 250-500, >500
+          </p>
         </div>
 
         <div class="form-group">
@@ -63,12 +66,14 @@
 
         <div class="form-group">
           <label for="total-funding">Total Funding</label>
-          <input ng-model="$ctrl.company.funding_amount" id="total-funding" class="form-control" type="text">
-        </div>
-
-        <div class="form-group">
-          <label for="revenue">Revenue (admin purposes only)</label>
-          <input ng-model="$ctrl.company.revenue" id="revenue" class="form-control" type="number">
+          <div class="input-group">
+            <span class="input-group-addon">&euro;</span>
+            <input ng-model="$ctrl.company.funding_amount" id="total-funding" class="form-control" type="text">
+            <span class="input-group-addon">M</span>
+          </div>
+          <p class="helper-text">
+            Don’t use currency symbols or commas. All amounts in Euro.
+          </p>
         </div>
 
         <div class="form-group">
@@ -153,7 +158,7 @@
           <select ng-model="$ctrl.company.company_stage" id="company-stage" class="form-control">
             <option></option>
             <option>Growth</option>
-            <option>Complete</option>
+            <option>Early-stage</option>
             <option>Late-stage</option>
             <option>Public</option>
             <option>Acquired</option>
@@ -161,8 +166,19 @@
         </div>
 
         <div class="form-group">
-          <label for="incubator">Incubator/Accelator</label>
-          <input ng-model="$ctrl.company.incubator" id="incubator" class="form-control" type="">
+          <label for="incubator">Accelerator/Incubator</label>
+          <tags-input name="hubsInput"
+                      ng-model="$ctrl.incubators"
+                      add-on-enter="false"
+                      add-from-autocomplete-only="true"
+                      on-tag-added="$ctrl.addIncubator($tag)"
+                      on-tag-removed="$ctrl.removeIncubator($tag)"
+                      placeholder="Add an Incubator">
+            <auto-complete source="$ctrl.queryHubs($query)"></auto-complete>
+          </tags-input>
+          <p class="help-block" style="color:red" ng-show="create.tagsInput.$invalid || edit.tagsInput.$invalid">
+            Sorry, you added a tag that does not exist in the system.
+          </p>
         </div>
 
         <div class="form-group">
@@ -175,25 +191,67 @@
         </div>
 
         <div class="form-group">
-          <label for="government-assistance">Government Assistance</label>
-          <input ng-model="$ctrl.company.government_assistance" id="government-assistance" class="form-control" type="text">
+          <label for="government-assistance">Government Support</label>
+          <select ng-model="$ctrl.company.government_assistance" id="government-assistance" class="form-control">
+            <option></option>
+            <option>High Potential Start Up Funding from Enterprise Ireland</option>
+            <option>New Frontiers Entreprener Development Program from Enterprise Ireland</option>
+            <option>Competitive Start Fund from Enterprise Ireland</option>
+            <option>Innovation Voucher from Enterprise Ireland</option>
+            <option>Feasibility Grant from Local Enterprise Office</option>
+          </select>
         </div>
 
         <div class="form-group">
-          <label for="looking-for">We're looking for</label>
+          <label for="looking-for">We're looking for eg. front-end web developers</label>
           <input ng-model="$ctrl.company.looking_for" id="looking-for" class="form-control" type="text">
-        </div>
-
-        <div class="form-group">
-          <label>Recently Funded?</label>
-          <br>
-          <input type="radio" ng-model="$ctrl.company.recently_funded" ng-value="true"> Yes
-          &nbsp;
-          <input type="radio" ng-model="$ctrl.company.recently_funded" ng-value="false"> No
         </div>
 
       </div>
 
+    </div>
+  </div>
+</div>
+
+<div class="panel panel-default">
+  <div class="panel-heading">Executive Summary Upload (PDF format only)</div>
+  <div class="panel-body">
+    <div class="row">
+      <div class="col-md-12">
+        <p ng-if="!$ctrl.company.exec_summary_file_name">
+          Click 'Choose file' to select your Executive Summary PDF (Note: the file is not uploaded until you save the company changes).
+        </p>
+        <div ng-if="$ctrl.company.exec_summary_file_name">
+          <p>
+            Current Executive Summary
+          </p>
+          <p>
+            <b>{{$ctrl.company.exec_summary_file_name}}</b>&nbsp;&nbsp;<a href='' ng-click="$ctrl.clearExecutiveSummary()">[remove]</a>
+          </p>
+          <p>
+            Upload another PDF to replace your current Executive Summary.
+          </p>
+        </div>
+      </div>
+      <!-- <input id="file-input" type="file" ngf-select ng-model="$ctrl.company.exec_summary" accept="application/pdf" ngf-max-size="20MB"> -->
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="input-group">
+          <label class="input-group-btn">
+            <span class="btn btn-primary">
+              Browse&hellip; <input id="file-input"
+                                    type="file"
+                                    style="display: none;"
+                                    ngf-select ng-model="$ctrl.company.exec_summary"
+                                    accept="application/pdf"
+                                    ngf-max-size="20MB"
+                                    onchange="angular.element(fileInput).val(angular.element(this)[0].files[0].name);">
+            </span>
+          </label>
+          <input id="fileInput" type="text" class="form-control" readonly>
+        </div>
+      </div>
     </div>
   </div>
 </div>
@@ -216,6 +274,9 @@
         <div class="panel-body">
           <div class="row">
             <div class="col-sm-12">
+              <div class="alert alert-info" role="alert">
+                To get longitude and latitude coordinates: Find your location on google maps, right click on the red marker, select "what's here" and you'll find them at the bottom of the dialog box (first one is latitude, second one is longitude).
+              </div>
 
               <div class="form-group">
                 <label for="location-address">Address</label>
@@ -271,7 +332,7 @@
           <div class="row">
             <div class="col-sm-12">
               <div class="form-group">
-                <label for="founder-linkedin">LinkedIn</label>
+                <label for="founder-linkedin">LinkedIn Username</label>
                 <input type="text" ng-model="founder.linkedin" id="founder-linkedin" class="form-control">
                 </textarea>
               </div>
@@ -300,10 +361,23 @@
         </div>
         <div class="panel-body">
           <div class="row">
-            <div class="col-sm-6">
+            <div class="col-sm-8">
               <div class="form-group">
                 <label for="funding-type">Funding type</label>
-                <input ng-model="round.type" id="funding-type" class="form-control" type="text">
+                <select ng-model="round.type" id="funding-type" class="form-control">
+                  <option></option>
+                  <option>Undisclosed</option>
+                  <option>Pre-Seed</option>
+                  <option>Seed</option>
+                  <option>Series A</option>
+                  <option>Series B</option>
+                  <option>Series C</option>
+                  <option>Series D</option>
+                  <option>Series E</option>
+                </select>
+                <p>
+                  Please note, we classify anything less than €100,000 as pre-seed.
+                </p>
               </div>
               <div class="form-group">
                 <label for="funding-amount">Funding amount</label>
@@ -315,16 +389,20 @@
               </div>
               <div class="form-group">
                 <label for="funding-date">Investors</label>
-                <tags-input ng-model="round.investors"
+                <tags-input name="investorsInput"
+                            ng-model="round.investors"
                             replace-spaces-with-dashes="false"
                             placeholder="Add an investor"
                             add-on-enter="false"
-                            add-from-auto-complete-only="true"
+                            add-from-autocomplete-only="true"
                             key-property="id"
                             display-property="name">
                   <auto-complete source="$ctrl.queryInvestors($query)" display-property="name">
                   </auto-complete>
                 </tags-input>
+                <p class="help-block" style="color:red" ng-show="create.investorsInput.$invalid || edit.investorsInput.$invalid">
+                  Sorry, looks like you are trying to add an investor that does not exist in our system. If you'd like to suggest a new investor, please email <a href="mailto:ciaran@startupdublin.com?Subject=I%20Have%20A%20New%20Investor%20For%20You%21&Body=Hi%20Ciaran%2C%0A%0AI%20was%20editing%20a%20profile%20%28INSERT%20PROFILE%20NAME%20HERE%29%20on%20TechIreland.org%20and%20wanted%20to%20suggest%20a%20new%20investor%20-%20%28INSERT%20TAG%20HERE%29.%0A%0AThanks%21">ciaran@startupdublin.com</a>
+                </p>
               </div>
             </div>
           </div>
@@ -337,14 +415,30 @@
 <div class="panel panel-default">
   <div class="panel-heading">Tags</div>
   <div class="panel-body">
-    <tags-input ng-model="$ctrl.tags"
+    <p>
+      Please add as many as are relevant. If you'd like to suggest a new tag, please email <a href="mailto:ciaran@startupdublin.com?Subject=I%20Have%20A%20New%20Tag%20For%20You%21&Body=Hi%20Ciaran%2C%0A%0AI%20was%20editing%20a%20profile%20%28INSERT%20PROFILE%20NAME%20HERE%29%20on%20TechIreland.org%20and%20wanted%20to%20suggest%20a%20new%20tag%20-%20%28INSERT%20TAG%20HERE%29.%0A%0AThanks%21">ciaran@startupdublin.com</a>
+    </p>
+    <tags-input name="tagsInput"
+                ng-model="$ctrl.tags"
                 add-on-enter="false"
+                add-from-autocomplete-only="true"
                 on-tag-added="$ctrl.addTag($tag)"
-                on-tag-removed="$ctrl.removeTag($tag)">
+                on-tag-removed="$ctrl.removeTag($tag)"
+                replace-spaces-with-dashes="false">
       <auto-complete source="$ctrl.queryTags($query)"></auto-complete>
     </tags-input>
+    <p class="help-block" style="color:red" ng-show="create.tagsInput.$invalid || edit.tagsInput.$invalid">
+      Sorry, looks like you are trying to use a tag that does not exist in our system.
+    </p>
   </div>
   </div>
 </div>
 
-<custom-fields entity="$ctrl.company"></custom-fields>
+<div class="form-group">
+  <label>We'd like to spread this information across the world through other media outlets (Crunchbase/Mattermark/CBInsights etc) so that I can spread my info beyond the database.</label>
+  <div class="checkbox">
+    <label>
+      <input ng-model="$ctrl.company.allow_sharing" type="checkbox">Please acknowledge that you're happy to have your publicly available details shared.</label>
+    <br/>
+  </div>
+</div>

@@ -17,12 +17,12 @@
     </div>
 
     <div class="col-md-4 m-b-md" ng-show="$ctrl.investor.headquarters">
-      <div class="company-info-title">Headquarters</div>
+      <div class="company-info-title">Local Office</div>
       <div class="company-info-value">{{$ctrl.investor.headquarters}}</div>
     </div>
 
     <div class="col-md-4 m-b-md" ng-show="$ctrl.investor.founders">
-      <div class="company-info-title">Founders</div>
+      <div class="company-info-title">Principals</div>
       <div class="company-info-value">
         <span ng-repeat="founder in $ctrl.investor.founders">
           <div ng-if="founder.linkedin"><a href="https://www.linkedin.com/in/{{founder.linkedin}}" target="_blank">{{founder.name}}</a></div>
@@ -32,7 +32,7 @@
     </div>
 
     <div class="col-md-4 m-b-md" ng-show="$ctrl.investor.founded">
-      <div class="company-info-title">Founded</div>
+      <div class="company-info-title">Founded Year</div>
       <div class="company-info-value">{{$ctrl.investor.founded}}</div>
     </div>
 
@@ -41,40 +41,35 @@
       <div class="company-info-value">${{$ctrl.investor.funds_raised}}</div>
     </div>
 
-    <div class="col-md-4 m-b-md" ng-show="$ctrl.investor.funding_types">
+    <div class="col-md-4 m-b-md" ng-show="$ctrl.investor.funding_types && $ctrl.investor.funding_types.length > 0">
       <div class="company-info-title">Type of Funding</div>
       <div class="company-info-value">{{$ctrl.investor.funding_types | fundingCodeToHuman : 'array' }}</div>
     </div>
 
-    <div class="col-md-4 m-b-md" ng-show="$ctrl.investor.deal_structure">
+    <!-- <div class="col-md-4 m-b-md" ng-show="$ctrl.investor.deal_structure">
       <div class="company-info-title">Deal Structure</div>
       <div class="company-info-value">{{$ctrl.investor.deal_structure}}</div>
-    </div>
+    </div> -->
 
     <div class="col-md-4 m-b-md" ng-show="$ctrl.investor.investment_size">
-      <div class="company-info-title">Investment Size</div>
+      <div class="company-info-title">Maximum Investment Size</div>
       <div class="company-info-value">{{$ctrl.investor.investment_size}}</div>
     </div>
 
-    <div class="col-md-4 m-b-md" ng-show="$ctrl.investor.office_locations">
+    <div class="col-md-4 m-b-md" ng-show="$ctrl.investor.office_locations && $ctrl.investor.office_locations.length > 0">
       <div class="company-info-title">Office Locations</div>
       <div class="company-info-value">
         <p ng-repeat="office in $ctrl.investor.office_locations">{{office.address}}</p>
       </div>
     </div>
 
-    <div class="col-md-4 m-b-md" ng-show="$ctrl.investor.contact">
-      <div class="company-info-title">Contact</div>
-      <div class="company-info-value">{{$ctrl.investor.contact}}</div>
-    </div>
-
     <div class="col-md-4 m-b-md" ng-show="$ctrl.investor.contact_email">
-      <div class="company-info-title">Contact Number</div>
+      <div class="company-info-title">Contact</div>
       <div class="company-info-value">{{$ctrl.investor.contact_email}}</div>
     </div>
 
     <div class="col-md-4 m-b-md" ng-show="$ctrl.investor.preferred_contact">
-      <div class="company-info-title">Preferred Contact</div>
+      <div class="company-info-title">Preferred Contact Method</div>
       <div class="company-info-value">{{$ctrl.investor.preferred_contact}}</div>
     </div>
 
@@ -100,18 +95,17 @@
   </div>
 </div>
 
-<div class="block block-bordered-lg" style="padding:40px 0;">
-  <div class="container text-center app-translate-15" data-transition="entrance" style="transition: transform 1200ms cubic-bezier(0.2, 0.7, 0.5, 1); transform: none;">
-    <blockquote class="pull-quote">
-      <cite style="margin-top:0;">Investments</cite>
-      <p style="margin-top:0px;font-size:26px;color:#e92a8b">
-        Irish Company Investments
-      </p>
-    </blockquote>
+<div class="container" ng-if="$ctrl.investor.investedInCompanies.length > 0">
+  <div class="block block-bordered-lg" style="padding:40px 0;">
+    <div class="container text-center app-translate-15" data-transition="entrance" style="transition: transform 1200ms cubic-bezier(0.2, 0.7, 0.5, 1); transform: none;">
+      <blockquote class="pull-quote">
+        <cite style="margin-top:0;">Investments</cite>
+        <p style="margin-top:0px;font-size:26px;color:#e92a8b">
+          Irish Company Investments
+        </p>
+      </blockquote>
+    </div>
   </div>
-</div>
-
-<div class="container">
   <div class="row m-b-md">
     <div class="col-md-3 col-sm-6 result-item" ng-repeat="entity in $ctrl.investor.investedInCompanies">
       <a ui-sref="search.companyProfile({id: entity.id})" class="no-decoration">
@@ -127,9 +121,11 @@
       </a>
     </div>
   </div>
+</div>
+
 
 <div class="container">
-  <div ng-show="!!$ctrl.investor.office_locations.length > 0" class="portfolio">
+  <div ng-if="!!$ctrl.investor.office_locations.length > 0" class="portfolio">
     <div class="block block-bordered-lg" style="padding:40px 0;">
       <div class="container text-center app-translate-15" data-transition="entrance" style="transition: transform 1200ms cubic-bezier(0.2, 0.7, 0.5, 1); transform: none;">
         <blockquote class="pull-quote">
@@ -160,6 +156,4 @@
       </ng-map>
     </div>
   </div>
-</div>
-
 </div>

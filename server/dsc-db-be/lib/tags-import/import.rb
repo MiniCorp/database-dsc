@@ -4,6 +4,7 @@ require 'open-uri'
 class Import
 
   def self.start_import
+    Tag.destroy_all
 
     CSV.foreach(Rails.root.join('lib/tags-import/tags.csv'), headers: true) do |row|
       # get name

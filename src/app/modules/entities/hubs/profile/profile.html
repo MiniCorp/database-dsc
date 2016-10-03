@@ -24,7 +24,7 @@
     </div>
 
     <div class="col-md-4 m-b-md" ng-show="$ctrl.hub.founded">
-      <div class="company-info-title">Founded</div>
+      <div class="company-info-title">Founded Year</div>
       <div class="company-info-value">{{$ctrl.hub.founded}}</div>
     </div>
 
@@ -34,7 +34,7 @@
     </div>
 
     <div class="col-md-4 m-b-md" ng-show="$ctrl.hub.contact_detail">
-      <div class="company-info-title">Contact Details</div>
+      <div class="company-info-title">Public Contact Email</div>
       <div class="company-info-value">{{$ctrl.hub.contact_detail}}</div>
     </div>
 
@@ -43,9 +43,19 @@
       <div class="company-info-value">{{$ctrl.hub.funding_provided ? 'Yes' : 'No'}}</div>
     </div>
 
-    <div class="col-md-4 m-b-md" ng-show="$ctrl.hub.programs && $ctrl.hub.application_deadline">
-      <div class="company-info-title">Application Deadline</div>
-      <div class="company-info-value">{{$ctrl.hub.programs}} - {{$ctrl.hub.application_deadline | date : "dd/MM/yyyy"}}</div>
+    <div class="col-md-4 m-b-md" ng-show="$ctrl.hub.applications && $ctrl.hub.applications.length > 0">
+      <div class="company-info-title">Program Details</div>
+      <div class="company-info-value">
+        <p id="hub-type">
+          <div ng-repeat="application in $ctrl.hub.applications">
+
+              <a ng-if="application.link && application.link.length > 0" href="{{application.link}}" target="_blank">{{application.title}}</a>
+              <span ng-if="!application.link || application.link.length == 0">{{application.title}}</span>
+              <span ng-if="application.deadline"> - {{application.deadline | date: 'dd/MM/yyyy'}}</span>
+            </div>
+          </div>
+        </p>
+      </div>
     </div>
   </div>
 </div>
@@ -82,7 +92,7 @@
   </div>
 </div>
 
-<div ng-show="$ctrl.hub.lat && $ctrl.hub.lng" class="portfolio">
+<div ng-if="$ctrl.hub.lat && $ctrl.hub.lng" class="portfolio">
   <div class="container">
     <div class="block block-bordered-lg" style="padding:40px 0;">
       <div class="container text-center app-translate-15" data-transition="entrance" style="transition: transform 1200ms cubic-bezier(0.2, 0.7, 0.5, 1); transform: none;">

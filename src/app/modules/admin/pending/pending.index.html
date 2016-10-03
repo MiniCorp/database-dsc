@@ -1,0 +1,48 @@
+<div class="row">
+  <h2>Pending Profiles</h2>
+</div>
+<div class="table-responsive">
+  <table class="table table-striped table-bordered table-hover">
+    <thead>
+    <tr>
+      <th>User</th>
+      <th>Entity</th>
+      <th>Requested</th>
+      <th>Options</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-if="$ctrl.pendingProfiles.length > 0" ng-repeat="pendingProfile in $ctrl.pendingProfiles">
+      <td>
+        <strong>
+          {{pendingProfile.user_requesting.first_name}} {{pendingProfile.user_requesting.last_name}}
+        </strong>
+        <p style="color:#acacac"><i>{{pendingProfile.user_requesting.email}}</i></a></p>
+      </td>
+      <td>
+        <strong>
+          {{pendingProfile.entity.name}}
+        </strong>
+        <p style="color:#acacac;text-transform: capitalize;"><i>{{pendingProfile.entity_type}}</i></a></p>
+      </td>
+      <td>
+        {{pendingProfile.created_at | date:'medium'}}
+      </td>
+      <td ng-switch on="pendingProfile.entity_type">
+        <a ng-click="$ctrl.approveProfile($event, pendingProfile.id)" class="btn btn-xs btn-primary">Set Live</a>
+        <a ng-click="$ctrl.denyProfile($event, pendingProfile.id)" class="btn btn-xs btn-danger">Reject</a>
+
+        <a ng-switch-when="company" ui-sref="admin.companies.edit({id: pendingProfile.entity_id})" class="btn btn-xs btn-default">Edit Profile</a>
+        <a ng-switch-when="multinational" ui-sref="admin.multinationals.edit({id: pendingProfile.entity_id})" class="btn btn-xs btn-default">Edit Profile</a>
+        <a ng-switch-when="investor" ui-sref="admin.investors.edit({id: pendingProfile.entity_id})" class="btn btn-xs btn-default">Edit Profile</a>
+        <a ng-switch-when="hub" ui-sref="admin.hubs.edit({id: pendingProfile.entity_id})" class="btn btn-xs btn-default">Edit Profile</a>
+      </td>
+    </tr>
+    <tr ng-if="$ctrl.pendingProfiles.length == 0">
+      <td colspan="4">
+        You have no pending profiles.
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>

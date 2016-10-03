@@ -29,7 +29,7 @@ describe('MultinationalProfile', function() {
     });
 
     it('should display the description', function() {
-      expect(page.overview.getText()).toContain('Our mission is to empower every person and every organization on the planet to achieve more. Our strategy is to build best-in-class platforms and productivity services for a mobile-first, cloud-first world. Our ambitions are to reinvent productivity & business processes, build the intelligent cloud platform and to create more personal computing.');
+      expect(page.overview.getText()).toContain('Our mission is to empower every person and every organization on the planet to achieve more.  Our strategy is to build best-in-class platforms and productivity services for a mobile-first, cloud-first world. Our ambitions are to reinvent productivity & business processes, build the intelligent cloud platform and to create more personal computing.');
     });
   });
 

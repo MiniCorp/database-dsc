@@ -42,6 +42,8 @@ class Company < ApplicationRecord
 
   using Utils
 
+  belongs_to :user
+
   pg_search_scope :search_by_tag,
     against: {
       tags: 'A',
@@ -58,7 +60,6 @@ class Company < ApplicationRecord
       formerly_known_as: 'A',
       founders: 'D',
       tags: 'D',
-      investors: 'D',
       office_locations: 'D',
       incubator: 'D'
     },
@@ -74,7 +75,15 @@ class Company < ApplicationRecord
       tsearch: { any_word: true }
     }
 
+  has_attached_file :exec_summary, default_url: "", url: ":s3_domain_url",
+  	:path => ':class/:attachment/:id_partition/:style/:basename.:extension'
+
+  validates_attachment_content_type :exec_summary, :content_type => ["application/pdf"]
+
+  scope :live, -> (live) { where is_live: live }
   scope :withIds, -> (company_ids) { where id: company_ids }
+  scope :claimed_by_user, -> (user) { where user: user }
+  scope :unclaimed, -> { where user: nil }
   scope :unclaimed_or_owned_by, -> (user_id) { where "(user_id is null) OR (user_id = #{user_id})" }
   scope :funding_stage, -> (funding_stage) { where funding_stage: funding_stage }
   scope :product_stage, -> (product_stage) { where product_stage: product_stage }
@@ -99,7 +108,7 @@ class Company < ApplicationRecord
 
   def as_json(options = { })
     super((options || { }).merge({
-        :methods => [:claimed_requested_by_current_user]
+        :methods => [:claimed_requested_by_current_user, :exec_summary_url]
     }))
   end
 
@@ -109,6 +118,10 @@ class Company < ApplicationRecord
       entity_id: self.id,
       entity_type: UserEntityClaim.entity_types['company']
     ).count > 0 if current_user
+  end
+
+  def exec_summary_url
+    self.exec_summary ? self.exec_summary.url : nil
   end
 
 end

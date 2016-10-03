@@ -5,7 +5,7 @@ module V1
     def index
       if params[:company_ids].present?
         companies = CompanySearchService.new(filter_params).call
-        render json: companies, status: 200
+        render json: companies, status: 200    
       else
         companies = CompanySearchService.new(filter_params).call
         paginate json: companies, status: 200
@@ -13,7 +13,7 @@ module V1
     end
 
     def show
-      company = Company.find(params[:id])
+      company = Company.live(true).find(params[:id])
       render json: company, status: 200
     end
 

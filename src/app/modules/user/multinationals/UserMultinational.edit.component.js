@@ -13,12 +13,22 @@
       this.functions = [];
 
       function loadTags() {
+        if (!controller.multinational.tags || angular.isFunction(controller.multinational.tags.forEach) == false) {
+          controller.multinational.tags = [];
+          return;
+        }
+
         controller.multinational.tags.forEach(function(tag) {
           controller.tags.push({text: tag})
         });
       }
 
       function loadFunctions() {
+        if (!controller.multinational.functions || angular.isFunction(controller.multinational.functions.forEach) == false) {
+          controller.multinational.functions = [];
+          return;
+        }
+
         controller.multinational.functions.forEach(function(func) {
           controller.functions[func] = true;
         });
@@ -59,15 +69,22 @@
 
       userGetMultinationalService.find($stateParams.id).then(function(multinational) {
         controller.multinational = multinational;
+
+        if (!angular.isArray(controller.multinational.startup_packages)) {
+          controller.multinational.startup_packages = [];
+        }
+
         loadFunctions();
         loadTags();
       });
 
       this.update = function() {
         setFunctions();
-        userUpdateMultinationalService.update(controller.multinational).then(function() {
-          Notification.success("Multinational has been updated successfully.");
-        });
+        userUpdateMultinationalService.update(controller.multinational)
+          .then(function(multinational) {
+            controller.multinational = multinational;
+            Notification.success("Multinational has been updated successfully.");
+          });
       };
     });
 })();

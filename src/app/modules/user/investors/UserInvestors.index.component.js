@@ -7,34 +7,33 @@
       controller: 'UserInvestorsIndexController',
       templateUrl: 'app/modules/user/investors/investors.index.html'
     })
-    .controller('UserInvestorsIndexController', function(store, $state, $confirm, userListInvestorsService, userClaimEntityService, deleteInvestorService, restoreInvestorService, Notification, exportToCSV) {
+    .controller('UserInvestorsIndexController', function(store, $state, $confirm, userListInvestorsService, userClaimEntityService, deleteInvestorService, restoreInvestorService, Notification, exportToCSV, $document) {
       this.userListInvestorsService = userListInvestorsService;
       this.deleteInvestorService = deleteInvestorService;
       this.restoreInvestorService = restoreInvestorService;
       this.userClaimEntityService = userClaimEntityService;
+      var searchInvestors = angular.element($document[0].getElementById("searchInvestors"))
+
       var controller = this;
 
-      getInvestors();
+      controller.investors = {
+        "user_investors": [],
+        "pending_investors": []
+      }
 
-      function getInvestors() {
+      getUserInvestors();
+
+      function getUserInvestors() {
         userListInvestorsService.getAll().then(function(investors) {
           controller.investors = investors;
         });
       }
 
-      this.deleteInvestor = function(id) {
-        controller.deleteInvestorService.delete(id).then(function() {
-          getInvestors();
-          Notification.success('The entry has been deleted.')
-        })
-      };
-
-      this.restoreInvestor = function(id) {
-        controller.restoreInvestorService.restore(id).then(function() {
-          getInvestors();
-          Notification.success('The entry has been restored!')
-        })
-      };
+      this.filterUnclaimedInvestors = function(query) {
+        return userListInvestorsService.filterUnclaimedInvestors(query).then(function(response){
+          return response.data;
+        });
+      }
 
       this.claimInvestor = function(e, id) {
         var requestedClaim = {
@@ -43,10 +42,10 @@
         }
 
         $confirm({text: "Are you sure you want request ownership of this investor?"}).then(function() {
-          controller.userClaimEntityService.create(requestedClaim).then(function() {
-            var element = angular.element(e.target)
-            element.text('Requested');
-            element.attr('disabled', true);
+          controller.userClaimEntityService.create(requestedClaim).then(function(response) {
+            searchInvestors.val("");
+            controller.selected = null;
+            controller.investors.pending_investors.push(response.data);
             Notification.success('Claim has been requested sucessfully. The Admin team will review this shortly!');
           });
         })

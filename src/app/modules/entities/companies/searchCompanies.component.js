@@ -7,10 +7,11 @@
       templateUrl: 'app/modules/entities/companies/index.html',
       controller: 'SearchCompaniesController'
     })
-    .controller('SearchCompaniesController', function($scope, $stateParams, $location, $document, searchCompaniesService, filterCompaniesService) {
+    .controller('SearchCompaniesController', function($rootScope, $scope, $stateParams, $location, $document, searchCompaniesService, filterCompaniesService) {
       var controller = this;
       this.searchCompaniesService = searchCompaniesService;
       this.filterCompaniesService = filterCompaniesService;
+      $rootScope.title = "TechIreland | Companies";
 
       if ($stateParams.tag) {
         this.tag = $stateParams.tag;
@@ -32,6 +33,7 @@
       $scope.perPage = 9;
 
       $scope.$watch('currentPage', function () {
+        $document.scrollTopAnimated(0, 250);
         controller.search();
       }, true);
 

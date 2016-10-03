@@ -11,8 +11,18 @@
         })
       };
 
+      this.filterUnclaimedCompanies = function(query) {
+        var basePath = serverUrl + '/user/companies.json?filter=' + query;
+        return $http.get(basePath);
+      };
+
       this.filter = function(query) {
-        var basePath = serverUrl + '/user/companies?filter=' + query;
+        var basePath = serverUrl + '/user/companies?typeahead=true&filter=' + query;
+        return $http.get(basePath);
+      };
+
+      this.export = function() {
+        var basePath = serverUrl + '/user/companies/export'
         return $http.get(basePath);
       };
     });

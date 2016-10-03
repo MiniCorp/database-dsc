@@ -1,17 +1,15 @@
 module V1
   module Admin
-    class MultinationalsController < ApplicationController
-      before_action :authenticate
-      before_action :is_user_admin
-
+    class MultinationalsController < AdminController
       def create
         multinational = Multinational.create(multinational_params)
+        multinational.update_attributes(is_live: true)
 
         render json: multinational
       end
 
       def index
-        multinationals = Multinational.with_deleted.order(:id)
+        multinationals = Multinational.with_deleted.order(:name)
 
         respond_to do |format|
           format.html do
@@ -41,13 +39,6 @@ module V1
         Multinational.restore(params[:id])
       end
 
-      def is_user_admin
-        if current_user.user_type != "admin"
-          render json: :nothing, status: 401
-          return
-        end
-      end
-
       private
 
       def multinational
@@ -60,6 +51,7 @@ module V1
           :logo,
           :short_description,
           :long_description,
+          :startup_evangelist,
           :headquarters,
           :emea_hq,
           :functions,
@@ -74,6 +66,8 @@ module V1
           :lng,
           :building_product_in_ireland,
           :events_space_qualifiers,
+          :tags,
+          :startup_packages,
           :custom_field_1, :custom_field_2, :custom_field_3, :custom_field_4,
           functions: [],
           startup_packages: [:name, :link, :description],

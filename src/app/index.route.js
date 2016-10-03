@@ -1,13 +1,37 @@
 (function() {
   'use strict';
 
-  angular
+  var app = angular
     .module('dscFe')
+    .run(function($rootScope, $window, $auth) {
+      $rootScope.$on('$stateChangeSuccess', function($rootScope) {
+        if ($auth.isAuthenticated()) {
+          window.Intercom('boot', {
+            app_id: 'veilum45',
+            email: $window.sessionStorage.getItem('userEmail'),
+            first_name: $window.sessionStorage.getItem('userFirstName'),
+            last_name: $window.sessionStorage.getItem('userLastName'),
+            created_at: $window.sessionStorage.getItem('createdAt')
+          });
+        } else {
+          window.Intercom("boot", {
+            app_id: "veilum45"
+          });
+        }
+      });
+      // debugger;
+
+    })
     .config(function routerConfig($stateProvider, $urlRouterProvider) {
       $stateProvider
         .state('userLogin', {
           url: '/user/login',
-          template: '<div class="container"><user-login></user-login></div>'
+          template: '<div class="container"><user-login></user-login></div>',
+          resolve: {
+            'title': ['$rootScope', function($rootScope){
+              $rootScope.title = "TechIreland | User Login";
+            }],
+          }
         })
         .state('userSignUp', {
           url: '/user/signup',
@@ -20,6 +44,10 @@
         .state('userResetPassword', {
           url: '/user/reset-password',
           template: '<div class="container"><user-reset-password></user-reset-password></div>'
+        })
+        .state('userAccountActivated', {
+          url: '/user/account-activated',
+          template: '<div class="container"><user-account-activated></user-account-activated></div>'
         })
         .state('user', {
           template: '<user></user>'
@@ -99,6 +127,13 @@
           url: '/admin',
           templateUrl: 'app/modules/admin/dashboard.html'
         })
+        .state('admin.pending', {
+          template: '<admin-pending ui-view></admin-pending>'
+        })
+        .state('admin.pending.index', {
+          url: '/admin/pending',
+          template: '<admin-pending-index></admin-pending-index>'
+        })
         .state('admin.claims', {
           template: '<admin-claims ui-view></admin-claims>'
         })
@@ -166,6 +201,13 @@
           url: '/admin/hubs/:id/edit',
           template: '<admin-hubs-edit></admin-hubs-edit>'
         })
+        .state('admin.users', {
+          template: '<admin-users ui-view></admin-users>'
+        })
+        .state('admin.users.index', {
+          url: '/admin/users',
+          template: '<admin-users-index></admin-users-index>'
+        })
         .state('search', {
           controller: function($scope, $auth) {
             $scope.loggedIn = $auth.isAuthenticated();
@@ -176,6 +218,10 @@
         .state('search.home', {
           url: '/',
           template: '<home></home>'
+        })
+        .state('search.about', {
+          url: '/about',
+          template: '<about></about>'
         })
         .state('search.searchCompanies', {
           url: '/companies',
@@ -191,7 +237,12 @@
         })
         .state('search.companyProfile', {
           url: '/company/:id',
-          template: '<company-profile></company-profile>'
+          template: '<company-profile></company-profile>',
+          resolve: {
+            'title': ['$rootScope', function($rootScope){
+              $rootScope.title = "TechIreland";
+            }],
+          }
         })
         .state('search.searchMultinationals', {
           url: '/mtns',
@@ -207,7 +258,12 @@
         })
         .state('search.multinationalProfile', {
           url: '/mtns/:id',
-          template: '<multinational-profile></multinational-profile>'
+          template: '<multinational-profile></multinational-profile>',
+          resolve: {
+            'title': ['$rootScope', function($rootScope){
+              $rootScope.title = "TechIreland";
+            }],
+          }
         })
         .state('search.searchInvestors', {
           url: '/investors',
@@ -223,7 +279,12 @@
         })
         .state('search.investorProfile', {
           url: '/investor/:id',
-          template: '<investor-profile></investor-profile>'
+          template: '<investor-profile></investor-profile>',
+          resolve: {
+            'title': ['$rootScope', function($rootScope){
+              $rootScope.title = "TechIreland";
+            }],
+          }
         })
         .state('search.searchHubs', {
           url: '/hubs',
@@ -239,10 +300,18 @@
         })
         .state('search.hubProfile', {
           url: '/hub/:id',
-          template: '<hub-profile></hub-profile>'
+          template: '<hub-profile></hub-profile>',
+          resolve: {
+            'title': ['$rootScope', function($rootScope){
+              $rootScope.title = "TechIreland";
+            }],
+          }
         })
         ,
 
       $urlRouterProvider.otherwise('/');
     });
+
+
+
 })();

@@ -8,48 +8,61 @@
       controller: 'AdminHubsEditController'
     })
     .controller('AdminHubsEditController', function(store, $state, adminGetHubService,
-      updateHubService, $stateParams, Notification, listTagsService, listCompaniesService) {
+      updateHubService, $stateParams, Notification, listTagsService, adminListCompaniesService) {
 
       var controller = this;
       this.hub_type = {};
       this.tags = [];
       this.fundingTypes = [];
       this.officeLocations = [];
-      this.appDeadlineDatePicker = {
-        opened: false
-      };
-
-      this.currentAppDeadlineDate;
 
       function loadTags() {
+        if (!controller.hub.tags || angular.isFunction(controller.hub.tags.forEach) == false) {
+          controller.hub.tags = [];
+          return;
+        }
+
         controller.hub.tags.forEach(function(tag) {
           controller.tags.push({text: tag})
         });
       }
 
-      function convertDateForDisplay() {
-        if (controller.hub.application_deadline) {
-          controller.hub.application_deadline = Date.parse(controller.hub.application_deadline);
-        }
-      }
+      function convertDeadlineDateForDisplay() {
 
-      function convertDateForUpdate() {
-        if (controller.hub.application_deadline == controller.currentAppDeadlineDate) {
-          controller.hub.application_deadline = new Date(controller.hub.application_deadline)
+        if (controller.hub.applications) {
+          for (var i = 0; i < controller.hub.applications.length; i++) {
+            var application = controller.hub.applications[i];
+            if (application.deadline != undefined && angular.isString(application.deadline)) {
+              application.deadline = Date.parse(application.deadline);
+            }
+          }
         }
       }
 
       controller.queryCompanies = function(query) {
-        return listCompaniesService.filter(query);
+        return adminListCompaniesService.filter(query);
       };
 
-      controller.toggleCalendar = function() {
-        controller.appDeadlineDatePicker.opened = true;
+      controller.toggleCalendar = function(application) {
+        application.opened = true;
       };
 
       controller.queryTags = function(query) {
         return listTagsService.filter(query);
       };
+
+      controller.addApplication = function() {
+        controller.hub.applications.push({
+          title: "",
+          deadline: "",
+          link: "",
+          opened: false
+        });
+      };
+
+      controller.removeApplication = function(application) {
+        controller.hub.applications.splice(controller.hub.applications.indexOf(application), 1);
+      }
 
       controller.addPrivateContact = function() {
         controller.hub.contact_urls.push({
@@ -87,26 +100,33 @@
         controller.hub.hub_type = controller.hub.hub_type
       }
 
+      function setContactURLs() {
+        if (!controller.hub.contact_urls || angular.isFunction(controller.hub.contact_urls.push) == false)
+          controller.hub.contact_urls = [];
+      }
+
+      function setApplications() {
+        if (!controller.hub.applications || angular.isFunction(controller.hub.applications.push) == false)
+          controller.hub.applications = [];
+      }
+
       adminGetHubService.find($stateParams.id).then(function(hub) {
         controller.hub = hub;
-
-        if (!angular.isArray(controller.hub.contact_urls)) {
-          controller.hub.contact_urls = [];
-        }
-
-        convertDateForDisplay();
-        controller.currentAppDeadlineDate = hub.application_deadline;
+        convertDeadlineDateForDisplay();
+        setContactURLs();
+        setApplications();
         loadTags();
         loadHubTypes();
       });
 
       this.update = function() {
         setHubTypes();
-        convertDateForUpdate();
         updateHubService.update(controller.hub)
           .then(function(hub) {
             controller.hub = hub;
-            convertDateForDisplay();
+            convertDeadlineDateForDisplay();
+            setContactURLs();
+            setApplications();
             Notification.success('Hub Updated!')
           }, function() {
             Notification.error('Error: Hub could not be saved!')

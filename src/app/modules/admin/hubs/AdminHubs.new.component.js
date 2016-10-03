@@ -7,27 +7,25 @@
       controller: 'AdminHubsNewController',
       templateUrl: 'app/modules/admin/hubs/hubs.new.html'
     })
-    .controller('AdminHubsNewController', function(createHubService, $confirm, Notification, listInvestorsService, listTagsService, listCompaniesService) {
+    .controller('AdminHubsNewController', function(createHubService, $confirm, Notification, adminListInvestorsService, listTagsService, adminListCompaniesService) {
       this.createHubService = createHubService;
       var controller = this;
       this.hub_type = {};
-      this.appDeadlineDatePicker = {
-        opened: false
-      };
 
       var setEmptyHub = function() {
         controller.hub = {
           founders: [],
           funding_rounds: [],
           tags: [],
-          contact_urls: []
+          contact_urls: [],
+          applications: []
         }
       };
 
       setEmptyHub();
 
-      controller.toggleCalendar = function() {
-        controller.appDeadlineDatePicker.opened = true;
+      controller.toggleCalendar = function(application) {
+        application.opened = true;
       };
 
       controller.queryTags = function(query) {
@@ -42,6 +40,19 @@
         controller.hub.tags.splice(controller.hub.tags.indexOf(tag.text), 1);
       };
 
+      controller.addApplication = function() {
+        controller.hub.applications.push({
+          title: "",
+          deadline: "",
+          link: "",
+          opened: false
+        });
+      };
+
+      controller.removeApplication = function(application) {
+        controller.hub.applications.splice(controller.hub.applications.indexOf(application), 1);
+      }
+
       controller.addPrivateContact = function() {
         controller.hub.contact_urls.push({
           name: "",
@@ -55,7 +66,7 @@
       };
 
       controller.queryCompanies = function(query) {
-        return listCompaniesService.filter(query);
+        return adminListCompaniesService.filter(query);
       };
 
       function setHubTypes() {

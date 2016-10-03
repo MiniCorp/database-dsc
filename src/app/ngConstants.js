@@ -1,3 +1,2 @@
 angular.module("configuration", [])
-  .constant("serverUrl", "http://localhost:4000/v1");
-
+  .constant("serverUrl", "https://techireland-be.cfapps.io/v1");

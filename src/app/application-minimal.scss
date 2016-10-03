@@ -8,6 +8,24 @@
  overflow: hidden;
 }
 
+.image-container {
+  vertical-align: middle;
+  height: 115px;
+  white-space: nowrap;
+}
+
+.helper {
+  display: inline-block;
+  height: 100%;
+  vertical-align: middle;
+}
+
+.image-container img {
+  vertical-align: middle;
+  max-height: 115px;
+  max-width: 100%;
+}
+
 
 /* navbar */
 .app-navbar {

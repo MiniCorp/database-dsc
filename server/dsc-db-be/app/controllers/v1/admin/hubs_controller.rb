@@ -1,25 +1,31 @@
 module V1
   module Admin
-    class HubsController < ApplicationController
-      before_action :authenticate
-      before_action :is_user_admin
-
+    class HubsController < AdminController
       def create
         hub = Hub.create(hub_params)
+        hub.update_attributes(is_live: true)
+
         render json: hub
       end
 
       def index
-        hubs = Hub.with_deleted.order(:id)
 
-        respond_to do |format|
-          format.html {
-            render json: hubs
-          }
-          format.csv do
-            send_data hubs.to_csv
+        if params[:filter].present?
+          hubs = Hub.where("name ILIKE ?", "%#{params[:filter]}%")
+          render json: hubs.pluck(:name)
+        else
+          hubs = Hub.with_deleted.order(:name)
+
+          respond_to do |format|
+            format.html {
+              render json: hubs
+            }
+            format.csv do
+              send_data hubs.to_csv
+            end
           end
         end
+
       end
 
       def show
@@ -40,13 +46,6 @@ module V1
         Hub.restore(params[:id])
       end
 
-      def is_user_admin
-        if current_user.user_type != "admin"
-          render json: :nothing, status: 401
-          return
-        end
-      end
-
       private
 
       def hub
@@ -56,9 +55,10 @@ module V1
       def hub_params
         params.require(:hub).permit(
           :name, :logo, :short_description, :long_description,
-          :headquarters, :founded, :programs, { hub_type: [] },
-          :application_deadline, :contact, :contact_detail,
-          :address, { contact_urls: [:name, :email, :phone] }, { events: [] },
+          :headquarters, :founded, { hub_type: [] }, :contact_urls,
+          :applications, { applications: [:title, :deadline, :link] },
+          :contact, :contact_detail, :alumni, :tags, :address,
+          { contact_urls: [:name, :email, :phone] }, { events: [] },
           { alumni: [:id, :name] }, :video_url, :website, :custom_field_1,
           :custom_field_2, :custom_field_3, :custom_field_4,
           { social_accounts: [:twitter, :linkedin, :facebook] },

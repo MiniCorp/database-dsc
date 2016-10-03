@@ -1,13 +1,11 @@
 Rails.application.routes.draw do
-
-
-
   root to: 'health#index'
 
   namespace :v1 do
+    # omniauth
     post '/auth/:provider',      to: 'auth#authenticate'
-
-    mount Knock::Engine => "/knock"
+    # knock token
+    post '/auth_token' => 'user_token#create'
 
     get 'companies', to: 'companies#index'
     get 'companies/:id', to: 'companies#show'
@@ -18,12 +16,16 @@ Rails.application.routes.draw do
     get 'hubs', to: 'hubs#index'
     get 'hubs/:id', to: 'hubs#show'
 
+    get 'home_search', to: 'home_searches#index'
+
     resources :password_resets, only: [:new, :create, :edit, :update]
 
     # Administration Routes
     namespace :admin do
       resources :user_entity_claims, only: [:index, :update]
+      resources :user_entity_pending, only: [:index, :update]
 
+      get 'companies/export'
       resources :companies, only: [:create, :index, :show, :update, :destroy] do
         member do
           put :restore
@@ -44,19 +46,26 @@ Rails.application.routes.draw do
           put :restore
         end
       end
+
+      resources :users
+
       resources :tags, only: [:index]
     end
 
-    # User routes
     resources :users, only: [:create, :show, :update] do
+      member do
+        put :verify_email
+      end
     end
 
     namespace :user do
       resources :user_entity_claims, only: [:create, :update]
 
+      get 'companies/export'
       resources :companies, only: [:create, :index, :show, :update, :destroy] do
         member do
           put :restore
+          delete :remove_exec_summary
         end
       end
       resources :multinationals, only: [:create, :index, :show, :update, :destroy] do

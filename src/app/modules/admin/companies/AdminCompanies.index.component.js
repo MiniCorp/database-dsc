@@ -36,14 +36,9 @@
       };
 
       this.export = function() {
-        exportToCSV.export('admin', 'companies').then(function(data) {
-          var anchor = angular.element('<a/>');
-          anchor.attr({
-            href: 'data:attachment/csv;charset=utf-8,' + encodeURI(data),
-            target: '_blank',
-            download: 'companies.csv'
-          })[0].click();
-        })
+        adminListCompaniesService.export().then(function() {
+          Notification.success('Export requested. You will receive this via email shortly.')
+        });
       };
     });
 })();

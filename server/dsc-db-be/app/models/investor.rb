@@ -33,6 +33,8 @@ class Investor < ApplicationRecord
   acts_as_paranoid
   include PgSearch
 
+  belongs_to :user
+
   pg_search_scope :search_by_tag,
     against: {
       tags: 'A',
@@ -63,15 +65,19 @@ class Investor < ApplicationRecord
       tsearch: { any_word: true }
     }
 
+  scope :live, -> (live) { where is_live: live }
   scope :greater_than, -> (column, limit) { where "#{column} > #{limit}" }
   scope :range_scope, -> (column, range) { where("#{column}" => range) }
   scope :deal_structure, -> (deal_structure) { where deal_structure: deal_structure }
+  scope :claimed_by_user, -> (user) { where user: user }
+  scope :unclaimed, -> { where user: nil }
   scope :unclaimed_or_owned_by, -> (user_id) { where "(user_id is null) OR (user_id = #{user_id})" }
 
   attr_accessor :current_user
 
-  def self.select_numeric_scope(column, range_as_string)
-    lower, upper = range_as_string.split('-').map(&:to_i)
+  def self.select_numeric_scope(column, selected_value)
+    lower = 0
+    upper = selected_value.to_i
     return greater_than(column, lower) if upper == 100000000
     range_scope(column, lower..upper)
   end

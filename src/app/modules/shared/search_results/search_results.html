@@ -4,7 +4,9 @@
       <a ui-sref="search.{{$ctrl.type}}Profile({id: entity.id})" class="no-decoration">
         <div class="panel panel-default" style="border-bottom: 5px solid #e92a8b;">
           <div class="panel-body result-item-panel">
-            <img ng-src="{{entity.logo}}" class="logo img-responsive" style="margin: 10px auto;">
+            <div class="image-container text-center">
+              <span class="helper"></span><img ng-src="{{entity.logo}}" />
+            </div>
             <h2 id="{{entity.name | slugify}}-item" class="text-left name lead" style="margin-bottom:0;margin-top:30px;font-size:22px;font-weight:300;">{{entity.name}}</h2>
             <p class="text-left short-desc" style="font-size:16px;font-weight:300;margin-bottom:0;color:#999999;">
               {{entity.short_description | characters:140 }}
@@ -17,7 +19,7 @@
   <div class="row">
     <div class="col-md-12">
       <div class="center-block">
-        <uib-pagination ng-model="$ctrl.currentPage" total-items="$ctrl.totalItems" items-per-page="$ctrl.perPage" boundary-links="true">
+        <uib-pagination ng-model="$ctrl.currentPage" total-items="$ctrl.totalItems" items-per-page="$ctrl.perPage" max-size="10" boundary-links="true" force-ellipses="true">
         </uib-pagination>
       </div>
     </div>

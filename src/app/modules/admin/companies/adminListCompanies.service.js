@@ -15,5 +15,10 @@
         var basePath = serverUrl + '/admin/companies?filter=' + query;
         return $http.get(basePath);
       };
+
+      this.export = function() {
+        var basePath = serverUrl + '/admin/companies/export'
+        return $http.get(basePath);
+      };
     });
 })();

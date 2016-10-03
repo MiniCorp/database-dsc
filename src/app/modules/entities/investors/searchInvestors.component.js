@@ -7,10 +7,11 @@
       templateUrl: 'app/modules/entities/investors/index.html',
       controller: 'SearchInvestorsController'
     })
-    .controller('SearchInvestorsController', function($scope, $stateParams, $document, searchInvestorsService, filterInvestorsService) {
+    .controller('SearchInvestorsController', function($rootScope, $scope, $stateParams, $document, searchInvestorsService, filterInvestorsService) {
       var controller = this;
       this.searchInvestorsService = searchInvestorsService;
       this.filterInvestorsService = filterInvestorsService;
+      $rootScope.title = "TechIreland | Investors";
 
       if ($stateParams.tag) {
         this.tag = $stateParams.tag;
@@ -32,6 +33,7 @@
       $scope.perPage = 9;
 
       $scope.$watch('currentPage', function () {
+        $document.scrollTopAnimated(0, 250);
         controller.search();
       }, true);
 

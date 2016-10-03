@@ -16,7 +16,8 @@ unless Rails.env.production?
   User.create(
     email: 'admin@test.com',
     password: '12345678',
-    user_type: 1
+    user_type: 1,
+    email_confirmed: true
   )
 
   Hub.create(
@@ -32,9 +33,9 @@ unless Rails.env.production?
         "address": "",
         "contact_urls": {},
         "events": [],
-        "programs": "",
         "hub_type": ["A","I"],
-        "funding_provided": false
+        "funding_provided": false,
+        "is_live": true
       },
       {
         "name": "Dogpatch Labs",
@@ -47,7 +48,6 @@ unless Rails.env.production?
         "address": "",
         "contact_urls": {},
         "events": [],
-        "programs": "",
         "hub_type": ["CW"],
         "funding_provided": true,
         "alumni": [
@@ -55,7 +55,8 @@ unless Rails.env.production?
           { "id": 2, "name": "CoderDojo" },
           { "id": 3, "name": "Twilio" },
           { "id": 4, "name": "Pivotal" },
-        ]
+        ],
+        "is_live": true
       }
     ]
   )
@@ -89,7 +90,8 @@ unless Rails.env.production?
           "facebook": "https://www.facebook.com/frontlineventures/",
           "twitter": "https://twitter.com/Frontline",
           "linkedin": "http://www.linkedin.com/company/frontline-ventures"
-        }
+        },
+        "is_live": true
       },
       {
         "name": "Polaris Partners",
@@ -126,7 +128,8 @@ unless Rails.env.production?
           "facebook": "http://www.facebook.com/pages/Polaris-Partners/404737049642094",
           "twitter": "http://twitter.com/PolarisVC",
           "linkedin": "http://www.linkedin.com/company/20197"
-        }
+        },
+        "is_live": true
       }
     ]
   )
@@ -165,7 +168,8 @@ unless Rails.env.production?
         ],
         "events_space": true,
         "employees": 722,
-        "functions": ['S', 'CS', 'F', 'L', 'SI', 'E', 'M', 'O', 'PD']
+        "functions": ['S', 'CS', 'F', 'L', 'SI', 'E', 'M', 'O', 'PD'],
+        "is_live": true
       },
       {
         "name": "Microsoft",
@@ -194,7 +198,8 @@ unless Rails.env.production?
         ],
         "events_space": true,
         "employees": 1646,
-        "functions": ['S', 'CS', 'F', 'L', 'SI', 'E', 'M', 'RD', 'MF', 'O', 'PD']
+        "functions": ['S', 'CS', 'F', 'L', 'SI', 'E', 'M', 'RD', 'MF', 'O', 'PD'],
+        "is_live": true
       },
       {
         "name": "SquareSpace",
@@ -213,21 +218,24 @@ unless Rails.env.production?
         ],
         "events_space": true,
         "employees": 115,
-        "functions": ['S', 'CS', 'F', 'L', 'SI', 'E', 'M', 'O']
+        "functions": ['S', 'CS', 'F', 'L', 'SI', 'E', 'M', 'O'],
+        "is_live": true
       },
       {
         "name": "Airbnb",
         "logo": "https://crunchbase-production-res.cloudinary.com/image/upload/c_pad,h_140,w_250/v1405534850/vubc5kxhmw6jalain0ot.png",
         "short_description": "Airbnb is an online community marketplace for people to list, discover, and book accommodations around the world.",
         "headquarters": "San Francisco, CA",
-        "local_office": "	The Watermarque Building, Ringsend, D2"
+        "local_office": "	The Watermarque Building, Ringsend, D2",
+        "is_live": true
       },
       {
         "name": "Google",
         "logo": "https://crunchbase-production-res.cloudinary.com/image/upload/c_pad,h_140,w_250/v1441152509/jpwjd07xo0ycgumam7as.png",
         "short_description": "Google is a multinational corporation that is specialized in internet-related services and products.",
         "headquarters": "Mountain View, CA",
-        "local_office": "Gordon House, Barrow StreetDublin 4"
+        "local_office": "Gordon House, Barrow StreetDublin 4",
+        "is_live": true
       }
     ]
   )
@@ -249,7 +257,6 @@ unless Rails.env.production?
           }
         ],
         "tags": ["Technology", "Social Recruiting", "Event Management"],
-        "investors": "Undisclosed",
         "office_locations": [
           {"id": 1, "address": "NDRC at the Digital Exchange, Crane Street, Dublin 8", "lat": 42.4076806, "lng": -71.2764524}
         ],
@@ -272,7 +279,8 @@ unless Rails.env.production?
             "date": "June 2015",
             "type": "Seed"
           }
-        ]
+        ],
+        "is_live": true
       },
       {
         "name": "Boxever",
@@ -297,7 +305,6 @@ unless Rails.env.production?
           }
         ],
         "tags": ["Travel", "Big Data Analytics", "Personalization"],
-        "investors": "NDRC - Seed, Series A; Tadhgh O'Toole - Angel; Bloom Equity - Angel; Conor Stanley - Angel; Delta Partners - Angel, Series A; Frontline Ventures - Series B; Polaris Partners - Series B; Silicon Valley Bank - Series B",
         "office_locations": [
           {"id": 1, "address": "Ashford House, Tara Street, Dublin, Dublin 2", "lat": 42.4076806, "lng": -71.2764524},
           {"id": 2, "address": "34 Farnsworth Street, Floor 4, Boston, MA 02110, USA", "lat": 42.4076806, "lng": -71.2764524}
@@ -333,7 +340,8 @@ unless Rails.env.production?
             "date": "January 2016",
             "type": "Series B"
           }
-        ]
+        ],
+        "is_live": true
       },
       {
         "name": "Logentries",
@@ -354,7 +362,6 @@ unless Rails.env.production?
           }
         ],
         "tags": ["Business Analytics", "Application Performance Monitoring", "Big Data Analytics"],
-        "investors": "NDRC, Seed Polaris Partners - Seed, Series A; Floodgate - Seed, Series A; Frontline Ventures - Series A; RRE Ventures - Series A",
         "office_locations": [
           {"id": 1, "address": "26-28 Lomard Street, Dublin 2, Dublin; 34 Farnsworth Street, Floor 4, Boston, MA 02110, USA", "lat": 42.4076806, "lng": -71.2764524}
         ],
@@ -375,7 +382,8 @@ unless Rails.env.production?
           {"amount": "Undisclosed", "date": "January 2010", type: "Pre-seed"},
           {"amount": "1.1m", "date": "January 2012", type: "Seed"},
           {"amount": "10m", "date": "January 2013", type: "Series A"}
-        ]
+        ],
+        "is_live": true
       },
       {
         "name": "Trustev",
@@ -396,7 +404,6 @@ unless Rails.env.production?
           }
         ],
         "tags": ["Security", "E-Commerce", "Fraud Detection", "Software"],
-        "investors": "Wayra - Angel, Seed, Convertible Note; Shane Naughton - Seed; Notion Capital - Seed; Mangrove Capital Partners - Seed, Convertible Note; Kevin Abosch - Seed; Greycroft Partners - Seed, Convertible Note; Enterprise Ireland - Seed; David Coallier - Seed; ACT Venture Capital - Seed, Convertible Note",
         "office_locations": [
           {"id": 1, "address": "2100 Cork Airport Business Park, Cork", "lat": 42.4076806, "lng": -71.2764524},
           {"id": 2, "address": "355 Lexington Avenue, New York, NY 10017, USA", "lat": 42.4076806, "lng": -71.2764524},
@@ -420,7 +427,8 @@ unless Rails.env.production?
           {"amount": "3m", "date": "October 2013", "type": "Seed"},
           {"amount": "500k", "date": "December 2013", "type": "Seed"},
           {"amount": "3.21m", "date": "November 2013", "type": "Convertible Debt"}
-        ]
+        ],
+        "is_live": true
       },
       {
         "name": "Soundwave",
@@ -445,7 +453,6 @@ unless Rails.env.production?
           }
         ],
         "tags": ["Music", "Apps", "Analytics", "Local", "Social Media", "Real Time", "Location Based Services"],
-        "investors": "ACT Venture Captal - Seed, Venture; Colin Wiel - Venture; Enterprise Ireland - Seed; Iain MacDonald - Venture; Matthew Le Merle - Seed; Mike Ryan - Venture; NDRC - Seed; Paddy Holahan - Venture; Per Brilloth - Venture; Radical Investments - Seed; Spark Labs Global - Venture; Trevor Bowen - Venture; Xandez Investments LLP - Venture",
         "office_locations": [
           {"id": 1, "address": "1 Rathmines Road Upper, Rathmines, Dublin 6, Dublin", "lat": 42.4076806, "lng": -71.2764524}
         ],
@@ -468,7 +475,8 @@ unless Rails.env.production?
             "date": "June 2015",
             "type": "Seed"
           }
-        ]
+        ],
+        "is_live": true
       },
       {
         "name": "Bizimply",
@@ -493,7 +501,6 @@ unless Rails.env.production?
           }
         ],
         "tags": ["Enterprise Software", "SaaS", "Restaurants", "Online Scheduling"],
-        "investors": "NDRC - Seed",
         "office_locations": [
           {"id": 1, "address": "St. Martin's House, Waterloo Road, Dublin 4, Dublin", "lat": 42.4076806, "lng": -71.2764524}
         ],
@@ -516,7 +523,8 @@ unless Rails.env.production?
             "date": "June 2015",
             "type": "Seed"
           }
-        ]
+        ],
+        "is_live": true
       },
     {
       "name": "Storyful",
@@ -533,7 +541,6 @@ unless Rails.env.production?
         }
       ],
       "tags": ["News", "Publishing", "Media", "Social Media"],
-      "investors": "SOSV - Seed; ACT Venture Capital - Venture",
       "office_locations": [
         {"id": 1, "address": "Ferry House, 48 Lower Mount Street, Dublin 2, Dublin", "lat": 42.4076806, "lng": -71.2764524}
       ],
@@ -556,7 +563,8 @@ unless Rails.env.production?
           "date": "June 2015",
           "type": "Seed"
         }
-      ]
+      ],
+      "is_live": true
     },
     {
       "name": "CurrencyFair",
@@ -581,7 +589,6 @@ unless Rails.env.production?
         }
       ],
       "tags": ["Finance", "Virtualization", "Peer-to-Peer", "P2P Money Transfer"],
-      "investors": "Frontline Ventures - Seed, Series A; Enterprise Ireland - Venture; Octopus Ventures - Series A",
       "office_locations": [
         {"id": 1, "address": "Colm House, 91 Pembroke Rd, Ballsbridge, Dublin 4, Dublin", "lat": 42.4076806, "lng": -71.2764524}
       ],
@@ -604,7 +611,8 @@ unless Rails.env.production?
           "date": "June 2015",
           "type": "Seed"
         }
-      ]
+      ],
+      "is_live": true
     },
     {
       "name": "PageFair",
@@ -629,7 +637,6 @@ unless Rails.env.production?
         }
       ],
       "tags": ["Advertising", "Software", "Digital Media"],
-      "investors": "Tribal Ventures - Angel, Seed; Frontline Ventures - Angel; Enterprise Ireland - Angel",
       "office_locations": [
         {"id": 1, "address": "Unit D, Mount Pleasant Business Park, Mount Pleasant Avenue, Ranelagh, Dublin 6, Dublin", "lat": 42.4076806, "lng": -71.2764524}
       ],
@@ -652,7 +659,8 @@ unless Rails.env.production?
           "date": "June 2015",
           "type": "Seed"
         }
-      ]
+      ],
+      "is_live": true
     },
     {
       "name": "Pointy",
@@ -673,7 +681,6 @@ unless Rails.env.production?
         }
       ],
       "tags": ["Wireless", "Internet", "Services"],
-      "investors": "Frontline Ventures - Seed",
       "office_locations": [
         {"id": 1, "address": "National College of Ireland Business Centre, Mayor Square, IFSC, Dublin 1, Dublin", "lat": 42.4076806, "lng": -71.2764524}
       ],
@@ -696,7 +703,8 @@ unless Rails.env.production?
           "date": "June 2015",
           "type": "Seed"
         }
-      ]
+      ],
+      "is_live": true
     }
   ])
 end

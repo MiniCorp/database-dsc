@@ -8,13 +8,18 @@
       controller: 'AdminInvestorsEditController'
     })
     .controller('AdminInvestorsEditController', function(store, $state, adminGetInvestorService,
-      updateInvestorService, $stateParams, Notification, listTagsService, listCompaniesService) {
+      updateInvestorService, $stateParams, Notification, listTagsService, adminListCompaniesService) {
 
       var controller = this;
       this.tags = [];
       this.fundingTypes = [];
 
       function loadTags() {
+        if (!controller.investor.tags || angular.isFunction(controller.investor.tags.forEach) == false) {
+          controller.investor.tags = [];
+          return;
+        }
+
         controller.investor.tags.forEach(function(tag) {
           controller.tags.push({text: tag})
         });
@@ -35,8 +40,18 @@
         });
       }
 
+      function setOfficeLocations() {
+        if (!controller.investor.office_locations || angular.isFunction(controller.investor.office_locations.push) == false)
+          controller.investor.office_locations = [];
+      }
+
+      function setFounders() {
+        if (!controller.investor.founders || angular.isFunction(controller.investor.founders.push) == false)
+          controller.investor.founders = [];
+      }
+
       controller.queryCompanies = function(query) {
-        return listCompaniesService.filter(query);
+        return adminListCompaniesService.filter(query);
       };
 
       controller.queryTags = function(query) {
@@ -77,6 +92,8 @@
 
       adminGetInvestorService.find($stateParams.id).then(function(investor) {
         controller.investor = investor;
+        setOfficeLocations();
+        setFounders();
         loadTags();
         loadFundingTypes();
       });
@@ -86,6 +103,8 @@
         updateInvestorService.update(controller.investor)
           .then(function(investor) {
             controller.investor = investor;
+            setOfficeLocations();
+            setFounders();
             Notification.success('Investor Updated!')
           }, function() {
             Notification.error('Error: Investor could not be saved!')

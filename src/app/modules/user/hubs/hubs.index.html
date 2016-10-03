@@ -2,7 +2,8 @@
   <div class="col-md-12">
     <h2 style="margin-bottom:0;">Hubs</h2>
     <p class="text-muted" style="margin-bottom:20px;">
-      All hubs listed on Tech Ireland are listed below. Please claim any hub you own or alternativly create a new hub.
+      <br/>
+      <user-header-text entity="Hub"></user-header-text>
     </p>
     <p class="pull-right">
       <button ng-click="$ctrl.export()" class="btn btn-primary btn-xs">Export Hubs</button>
@@ -11,45 +12,128 @@
   </div>
 </div>
 
-<div class="table-responsive">
-  <table class="table table-striped table-bordered table-hover">
-    <thead>
-      <tr>
-        <th></th>
-        <th>Name</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr ng-class="{deleted: hub.deleted_at}" ng-repeat="hub in $ctrl.hubs">
-        <td>
-          <a ng-if="hub.user_id" ui-sref="user.hubs.edit({id: hub.id})"><img ng-src="{{hub.logo}}" alt="{{hub.name}}" width="80" height="50"></a>
-          <a ng-if="!hub.user_id" ui-sref="search.hubProfile({id: hub.id})"><img ng-src="{{hub.logo}}" alt="{{hub.name}}" width="80" height="50"></a>
-        </td>
-        <td>
-          <strong>
-            <a ng-if="hub.user_id" ui-sref="user.hubs.edit({id: hub.id})">{{hub.name}}</a>
-            <a ng-if="!hub.user_id" ui-sref="search.hubProfile({id: hub.id})">{{hub.name}}</a>
-          </strong>
-          <p style="color:#acacac"><i>{{hub.short_description}}</i> <a ng-href="{{hub.website}}" ng-show="hub.website"><i class="fa fa-link"></i></a></p>
-        </td>
-        <td class="actions">
+<div class="panel panel-default">
+  <div class="panel-heading">Search Hubs</div>
+  <div class="panel-body">
+    <div class="row">
+      <input id="searchHubs"
+             type="text"
+             ng-model="$ctrl.selected"
+             uib-typeahead="hub as hub.name for hub in $ctrl.filterUnclaimedHubs($viewValue)"
+             class="form-control"
+             placeholder="Type here to search for your hub...">
+    </div>
+    <div ng-show="$ctrl.selected && $ctrl.selected.id" class="row">
+      <br/>
+      <p>
+        Click 'Claim' to request ownership of this hub.
+      </p>
+      <div class="table-responsive">
+        <table class="table table-striped table-bordered table-hover">
+          <thead>
+            <tr>
+              <th></th>
+              <th>Name</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <a ui-sref="search.hubProfile({id: $ctrl.selected.id})"><img ng-src="{{$ctrl.selected.logo}}" alt="{{$ctrl.selected.name}}" width="80" height="50"></a>
+              </td>
+              <td>
+                <strong>
+                  <a ui-sref="search.hubProfile({id: $ctrl.selected.id})">{{$ctrl.selected.name}}</a>
+                </strong>
+                <p style="color:#acacac"><i>{{$ctrl.selected.short_description}}</i> <a ng-href="{{$ctrl.selected.website}}" ng-show="$ctrl.selected.website"><i class="fa fa-link"></i></a></p>
+              </td>
+              <td class="actions">
+                <div>
+                  <a ng-if="!$ctrl.selected.claimed_requested_by_current_user" ng-click="$ctrl.claimHub($event, $ctrl.selected.id)" class="btn btn-xs btn-primary-blue">Claim</a>
+                  <a ng-if="$ctrl.selected.claimed_requested_by_current_user" class="btn btn-xs btn-primary-blue" disabled>Requested</a>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
 
-          <div class="" ng-if="hub.user_id">
-            <span ng-hide="hub.deleted_at">
-              <a ui-sref="user.hubs.edit({id: hub.id})"><i class="fa fa-2x fa-edit"></i></a>
-            </span>
-            <span ng-show="hub.deleted_at">
-              <a href="" ng-click="$ctrl.restoreHub(hub.id)"><i class="fa fa-2x fa-refresh"></i></a>
-            </span>
-          </div>
+<div ng-if="$ctrl.hubs.user_hubs.length > 0" class="panel panel-default">
+  <div class="panel-heading">My Profiles</div>
+  <div class="panel-body">
+    <div class="table-responsive">
+      <table class="table table-striped table-bordered table-hover">
+        <thead>
+        <tr>
+          <th></th>
+          <th>Name</th>
+          <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-class="{deleted: hub.deleted_at}" ng-repeat="hub in $ctrl.hubs.user_hubs">
+          <td>
+            <a ng-if="hub.user_id" ui-sref="user.hubs.edit({id: hub.id})"><img ng-src="{{hub.logo}}" alt="{{hub.name}}" width="80" height="50"></a>
+            <a ng-if="!hub.user_id" ui-sref="search.hubProfile({id: hub.id})"><img ng-src="{{hub.logo}}" alt="{{hub.name}}" width="80" height="50"></a>
+          </td>
+          <td>
+            <strong>
+              <a ng-if="hub.user_id" ui-sref="user.hubs.edit({id: hub.id})">{{hub.name}}</a>
+              <a ng-if="!hub.user_id" ui-sref="search.hubProfile({id: hub.id})">{{hub.name}}</a>
+            </strong>
+            <p style="color:#acacac"><i>{{hub.short_description}}</i> <a ng-href="{{hub.website}}" ng-show="hub.website"><i class="fa fa-link"></i></a></p>
+          </td>
+          <td class="actions">
+            <div class="" ng-if="hub.user_id">
+              <span ng-hide="hub.deleted_at">
+                <a ui-sref="user.hubs.edit({id: hub.id})"><i class="fa fa-2x fa-edit"></i></a>
+              </span>
+            </div>
+            <div class="" ng-if="!hub.user_id && !hub.deleted_at">
+              <a ng-if="!hub.claimed_requested_by_current_user" ng-click="$ctrl.claimHub($event, hub.id)" class="btn btn-xs btn-primary-blue">Claim</a>
+              <a ng-if="hub.claimed_requested_by_current_user" class="btn btn-xs btn-primary-blue" disabled>Requested</a>
+            </div>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
 
-          <div class="" ng-if="!hub.user_id">
-            <a ng-if="!hub.claimed_requested_by_current_user" ng-click="$ctrl.claimHub($event, hub.id)" class="btn btn-xs btn-block btn-default">Claim</a>
-            <a ng-if="hub.claimed_requested_by_current_user" class="btn btn-xs btn-block btn-default" disabled>Requested</a>
-          </div>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+<div ng-if="$ctrl.hubs.pending_hubs.length > 0" class="panel panel-default">
+  <div class="panel-heading">Pending Approval</div>
+  <div class="panel-body">
+    <div class="table-responsive">
+      <table class="table table-striped table-bordered table-hover">
+        <thead>
+        <tr>
+          <th></th>
+          <th>Name</th>
+          <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-class="{deleted: hub.deleted_at}" ng-repeat="hub in $ctrl.hubs.pending_hubs">
+          <td>
+            <img ng-src="{{hub.logo}}" alt="{{hub.name}}" width="80" height="50">
+          </td>
+          <td>
+            <strong>
+              {{hub.name}}
+            </strong>
+            <p style="color:#acacac"><i>{{hub.short_description}}</i> <a ng-href="{{hub.website}}" ng-show="hub.website"><i class="fa fa-link"></i></a></p>
+          </td>
+          <td class="actions">
+            <a class="btn btn-xs btn-primary-blue" disabled>Requested</a>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
 </div>
