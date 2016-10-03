@@ -27,6 +27,6 @@ class UserMailer < ApplicationMailer
 
   def export_ready_notification(entity_export)
     @entity_export = entity_export
-    mail to: 'brian@minicorp.ie', subject: "TechIreland - Your export is ready"
+    mail to: entity_export.user.email, subject: "TechIreland - Your export is ready"
   end
 end
