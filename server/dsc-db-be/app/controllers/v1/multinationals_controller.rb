@@ -4,12 +4,14 @@ class V1::MultinationalsController < ApplicationController
 
   def index
     multinationals = MultinationalSearchService.new(filter_params).call
-    paginate json: multinationals, status: 200
+    paginate json: multinationals,
+       serializer: ActiveModel::Serializer::CollectionSerializer,
+       each_serializer: PublicMultinationalSerializer, status: 200
   end
 
   def show
     multinational = Multinational.live(true).find(params[:id])
-    render json: multinational, status: 200
+    render json: PublicMultinationalSerializer.new(multinational), status: 200
   end
 
   private

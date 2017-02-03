@@ -3,12 +3,14 @@ class V1::HubsController < ApplicationController
 
   def index
     hubs = HubSearchService.new(filter_params).call
-    paginate json: hubs, status: 200
+    paginate json: hubs,
+       serializer: ActiveModel::Serializer::CollectionSerializer,
+       each_serializer: PublicHubSerializer, status: 200
   end
 
   def show
     hub = Hub.live(true).find(params[:id])
-    render json: hub, status: 200
+    render json: PublicHubSerializer.new(hub), status: 200
   end
 
   private
