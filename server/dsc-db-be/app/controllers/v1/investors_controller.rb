@@ -3,12 +3,14 @@ class V1::InvestorsController < ApplicationController
 
   def index
     investors = InvestorSearchService.new(filter_params).call
-    paginate json: investors, status: 200
+    paginate json: investors,
+       serializer: ActiveModel::Serializer::CollectionSerializer,
+       each_serializer: PublicInvestorSerializer, status: 200
   end
 
   def show
     investor = Investor.live(true).find(params[:id])
-    render json: investor, status: 200
+    render json: PublicInvestorSerializer.new(investor), status: 200
   end
 
   private

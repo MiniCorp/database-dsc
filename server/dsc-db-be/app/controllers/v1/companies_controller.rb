@@ -5,7 +5,9 @@ module V1
     def index
       if params[:company_ids].present?
         companies = CompanySearchService.new(filter_params).call
-        render json: companies, status: 200
+        render json: companies,
+           serializer: ActiveModel::Serializer::CollectionSerializer,
+           each_serializer: PublicCompanySerializer, status: 200
       else
         companies = CompanySearchService.new(filter_params).call
         paginate json: companies,
@@ -16,7 +18,7 @@ module V1
 
     def show
       company = Company.live(true).find(params[:id])
-      render json: company, status: 200
+      render json: PublicCompanySerializer.new(company), status: 200
     end
 
     private
