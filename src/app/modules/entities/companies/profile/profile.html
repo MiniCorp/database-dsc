@@ -101,6 +101,11 @@
       <div class="company-info-title">We're looking for</div>
       <div class="company-info-value">{{$ctrl.company.looking_for}}</div>
     </div>
+
+    <div class="col-md-4 m-b-md" ng-show="$ctrl.company.female_founder">
+      <div class="company-info-title">Female Founder/CEO</div>
+      <div class="company-info-value">{{$ctrl.company.female_founder ? 'Yes' : 'No'}}</div>
+    </div>
   </div>
   <div ng-show="$ctrl.company.funding_rounds" class="row block block-bordered-lg" style="padding:40px 0;">
     <div id="funding" class="container text-center app-translate-15" data-transition="entrance">

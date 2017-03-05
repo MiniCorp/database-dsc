@@ -3,7 +3,7 @@ class PublicCompanySerializer < ActiveModel::Serializer
     :funding_stage, :product_stage, :target_markets, :business_model, :company_stage,
     :funding_rounds, :looking_for, :contact, :long_description, :founded, :video_url,
     :website, :social_accounts, :office_locations, :tags, :founders, :exec_summary_url,
-    :incubators
+    :incubators, :female_founder
 
   def funding_rounds
     object.funding_rounds

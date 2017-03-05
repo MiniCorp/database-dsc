@@ -44,6 +44,7 @@
               "acquired": company.acquired == null ? "" : company.acquired,
               "revenue": company.revenue,
               "recently_funded": company.recently_funded,
+              "female_founder": company.female_founder,
               "exec_summary": company.exec_summary,
               "allow_sharing": company.allow_sharing,
               "incubators": company.incubators.length == 0 ? "" : company.incubators

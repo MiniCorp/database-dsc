@@ -121,7 +121,11 @@ class Company < ApplicationRecord
   end
 
   def exec_summary_url
-    self.exec_summary ? self.exec_summary.url : nil
+    if Rails.env.production?
+      self.exec_summary ? self.exec_summary.url : nil
+    else
+      "https://minicorp.ie"
+    end
   end
 
 end

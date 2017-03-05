@@ -82,7 +82,7 @@ module V1
         params.require(:company).permit(
           :name, :logo, :short_description, :long_description, :acquisitions, :allow_sharing,
           :incubators, { incubators: [] },
-          :target_markets, :headquarters, :formerly_known_as, :founded, :tags,
+          :target_markets, :headquarters, :formerly_known_as, :founded, :tags, :female_founder,
           :revenue, :recently_funded, :exec_summary,
           { tags: [] }, :incubator, :funding_stage, :employees, :funding_amount,
           :business_model, :company_stage, :operational_status,
